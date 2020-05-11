@@ -1,11 +1,11 @@
 # coding=utf-8
 
 import struct
-from PyHydro.hidr import hidr
-from PyHydro.term import term
-from PyHydro.resequiv import resequiv
-from PyHydro.submercado import submercado as subsist
-from PyHydro.interc import interc
+from PySDDP.hidr import hidr
+from PySDDP.term import term
+from PySDDP.resequiv import resequiv
+from PySDDP.submercado import submercado as subsist
+from PySDDP.interc import interc
 import numpy as np
 import re
 

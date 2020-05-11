@@ -3,8 +3,8 @@
 import os
 import numpy as np
 from matplotlib import pyplot as plt
-from PyHydro.pmo import pmo
-from PyHydro.dadosgerais import dadosgerais
+from PySDDP.pmo import pmo
+from PySDDP.dadosgerais import dadosgerais
 
 
 class mddh(object):

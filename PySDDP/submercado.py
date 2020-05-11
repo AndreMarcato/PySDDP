@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from typing import List
-from PyHydro.hidr import hidr
+from PySDDP.hidr import hidr
 from scipy import stats
 from math import sqrt
 from scipy.optimize import minimize
