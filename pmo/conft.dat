@@ -1,0 +1,129 @@
+  NUM NOME           SSIS  U.EXIS CLASSE
+ XXXX XXXXXXXXXXXX   XXXX     XX   XXXX
+    1 ANGRA 1           1     EX      1
+   13 ANGRA 2           1     EX     13
+  211 BAIXADA FLU       1     EX    211
+   97 CCBS              1     NE     97
+  219 CCBS_L1           1     EE    219
+  220 CCBS_L13          1     EE    220
+   12 CUIABA G CC       1     EE     12
+  153 DAIA              1     EE    153
+   65 DO ATLAN_CSA      1     EE     65
+  183 DO ATLANTICO      1     EE    183
+  213 EBOLT_L1          1     EE    213
+  214 EBOLT_L13         1     EE    214
+   62 ELETROBOLT        1     NE     62
+  110 F.GASPARIAN       1     EE    110
+  238 GNA P. ACU 3      1     NE    238
+  155 GOIANIA II        1     EE    155
+   63 IBIRITERMO        1     EX     63
+    2 IGARAPE           1     EX      2
+   54 JUIZ DE FORA      1     EE     54
+   15 LINHARES          1     EE     15
+  236 MARLIM AZUL       1     NE    236
+  171 NORTEFLU-1        1     EX    171
+  172 NORTEFLU-2        1     EX    172
+  173 NORTEFLU-3        1     EE    173
+  174 NORTEFLU-4        1     EE    174
+  137 NOVO TEMPO        1     NE    137
+  229 ONCA PINTADA      1     NE    229
+  182 PALMEIRAS GO      1     EE    182
+   50 PIRAT.12 G        1     EE     50
+  230 PREDILECTA        1     NE    230
+    9 R.SILVEIRA        1     EE      9
+    4 ST.CRUZ 34        1     EE      4
+   86 ST.CRUZ NOVA      1     EE     86
+  146 STA VITORIA       1     NE    146
+  217 T LAGOAS_L1       1     EE    217
+  218 T LAGOAS_L13      1     EE    218
+  194 T.NORTE 2         1     EE    194
+  223 TERMOIRAPE I      1     NE    223
+   90 TERMOMACAE        1     EE     90
+   47 TERMORIO          1     NE     47
+  215 TERMORIO_L1       1     EE    215
+  216 TERMORIO_L13      1     EE    216
+   68 TRES LAGOAS       1     NE     68
+   49 VIANA             1     EE     49
+  108 XAVANTES          1     EE    108
+   48 ARAUCARIA         2     EE     48
+   37 ARGENTINA 1       2     EX     37
+   71 ARGENTINA 1B      2     EX     71
+   38 ARGENTINA 2A      2     EX     38
+   39 ARGENTINA 2B      2     EX     39
+   40 ARGENTINA 2C      2     EX     40
+   59 ARGENTINA 2D      2     EX     59
+  237 CAMBARA           2     NE    237
+  156 CANDIOTA 3        2     EE    156
+   64 CANOAS            2     EE     64
+  169 CISFRAMA          2     EX    169
+   28 FIGUEIRA          2     EE     28
+   26 J.LACERDA A1      2     EE     26
+   27 J.LACERDA A2      2     EE     27
+   25 J.LACERDA B       2     EE     25
+   24 J.LACERDA C       2     EE     24
+  107 PAMPA SUL         2     NE    107
+  149 SAO SEPE          2     EX    149
+   35 URUGUAIANA        2     EE     35
+  109 ALTOS             3     EE    109
+  111 ARACATI           3     EE    111
+  112 BAHIA I           3     EE    112
+  113 BATURITE          3     EE    113
+  235 CAMACARI MII      3     NE    235
+  166 CAMACARI PI       3     EX    166
+   52 CAMPINA GDE       3     EE     52
+  117 CAMPO MAIOR       3     EE    117
+  119 CAUCAIA           3     EE    119
+  121 CRATO             3     EE    121
+  125 ENGUIA PECEM      3     EE    125
+   74 FAFEN             3     EE     74
+   42 FORTALEZA         3     EE     42
+   53 GLOBAL I          3     EE     53
+   55 GLOBAL II         3     EE     55
+  127 IGUATU            3     EE    127
+  133 JUAZEIRO N        3     EE    133
+   57 MARACANAU I       3     EE     57
+  135 MARAMBAIA         3     EE    135
+  164 MURICY            3     EE    164
+  138 NAZARIA           3     EE    138
+  167 P. PECEM I        3     EE    167
+  163 P. PECEM II       3     EX    163
+  224 P. SERGIPE I      3     NE    224
+  160 PAU FERRO I       3     EE    160
+  162 PECEM II          3     NE    162
+   98 PERNAMBU_III      3     EE     98
+  144 PETROLINA         3     EE    144
+  151 POTIGUAR          3     EE    151
+  161 POTIGUAR III      3     EE    161
+  147 PROSPERIDADE      3     EE    147
+  170 SUAPE II          3     EE    170
+  221 SYKUE I           3     EX    221
+   43 TERMOBAHIA        3     EE     43
+  152 TERMOCABO         3     EE    152
+   58 TERMOCEARA        3     EX     58
+  159 TERMOMANAUS       3     EE    159
+   67 TERMONE           3     EE     67
+   69 TERMOPB           3     EE     69
+   96 TERMOPE           3     EE     96
+   83 VALE DO ACU       3     EE     83
+  201 APARECIDA         4     EE    201
+  203 C. ROCHA          4     EE    203
+  318 FLORES LT1        4     EE    318
+  319 FLORES LT2        4     EE    319
+   73 GERAMAR I         4     EE     73
+   70 GERAMAR II        4     EE     70
+  317 IRANDUBA          4     EE    317
+  204 JARAQUI           4     EE    204
+  205 MANAUARA          4     EE    205
+  212 MARANHAO III      4     EE    212
+   36 MARANHAO IV       4     EE     36
+   21 MARANHAO V        4     EE     21
+  140 MAUA 3            4     EE    140
+  206 MAUA B3           4     EE    206
+  141 MAUA B4           4     EE    141
+   46 N.VENECIA 2       4     EE     46
+  228 O. CANOAS 1       4     NE    228
+  116 PARNAIBA IV       4     EE    116
+  207 PONTA NEGRA       4     EE    207
+  176 PORTO ITAQUI      4     EE    176
+  136 SUZANO MA         4     EE    136
+  209 TAMBAQUI          4     EE    209

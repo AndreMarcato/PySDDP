@@ -1,0 +1,168 @@
+ NUM  NOME         POSTO JUS   REE V.INIC U.EXIS MODIF INIC.HIST FIM HIST
+ XXXX XXXXXXXXXXXX XXXX  XXXX XXXX XXX.XX XXXX   XXXX     XXXX     XXXX
+    4 FUNIL-GRANDE  211     6   10   0.00   EX      1     1931     2017
+   20 BATALHA        22    21   10  78.05   EX      1     1931     2017
+   21 SERRA FACAO   251    24   10  37.08   EX      0     1931     2017
+   27 CAPIM BRANC1  207    28   10  48.60   EX      1     1931     2017
+   28 CAPIM BRANC2   28    31   10   0.00   EX      1     1931     2017
+   29 CORUMBA IV    205   203   10  94.88   EX      0     1931     2017
+   48 PIRAJU         48    49   12   0.00   EX      0     1931     2017
+   66 ITAIPU         66     0    5   0.00   EX      0     1931     2017
+  131 NILO PECANHA  131   133    1   0.00   EX      0     1931     2017
+  132 FONTES        303   133    1   0.00   EX      1     1931     2017
+  141 BAGUARI       141   143    1   0.00   EX      0     1931     2017
+  153 SAO DOMINGOS  154    46   10   0.00   EX      0     1931     2017
+  155 RETIRO BAIXO  155   156    1  68.00   EX      1     1931     2017
+  156 TRES MARIAS   156     0    1  83.10   EX      1     1931     2017
+  162 QUEIMADO      158     0    1  99.20   EX      1     1931     2017
+  195 JAURU         295     0    1   0.00   EX      0     1931     2017
+  196 GUAPORE       296   285    6   0.00   EX      0     1931     2017
+  203 CORUMBA III    23    30   10  91.65   EX      0     1931     2017
+  227 SINOP         227   228    7  90.95   EE      1     1931     2017
+  228 COLIDER       228   229    7   0.00   EE      1     1931     2017
+  229 TELES PIRES   229   230    7   0.00   EX      1     1931     2017
+  230 SAO MANOEL    230     0    7   0.00   EX      0     1931     2017
+  241 SLT VERDINHO  241    34   10   0.00   EX      0     1931     2017
+  249 OURINHOS      249    50   12   0.00   EX      0     1931     2017
+  251 SERRA MESA    270   252    1  22.92   EX      1     1931     2017
+  252 CANA BRAVA    191   253    1   0.00   EX      1     1931     2017
+  253 SAO SALVADOR  253   257    1   0.00   EX      1     1931     2017
+  257 PEIXE ANGIC   257   261    1  73.50   EX      1     1931     2017
+  261 LAJEADO       273     0    1   0.00   EX      1     1931     2017
+  262 SALTO         294   241   10   0.00   EX      0     1931     2017
+  276 RONDON II     145     0    6  86.40   EX      0     1931     2017
+  281 PONTE PEDRA   281     0    1   0.00   EX      1     1931     2017
+  285 JIRAU         285   287    6   0.00   EX      1     1931     2017
+  287 STO ANTONIO   287     0    6   0.00   EX      1     1931     2017
+  290 ESPORA         99    34   10  94.00   EX      0     1931     2017
+  304 ITIQUIRA I    259   305    1   0.00   EX      0     1931     2017
+  305 ITIQUIRA II   252     0    1   0.00   EX      1     1931     2017
+  310 DARDANELOS    291     0    6   0.00   EX      0     1931     2017
+  311 CACU          247   312   10  49.00   EX      0     1931     2017
+  312 B. COQUEIROS  248   315   10   0.00   EX      0     1931     2017
+  315 FOZ R. CLARO  261    34   10   0.00   EX      0     1931     2017
+  317 FICT.TIBAGI    55   319   12   0.00   NE      0     1931     2017
+  318 FICT.STA BRA   54   317   12   0.00   NE      0     1931     2017
+  319 FICT.MAUA      57    61   12  61.00   EX      1     1931     2017
+  117 GUARAPIRANGA  117   118    1  92.76   EX      1     1931     2017
+  118 BILLINGS      319   119    1  90.26   EX      1     1931     2017
+  119 HENRY BORDEN  318     0    1   0.00   EX      1     1931     2017
+  120 JAGUARI       120   123    1  70.65   EX      1     1931     2017
+  121 PARAIBUNA     121   122    1  55.30   EX      1     1931     2017
+  122 SANTA BRANCA  122   123    1  51.79   EX      1     1931     2017
+  123 FUNIL         123   131    1  66.32   EX      1     1931     2017
+  124 LAJES         132   132    1 100.00   EX      1     1931     2017
+  126 PICADA        197   127    1   0.00   EX      0     1931     2017
+  127 SOBRAGI       198   129    1   0.00   EX      0     1931     2017
+  129 SIMPLICIO     126   130    1   0.00   EX      0     1931     2017
+  130 ILHA POMBOS   299     0    1   0.00   EX      0     1931     2017
+  133 P. PASSOS     306     0    1   0.00   EX      1     1931     2017
+  134 SALTO GRANDE  134   135    1   0.00   EX      1     1931     2017
+  135 P. ESTRELA    263   141    1  64.50   EX      1     1931     2017
+  139 CANDONGA      149   141    1   0.00   EX      1     1931     2017
+  143 AIMORES       148   144    1   0.00   EX      0     1931     2017
+  144 MASCARENHAS   144     0    1   0.00   EX      1     1931     2017
+  192 GUILMAN-AMOR  262   193    1   0.00   EX      1     1931     2017
+  193 SA CARVALHO   183   141    1   0.00   EX      0     1931     2017
+  217 ROSAL         196     0    1   0.00   EX      0     1931     2017
+  279 SAMUEL        279     0    6  88.60   EX      0     1931     2017
+  148 IRAPE         255     0    1  30.60   EX      1     1931     2017
+  283 STA CLARA MG  283     0    1   0.00   EX      1     1931     2017
+    1 CAMARGOS        1     2   10  86.10   EX      1     1931     2017
+    2 ITUTINGA        2     4   10   0.00   EX      1     1931     2017
+    6 FURNAS          6     7   10  51.14   EX      1     1931     2017
+    7 M. DE MORAES    7     8   10  21.07   EX      1     1931     2017
+    8 ESTREITO        8     9   10   0.00   EX      1     1931     2017
+    9 JAGUARA         9    10   10   0.00   EX      1     1931     2017
+   10 IGARAPAVA      10    11   10   0.00   EX      1     1931     2017
+   11 VOLTA GRANDE   11    12   10   0.00   EX      1     1931     2017
+   12 P. COLOMBIA    12    17   10   0.00   EX      1     1931     2017
+   14 CACONDE        14    15   10  91.60   EX      1     1931     2017
+   15 E. DA CUNHA    15    16   10   0.00   EX      0     1931     2017
+   16 A.S.OLIVEIRA   16    17   10   0.00   EX      1     1931     2017
+   17 MARIMBONDO     17    18   10  90.44   EX      1     1931     2017
+   18 A. VERMELHA    18    34   10  57.50   EX      1     1931     2017
+   34 I. SOLTEIRA    34    45   10  78.38   EX      1     1931     2017
+   24 EMBORCACAO     24    31   10  41.50   EX      1     1931     2017
+   25 NOVA PONTE     25    26   10  43.50   EX      1     1931     2017
+   26 MIRANDA       206    27   10  52.35   EX      1     1931     2017
+   30 CORUMBA I     209    31   10  89.12   EX      1     1931     2017
+   31 ITUMBIARA      31    32   10  45.40   EX      1     1931     2017
+   32 CACH.DOURADA   32    33   10   0.00   EX      1     1931     2017
+   33 SAO SIMAO      33    34   10  78.85   EX      1     1931     2017
+   37 BARRA BONITA   37    38   10  93.70   EX      1     1931     2017
+   38 A.S. LIMA      38    39   10   0.00   EX      0     1931     2017
+   39 IBITINGA       39    40   10   0.00   EX      0     1931     2017
+   40 PROMISSAO      40    42   10  96.30   EX      1     1931     2017
+   42 NAVANHANDAVA   42    43   10   0.00   EX      0     1931     2017
+   43 TRES IRMAOS    43    45   10  81.10   EX      1     1931     2017
+   45 JUPIA          45    46   10   0.00   EX      1     1931     2017
+   46 P. PRIMAVERA   46    66   10   0.00   EX      1     1931     2017
+  278 MANSO         278     0    1  87.57   EX      1     1931     2017
+   47 A.A. LAYDNER   47    48   12  26.28   EX      1     1931     2017
+   49 CHAVANTES      49   249   12  37.80   EX      1     1931     2017
+   50 L.N. GARCEZ    50    51   12   0.00   EX      0     1931     2017
+   51 CANOAS II      51    52   12   0.00   EX      0     1931     2017
+   52 CANOAS I       52    61   12   0.00   EX      0     1931     2017
+   61 CAPIVARA       61    62   12  45.83   EX      1     1931     2017
+   62 TAQUARUCU      62    63   12   0.00   EX      0     1931     2017
+   63 ROSANA         63    66   12   0.00   EX      0     1931     2017
+   54 STA BRANCA T   54    55   11   0.00   NE      0     1931     2017
+   55 TIBAGI MONT    55    57   11   0.00   NE      0     1931     2017
+   57 MAUA           57     0   11  61.00   EX      1     1931     2017
+   71 STA CLARA PR   71    72   11 100.00   EX      0     1931     2017
+   72 FUNDAO         72    73   11   0.00   EX      0     1931     2017
+   74 G.B. MUNHOZ    74    76   11  69.10   EX      0     1931     2017
+   83 BAIXO IGUACU   81     0   11   0.00   EX      1     1931     2017
+   86 BARRA GRANDE  215    91    2  93.78   EX      1     1931     2017
+   89 GARIBALDI      89    90    2  99.76   EX      1     1931     2017
+   90 CAMPOS NOVOS  216    91    2  99.89   EX      0     1931     2017
+   91 MACHADINHO    217    92    2  97.50   EX      1     1931     2017
+   92 ITA            92   103    2   0.00   EX      1     1931     2017
+   93 PASSO FUNDO    93    94    2  53.21   EX      0     1931     2017
+   94 MONJOLINHO    220   103    2   0.00   EX      0     1931     2017
+   95 QUEBRA QUEIX  286     0    2 100.00   EX      1     1931     2017
+  101 SAO JOSE      102   102    2   0.00   EX      1     1931     2017
+  102 PASSO S JOAO  103     0    2   0.00   EX      1     1931     2017
+  103 FOZ CHAPECO    94     0    2   0.00   EX      0     1931     2017
+   97 CASTRO ALVES   98    98    2   0.00   EX      0     1931     2017
+   98 MONTE CLARO    97    99    2   0.00   EX      0     1931     2017
+   99 14 DE JULHO   284     0    2   0.00   EX      0     1931     2017
+  110 ERNESTINA     110   111    2 100.00   EX      0     1931     2017
+  111 PASSO REAL    111   112    2  85.13   EX      1     1931     2017
+  112 JACUI         112   113    2   0.00   EX      0     1931     2017
+  113 ITAUBA        113   114    2   0.00   EX      0     1931     2017
+  114 D. FRANCISCA  114     0    2   0.00   EX      1     1931     2017
+  115 G.P. SOUZA    115     0    2  29.50   EX      0     1931     2017
+  215 SALTO PILAO   101     0    2   0.00   EX      0     1931     2017
+   73 JORDAO         70    77   11 100.00   EX      1     1931     2017
+   76 SEGREDO        75    77   11 100.00   EX      0     1931     2017
+   77 SLT.SANTIAGO   77    78   11  37.60   EX      1     1931     2017
+   78 SALTO OSORIO   78    82   11   0.00   EX      1     1931     2017
+   82 SALTO CAXIAS  222    83   11   0.00   EX      1     1931     2017
+  169 SOBRADINHO    169   172    3  47.59   EX      1     1931     2017
+  172 ITAPARICA     172   176    3  34.36   EX      1     1931     2017
+  176 COMP PAF-MOX  176   178    3   0.00   EX      1     1931     2017
+  178 XINGO         178     0    3   0.00   EX      1     1931     2017
+  294 FICT.QUEIMAD  158   169    3  99.20   EX      1     1931     2017
+  295 FICT.TRES MA  156   169    3  83.10   EX      1     1931     2017
+  308 FICT.RETIRO   155   295    3  68.00   EX      1     1931     2017
+  154 ITAPEBI       188     0    3   0.00   EX      1     1931     2017
+  298 FICT.IRAPE    255   154    3  30.60   EX      1     1931     2017
+  189 P. CAVALO     254     0    3 100.00   EX      1     1931     2017
+  190 B. ESPERANCA  190     0    3  98.37   EX      1     1931     2017
+  204 CACH.CALDEIR  204   280    9   0.00   EX      1     1931     2017
+  267 ESTREITO TOC  271   275    4   0.00   EX      1     1931     2017
+  275 TUCURUI       275     0    4  99.77   EX      1     1931     2017
+  277 BALBINA       269     0    9  82.97   EX      1     1931     2017
+  280 COARACY NUNE  280   284    9   0.00   EX      0     1931     2017
+  284 FERREIRA GOM  297     0    9   0.00   EX      0     1931     2017
+  286 STO ANT JARI  290     0    9   0.00   EX      1     1931     2017
+  291 FICT.SERRA M  270   292    4  41.67   EX      1     1931     2017
+  292 FICT.CANA BR  191   306    4   0.00   EX      1     1931     2017
+  302 FICT.LAJEADO  273   267    4   0.00   EX      1     1931     2017
+  303 FICT.PEIXE A  257   302    4  73.50   EX      1     1931     2017
+  306 FICT.SAO SAL  253   303    4   0.00   EX      1     1931     2017
+  314 PIMENTAL      302     0    8   0.00   EX      0     1931     2017
+  272 CURUA-UNA     277     0    8  95.33   EX      1     1931     2017
+  288 BELO MONTE    292     0    8   0.00   EE      1     1931     2017

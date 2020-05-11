@@ -1,0 +1,27 @@
+COD  NOME        ENCHIMENTO  VOLUME MORTO    DATA    POT.   MQ CJ
+                  INICIO    DUR.MESES  %    ENTRADA
+XXXX XXXXXXXXXXXX XX/XXXX      XX     XX.X  XX/XXXX XXXX.X  XX  X
+  54 STA BRANCA T 10/2020       3      0.0
+                                             5/2023   31.0   1  1
+                                             5/2023   31.0   2  1
+9999
+  55 TIBAGI MONT   9/2019       3      0.0
+                                             2/2020   12.0   1  1
+                                             2/2020   12.0   2  1
+                                             2/2020   12.0   3  1
+9999
+ 318 FICT.STA BRA 10/2020       3      0.0
+9999
+ 317 FICT.TIBAGI   9/2019       3      0.0
+9999
+ 288 BELO MONTE                              7/2019  611.1  14  1
+                                             9/2019  611.1  15  1
+                                            10/2019  611.1  16  1
+                                            12/2019  611.1  17  1
+                                             2/2020  611.1  18  1
+9999
+ 228 COLIDER                                 8/2019  100.0   3  1
+9999
+ 227 SINOP                                   8/2019  200.9   1  1
+                                             8/2019  200.9   2  1
+9999

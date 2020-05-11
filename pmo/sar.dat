@@ -1,0 +1,22 @@
+ ---  DADOS GERAIS SAR  ---
+ MES FINAL : 11                                                                                                
+ PENALIDADE: 100.00
+ ---  NIVEL META   ---
+ XXX XXXXXXXXXX XXX.X  XXX.X  XXX.X  XXX.X  XXX.X 
+   1 SUDESTE     47.0   47.0   47.0   47.0   47.0
+   2 SUL          0.0    0.0    0.0    0.0    0.0                                                              
+   3 NORDESTE    35.0   35.0   35.0   35.0   35.0  
+   4 NORTE        0.0    0.0    0.0    0.0    0.0 
+ 999
+ --- HORIZONTE DE APLICACAO DA SAR  --- 
+ ANOX   JAN FEV MAR ABR MAI JUN JUL AGO SET OUT NOV DEZ       
+ 2012    0   0   0   1   1   1   1   1   1   1   0   0              
+ 2013    0   0   0   1   1   1   1   1   1   1   0   0              
+ 2014    0   0   0   1   1   1   1   1   1   1   0   0                                                         
+ 2015    0   0   0   1   1   1   1   1   1   1   0   0
+ 2016    0   0   0   1   1   1   1   1   1   1   0   0              
+ POS     0   0   0   1   1   1   1   1   1   1   0   0              
+ 9999
+ --- CONDICIONAMENTO DA SERIE SAR (0: CONDICIONADA, 1: NAO COND. HISTORICO, 2: NAO COND. CUSTOMIZADA) ---          
+ 000                                                                                                      
+ 999

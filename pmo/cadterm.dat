@@ -1,0 +1,577 @@
+(NUM      NOMUSI      SSIS  SITU CLAST CLAST N       SMERC NUNID PROP        POT     FCAR        CGER     CCC  TCOMB/DINI  GTMIN1  GTMIN2  GTMIN3  TIF         IP          GTMINe OUTROS)
+(XXXXX  XXXXXXXXXXXX  XXXX  XXX  XXXX  XXXXXXXXXXXX  XXXX  XXXX  XXXXXXXXXX  XXXXXX  XXXXXXXXXX  XXXXXXX  XXX  XXXXXXXXXX  XXXXXX  XXXXXX  XXXXXX  XXXXXXXXXX  XXXXXXXXXX  XXXXXX ......)
+   001  ANGRA 1          1   EX                                                                                                                                              640.
+001001  ANGRA 1                                                                                                                                                          
+   013  ANGRA 2          1   EX                                                                                                                                             1350.
+013001  ANGRA 2                                                                                                                                                          
+   211  BAIXADA FLU      1   EX                                                                                                                                                0.
+211001  BAIXADA FLU                                                                                                                                                              
+211002  BAIXADA FLU                                                                                                                                                              
+211003  BAIXADA FLU                                                                                                                                                              
+   007  CARIOBA          1   EX                                                                                                                                                0.
+007001  CARIOBA                                                                                                                                                          
+007002  CARIOBA                                                                                                                                                          
+   097  CCBS             1   NE                                                                                                                                              86.4
+097001  CCBS                                                                                                                                                             
+097002  CCBS                                                                                                                                                             
+   219  CCBS_L1          1   EX                                                                                                                                             62.87
+219001  CCBS_L1                                                                                                                                                          
+   220  CCBS_L13         1   EX                                                                                                                                             23.53
+220001  CCBS_L13                                                                                                                                                         
+   012  CUIABA G CC      1   EX                                                                                                                                                0.
+012001  CUIABA G CC                                                                                                                                                      
+012002  CUIABA G CC                                                                                                                                                      
+012003  CUIABA G CC                                                                                                                                                      
+   153  DAIA             1   EX                                                                                                                                                0.
+153001  DAIA                                                                                                                                                             
+153002  DAIA                                                                                                                                                             
+153003  DAIA                                                                                                                                                             
+   065  DO ATLAN_CSA     1   EX                                                                                                                                            236.96
+065001  DO ATLAN_CSA                                                                                                                                                     
+   183  DO ATLANTICO     1   EX                                                                                                                                             201.5
+183001  DO ATLANTICO                                                                                                                                                     
+   213  EBOLT_L1         1   EX                                                                                                                                                0.
+213001  EBOLT_L1                                                                                                                                                         
+   214  EBOLT_L13        1   EX                                                                                                                                                0.
+214001  EBOLT_L13                                                                                                                                                        
+   062  ELETROBOLT       1   NE                                                                                                                                                0.
+062001  ELETROBOLT                                                                                                                                                       
+062002  ELETROBOLT                                                                                                                                                       
+062003  ELETROBOLT                                                                                                                                                       
+062004  ELETROBOLT                                                                                                                                                       
+062005  ELETROBOLT                                                                                                                                                       
+062006  ELETROBOLT                                                                                                                                                       
+062007  ELETROBOLT                                                                                                                                                       
+062008  ELETROBOLT                                                                                                                                                       
+   110  F.GASPARIAN      1   EX                                                                                                                                                0.
+110001  F.GASPARIAN                                                                                                                                                      
+110002  F.GASPARIAN                                                                                                                                                      
+110003  F.GASPARIAN                                                                                                                                                      
+110004  F.GASPARIAN                                                                                                                                                      
+110005  F.GASPARIAN                                                                                                                                                      
+110006  F.GASPARIAN                                                                                                                                                      
+   155  GOIANIA II       1   EX                                                                                                                                                0.
+155001  GOIANIA II                                                                                                                                                       
+155002  GOIANIA II                                                                                                                                                       
+   063  IBIRITERMO       1   EX                                                                                                                                                0.
+063001  IBIRITERMO                                                                                                                                                       
+063002  IBIRITERMO                                                                                                                                                       
+   002  IGARAPE          1   EX                                                                                                                                                0.
+002001  IGARAPE                                                                                                                                                          
+   054  JUIZ DE FORA     1   EX                                                                                                                                                0.
+054001  JUIZ DE FORA                                                                                                                                                     
+054002  JUIZ DE FORA                                                                                                                                                     
+   015  LINHARES         1   EX                                                                                                                                                0.
+015001  LINHARES                                                                                                                                                         
+015002  LINHARES                                                                                                                                                         
+015003  LINHARES                                                                                                                                                         
+015004  LINHARES                                                                                                                                                         
+   171  NORTEFLU-1       1   EX                                                                                                                                              400.
+171001  NORTEFLU-1                                                                                                                                                       
+   172  NORTEFLU-2       1   EX                                                                                                                                                0.
+172001  NORTEFLU-2                                                                                                                                                       
+   173  NORTEFLU-3       1   EX                                                                                                                                                0.
+173001  NORTEFLU-3                                                                                                                                                       
+   174  NORTEFLU-4       1   EX                                                                                                                                                0.
+174001  NORTEFLU-4                                                                                                                                                       
+   229  ONCA PINTADA     1   NE                                                                                                                                              6.86
+229001  ONCA PINTADA                                                                                                                                                     
+   182  PALMEIRAS GO     1   EX                                                                                                                                                0.
+182001  PALMEIRAS GO                                                                                                                                                     
+182002  PALMEIRAS GO                                                                                                                                                     
+   050  PIRAT.12 G       1   EX                                                                                                                                                0.
+050001  PIRAT.12 G                                                                                                                                                       
+050002  PIRAT.12 G                                                                                                                                                       
+   230  PREDILECTA       1   NE                                                                                                                                                0.
+230001  PREDILECTA                                                                                                                                                       
+   009  R.SILVEIRA       1   EX                                                                                                                                                0.
+009001  R.SILVEIRA                                                                                                                                                       
+009002  R.SILVEIRA                                                                                                                                                       
+   004  ST.CRUZ 34       1   EX                                                                                                                                                0.
+004001  ST.CRUZ 34                                                                                                                                                       
+004002  ST.CRUZ 34                                                                                                                                                       
+   086  ST.CRUZ NOVA     1   EX                                                                                                                                                0.
+086001  ST.CRUZ NOVA                                                                                                                                                     
+086002  ST.CRUZ NOVA                                                                                                                                                     
+086003  ST.CRUZ NOVA                                                                                                                                                     
+086004  ST.CRUZ NOVA                                                                                                                                                     
+   146  STA VITORIA      1   NE                                                                                                                                                0.
+146001  STA VITORIA                                                                                                                                                      
+   217  T LAGOAS_L1      1   EX                                                                                                                                                0.
+217001  T LAGOAS_L1                                                                                                                                                      
+   218  T LAGOAS_L13     1   EX                                                                                                                                                0.
+218001  T LAGOAS_L13                                                                                                                                                     
+   194  T.NORTE 2        1   EX                                                                                                                                                0.
+194001  T.NORTE 2                                                                                                                                                                
+194002  T.NORTE 2                                                                                                                                                                
+194003  T.NORTE 2                                                                                                                                                                
+194004  T.NORTE 2                                                                                                                                                                
+   223  TERMOIRAPE I     1   NE                                                                                                                                                0.
+223001  TERMOIRAPE I                                                                                                                                                     
+   090  TERMOMACAE       1   EX                                                                                                                                                0.
+090001  TERMOMACAE                                                                                                                                                       
+090002  TERMOMACAE                                                                                                                                                       
+090003  TERMOMACAE                                                                                                                                                       
+090004  TERMOMACAE                                                                                                                                                       
+090005  TERMOMACAE                                                                                                                                                       
+090006  TERMOMACAE                                                                                                                                                       
+090007  TERMOMACAE                                                                                                                                                       
+090008  TERMOMACAE                                                                                                                                                       
+090009  TERMOMACAE                                                                                                                                                       
+090010  TERMOMACAE                                                                                                                                                       
+090011  TERMOMACAE                                                                                                                                                       
+090012  TERMOMACAE                                                                                                                                                       
+090013  TERMOMACAE                                                                                                                                                       
+090014  TERMOMACAE                                                                                                                                                       
+090015  TERMOMACAE                                                                                                                                                       
+090016  TERMOMACAE                                                                                                                                                       
+090017  TERMOMACAE                                                                                                                                                       
+090018  TERMOMACAE                                                                                                                                                       
+090019  TERMOMACAE                                                                                                                                                       
+090020  TERMOMACAE                                                                                                                                                       
+   047  TERMORIO         1   NE                                                                                                                                             100.5
+047001  TERMORIO                                                                                                                                                         
+047002  TERMORIO                                                                                                                                                         
+047003  TERMORIO                                                                                                                                                         
+047004  TERMORIO                                                                                                                                                         
+047005  TERMORIO                                                                                                                                                         
+047006  TERMORIO                                                                                                                                                         
+047007  TERMORIO                                                                                                                                                         
+047008  TERMORIO                                                                                                                                                         
+047009  TERMORIO                                                                                                                                                         
+   215  TERMORIO_L1      1   EX                                                                                                                                             74.73
+215001  TERMORIO_L1                                                                                                                                                      
+   216  TERMORIO_L13     1   EX                                                                                                                                             25.77
+216001  TERMORIO_L13                                                                                                                                                     
+   068  TRES LAGOAS      1   NE                                                                                                                                                0.
+068001  TRES LAGOAS                                                                                                                                                              
+068002  TRES LAGOAS                                                                                                                                                              
+068003  TRES LAGOAS                                                                                                                                                              
+068004  TRES LAGOAS                                                                                                                                                              
+068005  TRES LAGOAS                                                                                                                                                              
+068006  TRES LAGOAS                                                                                                                                                              
+   019  UTE BRASILIA     1   EX                                                                                                                                                0.
+019001  UTE BRASILIA                                                                                                                                                     
+019002  UTE BRASILIA                                                                                                                                                     
+   049  VIANA            1   EX                                                                                                                                                0.
+049001  VIANA                                                                                                                                                            
+049002  VIANA                                                                                                                                                            
+049003  VIANA                                                                                                                                                            
+049004  VIANA                                                                                                                                                            
+   034  W.ARJONA         1   EX                                                                                                                                                0.
+034001  W.ARJONA                                                                                                                                                         
+034002  W.ARJONA                                                                                                                                                         
+034003  W.ARJONA                                                                                                                                                         
+034004  W.ARJONA                                                                                                                                                         
+034005  W.ARJONA                                                                                                                                                         
+   108  XAVANTES         1   EX                                                                                                                                                0.
+108001  XAVANTES                                                                                                                                                         
+108002  XAVANTES                                                                                                                                                         
+   048  ARAUCARIA        2   EX                                                                                                                                                0.
+048001  ARAUCARIA                                                                                                                                                        
+048002  ARAUCARIA                                                                                                                                                        
+048003  ARAUCARIA                                                                                                                                                        
+   037  ARGENTINA 1      2   EX                                                                                                                                                0.
+037001  ARGENTINA 1                                                                                                                                                      
+   071  ARGENTINA 1B     2   EX                                                                                                                                                0.
+071001  ARGENTINA 1B                                                                                                                                                     
+   038  ARGENTINA 2A     2   EX                                                                                                                                                0.
+038001  ARGENTINA 2A                                                                                                                                                     
+   039  ARGENTINA 2B     2   EX                                                                                                                                                0.
+039001  ARGENTINA 2B                                                                                                                                                     
+   040  ARGENTINA 2C     2   EX                                                                                                                                                0.
+040001  ARGENTINA 2C                                                                                                                                                     
+   059  ARGENTINA 2D     2   EX                                                                                                                                                0.
+059001  ARGENTINA 2D                                                                                                                                                     
+   156  CANDIOTA 3       2   EX                                                                                                                                              210.
+156001  CANDIOTA 3                                                                                                                                                       
+   064  CANOAS           2   EX                                                                                                                                                0.
+064001  CANOAS                                                                                                                                                           
+064002  CANOAS                                                                                                                                                           
+   169  CISFRAMA         2   EX                                                                                                                                                0.
+169001  CISFRAMA                                                                                                                                                         
+   028  FIGUEIRA         2   EX                                                                                                                                               20.
+028001  FIGUEIRA                                                                                                                                                         
+028002  FIGUEIRA                                                                                                                                                         
+   026  J.LACERDA A1     2   EX                                                                                                                                               30.
+026001  J.LACERDA A1                                                                                                                                                     
+026002  J.LACERDA A1                                                                                                                                                     
+   027  J.LACERDA A2     2   NC                                                                                                                                               96. 
+027001  J.LACERDA A2                                                                                                                                                     
+027002  J.LACERDA A2                                                                                                                                                     
+   025  J.LACERDA B      2   EX                                                                                                                                              208.
+025001  J.LACERDA B                                                                                                                                                      
+025002  J.LACERDA B                                                                                                                                                      
+   024  J.LACERDA C      2   EX                                                                                                                                              296.
+024001  J.LACERDA C                                                                                                                                                      
+   030  NUTEPA           2   EX                                                                                                                                                0.
+030001  NUTEPA                                                                                                                                                           
+030002  NUTEPA                                                                                                                                                           
+030003  NUTEPA                                                                                                                                                           
+   022  P.MEDICI A       2   EX                                                                                                                                                0.
+022001  P.MEDICI A                                                                                                                                                       
+022002  P.MEDICI A                                                                                                                                                       
+   023  P.MEDICI B       2   NC                                                                                                                                                0.
+023001  P.MEDICI B                                                                                                                                                       
+023002  P.MEDICI B                                                                                                                                                       
+   107  PAMPA SUL        2   NE                                                                                                                                              170.
+107001  PAMPA SUL                                                                                                                                                        
+   032  S.JERONIMO       2   EX                                                                                                                                                0.
+032001  S.JERONIMO                                                                                                                                                       
+032002  S.JERONIMO                                                                                                                                                       
+032003  S.JERONIMO                                                                                                                                                       
+   149  SAO SEPE         2   NE                                                                                                                                                0.
+149001  SAO SEPE                                                                                                                                                         
+   035  URUGUAIANA       2   EX                                                                                                                                              480.
+035001  URUGUAIANA                                                                                                                                                       
+035002  URUGUAIANA                                                                                                                                                       
+035003  URUGUAIANA                                                                                                                                                       
+   109  ALTOS            3   EX                                                                                                                                                0.
+109001  ALTOS                                                                                                                                                            
+109002  ALTOS                                                                                                                                                            
+109003  ALTOS                                                                                                                                                            
+109004  ALTOS                                                                                                                                                            
+109005  ALTOS                                                                                                                                                            
+109006  ALTOS                                                                                                                                                            
+109007  ALTOS                                                                                                                                                            
+109008  ALTOS                                                                                                                                                            
+   111  ARACATI          3   EX                                                                                                                                                0.
+111001  ARACATI                                                                                                                                                          
+111002  ARACATI                                                                                                                                                          
+111003  ARACATI                                                                                                                                                          
+111004  ARACATI                                                                                                                                                          
+111005  ARACATI                                                                                                                                                          
+111006  ARACATI                                                                                                                                                          
+111007  ARACATI                                                                                                                                                          
+   112  BAHIA I          3   EX                                                                                                                                                0.
+112001  BAHIA I                                                                                                                                                          
+112002  BAHIA I                                                                                                                                                          
+112003  BAHIA I                                                                                                                                                          
+   113  BATURITE         3   EX                                                                                                                                                0.
+113001  BATURITE                                                                                                                                                         
+113002  BATURITE                                                                                                                                                         
+113003  BATURITE                                                                                                                                                         
+113004  BATURITE                                                                                                                                                         
+113005  BATURITE                                                                                                                                                         
+113006  BATURITE                                                                                                                                                         
+113007  BATURITE                                                                                                                                                         
+   093  CAMACARI D/G     3   EX                                                                                                                                                0.
+093001  CAMACARI D/G                                                                                                                                                     
+093002  CAMACARI D/G                                                                                                                                                     
+093003  CAMACARI D/G                                                                                                                                                     
+093004  CAMACARI D/G                                                                                                                                                     
+093005  CAMACARI D/G                                                                                                                                                     
+   166  CAMACARI PI      3   EX                                                                                                                                                0.
+166001  CAMACARI PI                                                                                                                                                      
+166002  CAMACARI PI                                                                                                                                                      
+166003  CAMACARI PI                                                                                                                                                      
+166004  CAMACARI PI                                                                                                                                                      
+   052  CAMPINA GDE      3   EX                                                                                                                                                0.
+052001  CAMPINA GDE                                                                                                                                                              
+052002  CAMPINA GDE                                                                                                                                                              
+052003  CAMPINA GDE                                                                                                                                                              
+052004  CAMPINA GDE                                                                                                                                                              
+   117  CAMPO MAIOR      3   EX                                                                                                                                                0.
+117001  CAMPO MAIOR                                                                                                                                                      
+117002  CAMPO MAIOR                                                                                                                                                      
+117003  CAMPO MAIOR                                                                                                                                                      
+117004  CAMPO MAIOR                                                                                                                                                      
+117005  CAMPO MAIOR                                                                                                                                                      
+117006  CAMPO MAIOR                                                                                                                                                      
+117007  CAMPO MAIOR                                                                                                                                                      
+117008  CAMPO MAIOR                                                                                                                                                      
+   119  CAUCAIA          3   EX                                                                                                                                                0.
+119001  CAUCAIA                                                                                                                                                          
+119002  CAUCAIA                                                                                                                                                          
+119003  CAUCAIA                                                                                                                                                          
+119004  CAUCAIA                                                                                                                                                          
+119005  CAUCAIA                                                                                                                                                          
+119006  CAUCAIA                                                                                                                                                          
+119007  CAUCAIA                                                                                                                                                          
+119008  CAUCAIA                                                                                                                                                          
+119009  CAUCAIA                                                                                                                                                          
+   121  CRATO            3   EX                                                                                                                                                0.
+121001  CRATO                                                                                                                                                            
+121002  CRATO                                                                                                                                                            
+121003  CRATO                                                                                                                                                            
+121004  CRATO                                                                                                                                                            
+121005  CRATO                                                                                                                                                            
+121006  CRATO                                                                                                                                                            
+121007  CRATO                                                                                                                                                            
+121008  CRATO                                                                                                                                                            
+   125  ENGUIA PECEM     3   EX                                                                                                                                                0.
+125001  ENGUIA PECEM                                                                                                                                                     
+125002  ENGUIA PECEM                                                                                                                                                     
+125003  ENGUIA PECEM                                                                                                                                                     
+125004  ENGUIA PECEM                                                                                                                                                     
+125005  ENGUIA PECEM                                                                                                                                                     
+125006  ENGUIA PECEM                                                                                                                                                     
+125007  ENGUIA PECEM                                                                                                                                                     
+125008  ENGUIA PECEM                                                                                                                                                     
+125009  ENGUIA PECEM                                                                                                                                                     
+   106  ERB CANDEIAS     3   NE                                                                                                                                                0.
+106001  ERB CANDEIAS                                                                                                                                                     
+   074  FAFEN            3   EX                                                                                                                                                0.
+074001  FAFEN                                                                                                                                                            
+074002  FAFEN                                                                                                                                                            
+074003  FAFEN                                                                                                                                                            
+074004  FAFEN                                                                                                                                                            
+   042  FORTALEZA        3   EX                                                                                                                                              223.
+042001  FORTALEZA                                                                                                                                                        
+042002  FORTALEZA                                                                                                                                                        
+042003  FORTALEZA                                                                                                                                                        
+   053  GLOBAL I         3   EX                                                                                                                                                0.
+053001  GLOBAL I                                                                                                                                                                 
+053002  GLOBAL I                                                                                                                                                                 
+053003  GLOBAL I                                                                                                                                                                 
+053004  GLOBAL I                                                                                                                                                                 
+   055  GLOBAL II        3   EX                                                                                                                                                0.
+055001  GLOBAL II                                                                                                                                                                
+055002  GLOBAL II                                                                                                                                                                
+055003  GLOBAL II                                                                                                                                                                
+055004  GLOBAL II                                                                                                                                                                
+   127  IGUATU           3   EX                                                                                                                                                0.
+127001  IGUATU                                                                                                                                                           
+127002  IGUATU                                                                                                                                                           
+127003  IGUATU                                                                                                                                                           
+127004  IGUATU                                                                                                                                                           
+127005  IGUATU                                                                                                                                                           
+127006  IGUATU                                                                                                                                                           
+127007  IGUATU                                                                                                                                                           
+127008  IGUATU                                                                                                                                                           
+127009  IGUATU                                                                                                                                                           
+   133  JUAZEIRO N       3   EX                                                                                                                                                0.
+133001  JUAZEIRO N                                                                                                                                                       
+133002  JUAZEIRO N                                                                                                                                                       
+133003  JUAZEIRO N                                                                                                                                                       
+133004  JUAZEIRO N                                                                                                                                                       
+133005  JUAZEIRO N                                                                                                                                                       
+133006  JUAZEIRO N                                                                                                                                                       
+133007  JUAZEIRO N                                                                                                                                                       
+133008  JUAZEIRO N                                                                                                                                                       
+133009  JUAZEIRO N                                                                                                                                                       
+   057  MARACANAU I      3   EX                                                                                                                                                0.
+057001  MARACANAU I                                                                                                                                                              
+057002  MARACANAU I                                                                                                                                                              
+057003  MARACANAU I                                                                                                                                                              
+057004  MARACANAU I                                                                                                                                                              
+057005  MARACANAU I                                                                                                                                                              
+057006  MARACANAU I                                                                                                                                                              
+057007  MARACANAU I                                                                                                                                                              
+057008  MARACANAU I                                                                                                                                                              
+   135  MARAMBAIA        3   EX                                                                                                                                                0.
+135001  MARAMBAIA                                                                                                                                                        
+135002  MARAMBAIA                                                                                                                                                        
+135003  MARAMBAIA                                                                                                                                                        
+135004  MARAMBAIA                                                                                                                                                        
+135005  MARAMBAIA                                                                                                                                                        
+135006  MARAMBAIA                                                                                                                                                        
+135007  MARAMBAIA                                                                                                                                                        
+135008  MARAMBAIA                                                                                                                                                        
+   164  MURICY           3   EX                                                                                                                                                0.
+164001  MURICY                                                                                                                                                           
+164002  MURICY                                                                                                                                                           
+164003  MURICY                                                                                                                                                           
+164004  MURICY                                                                                                                                                           
+164005  MURICY                                                                                                                                                           
+164006  MURICY                                                                                                                                                           
+164007  MURICY                                                                                                                                                           
+164008  MURICY                                                                                                                                                           
+   138  NAZARIA          3   EX                                                                                                                                                0.
+138001  NAZARIA                                                                                                                                                          
+138002  NAZARIA                                                                                                                                                          
+138003  NAZARIA                                                                                                                                                          
+138004  NAZARIA                                                                                                                                                          
+138005  NAZARIA                                                                                                                                                          
+138006  NAZARIA                                                                                                                                                          
+138007  NAZARIA                                                                                                                                                          
+138008  NAZARIA                                                                                                                                                          
+   167  P. PECEM I       3   EX                                                                                                                                                0.
+167001  P. PECEM I                                                                                                                                                               
+167002  P. PECEM I                                                                                                                                                               
+   163  P. PECEM II      3   EX                                                                                                                                                0.
+163001  P. PECEM II                                                                                                                                                      
+   224  P. SERGIPE I     3   NE                                                                                                                                                0.
+224001  P. SERGIPE I                                                                                                                                                     
+224002  P. SERGIPE I                                                                                                                                                     
+224003  P. SERGIPE I                                                                                                                                                     
+224004  P. SERGIPE I                                                                                                                                                     
+   160  PAU FERRO I      3   EX                                                                                                                                                0.
+160001  PAU FERRO I                                                                                                                                                      
+   098  PERNAMBU_III     3   EX                                                                                                                                                0.
+098001  PERNAMBU_III                                                                                                                                                     
+098002  PERNAMBU_III                                                                                                                                                     
+098003  PERNAMBU_III                                                                                                                                                     
+098004  PERNAMBU_III                                                                                                                                                     
+   144  PETROLINA        3   EX                                                                                                                                                0.
+144001  PETROLINA                                                                                                                                                        
+144002  PETROLINA                                                                                                                                                        
+144003  PETROLINA                                                                                                                                                        
+144004  PETROLINA                                                                                                                                                        
+144005  PETROLINA                                                                                                                                                        
+144006  PETROLINA                                                                                                                                                        
+144007  PETROLINA                                                                                                                                                        
+144008  PETROLINA                                                                                                                                                        
+   151  POTIGUAR         3   EX                                                                                                                                                0.
+151001  POTIGUAR                                                                                                                                                         
+151002  POTIGUAR                                                                                                                                                         
+151003  POTIGUAR                                                                                                                                                         
+151004  POTIGUAR                                                                                                                                                         
+   161  POTIGUAR III     3   EX                                                                                                                                                0.
+161001  POTIGUAR III                                                                                                                                                     
+161002  POTIGUAR III                                                                                                                                                     
+161003  POTIGUAR III                                                                                                                                                     
+161004  POTIGUAR III                                                                                                                                                     
+161005  POTIGUAR III                                                                                                                                                     
+161006  POTIGUAR III                                                                                                                                                     
+   147  PROSPERIDADE     3   NE                                                                                                                                                0.
+147001  PROSPERIDADE                                                                                                                                                     
+147002  PROSPERIDADE                                                                                                                                                     
+147003  PROSPERIDADE                                                                                                                                                     
+   170  SUAPE II         3   EX                                                                                                                                                0.
+170001  SUAPE II                                                                                                                                                         
+170002  SUAPE II                                                                                                                                                         
+170003  SUAPE II                                                                                                                                                         
+170004  SUAPE II                                                                                                                                                         
+170005  SUAPE II                                                                                                                                                         
+170006  SUAPE II                                                                                                                                                         
+170007  SUAPE II                                                                                                                                                         
+170008  SUAPE II                                                                                                                                                         
+170009  SUAPE II                                                                                                                                                         
+170010  SUAPE II                                                                                                                                                         
+170011  SUAPE II                                                                                                                                                         
+170012  SUAPE II                                                                                                                                                         
+170013  SUAPE II                                                                                                                                                         
+170014  SUAPE II                                                                                                                                                         
+170015  SUAPE II                                                                                                                                                         
+170016  SUAPE II                                                                                                                                                         
+170017  SUAPE II                                                                                                                                                         
+   221  SYKUE I          3   EX                                                                                                                                                0.
+221001  SYKUE I                                                                                                                                                          
+   043  TERMOBAHIA       3   EX                                                                                                                                                0.
+043001  TERMOBAHIA                                                                                                                                                       
+   152  TERMOCABO        3   EX                                                                                                                                                0.
+152001  TERMOCABO                                                                                                                                                        
+152002  TERMOCABO                                                                                                                                                        
+152003  TERMOCABO                                                                                                                                                        
+   058  TERMOCEARA       3   EX                                                                                                                                                0.
+058001  TERMOCEARA                                                                                                                                                       
+058002  TERMOCEARA                                                                                                                                                       
+058003  TERMOCEARA                                                                                                                                                       
+058004  TERMOCEARA                                                                                                                                                       
+   159  TERMOMANAUS      3   EX                                                                                                                                                0.
+159001  TERMOMANAUS                                                                                                                                                      
+   067  TERMONE          3   EX                                                                                                                                                0.
+067001  TERMONE                                                                                                                                                          
+   069  TERMOPB          3   EX                                                                                                                                                0.
+069001  TERMOPB                                                                                                                                                                  
+069002  TERMOPB                                                                                                                                                                  
+069003  TERMOPB                                                                                                                                                                  
+   096  TERMOPE          3   EX                                                                                                                                             348.8
+096001  TERMOPE                                                                                                                                                          
+096002  TERMOPE                                                                                                                                                          
+096003  TERMOPE                                                                                                                                                          
+   083  VALE DO ACU      3   EX                                                                                                                                                0.
+083001  VALE DO ACU                                                                                                                                                      
+083002  VALE DO ACU                                                                                                                                                      
+   201  APARECIDA        4   EX                                                                                                                                              150.
+201001  APARECIDA                                                                                                                                                                
+201002  APARECIDA                                                                                                                                                                
+201003  APARECIDA                                                                                                                                                                
+201004  APARECIDA                                                                                                                                                                
+   203  C. ROCHA         4   EX                                                                                                                                               67.
+203001  C. ROCHA                                                                                                                                                                 
+203002  C. ROCHA                                                                                                                                                                 
+203003  C. ROCHA                                                                                                                                                                 
+203004  C. ROCHA                                                                                                                                                                 
+203005  C. ROCHA                                                                                                                                                                 
+   318  FLORES LT1       4   EX                                                                                                                                                0.
+318001  FLORES LT1                                                                                                                                                               
+318002  FLORES LT1                                                                                                                                                               
+   319  FLORES LT2       4   EX                                                                                                                                                0.
+319001  FLORES LT2                                                                                                                                                               
+319002  FLORES LT2                                                                                                                                                               
+   073  GERAMAR I        4   EX                                                                                                                                                0.
+073001  GERAMAR I                                                                                                                                                                
+073002  GERAMAR I                                                                                                                                                                
+073003  GERAMAR I                                                                                                                                                                
+073004  GERAMAR I                                                                                                                                                                
+   070  GERAMAR II       4   EX                                                                                                                                                0.
+070001  GERAMAR II                                                                                                                                                               
+070002  GERAMAR II                                                                                                                                                               
+070003  GERAMAR II                                                                                                                                                               
+070004  GERAMAR II                                                                                                                                                               
+   317  IRANDUBA         4   EX                                                                                                                                                0.
+317001  IRANDUBA                                                                                                                                                                 
+   204  JARAQUI          4   EX                                                                                                                                               63.
+204001  JARAQUI                                                                                                                                                          
+204002  JARAQUI                                                                                                                                                          
+   205  MANAUARA         4   EX                                                                                                                                              64.5
+205001  MANAUARA                                                                                                                                                                 
+205002  MANAUARA                                                                                                                                                                 
+205003  MANAUARA                                                                                                                                                                 
+205004  MANAUARA                                                                                                                                                                 
+   212  MARANHAO III     4   EX                                                                                                                                            483.37
+212001  MARANHAO III                                                                                                                                                             
+212002  MARANHAO III                                                                                                                                                             
+212003  MARANHAO III                                                                                                                                                             
+   036  MARANHAO IV      4   EX                                                                                                                                                0.
+036001  MARANHAO IV                                                                                                                                                      
+036002  MARANHAO IV                                                                                                                                                      
+   021  MARANHAO V       4   EX                                                                                                                                                0.
+021001  MARANHAO V                                                                                                                                                       
+021002  MARANHAO V                                                                                                                                                       
+   140  MAUA 3           4   EE                                                                                                                                              264.
+140001  MAUA 3                                                                                                                                                                   
+140002  MAUA 3                                                                                                                                                                   
+140003  MAUA 3                                                                                                                                                                   
+   206  MAUA B3          4   EX                                                                                                                                              100.
+206001  MAUA B3                                                                                                                                                                  
+206002  MAUA B3                                                                                                                                                                  
+   141  MAUA B4          4   EX                                                                                                                                                0.
+141001  MAUA B4                                                                                                                                                                  
+141002  MAUA B4                                                                                                                                                                  
+141003  MAUA B4                                                                                                                                                                  
+141004  MAUA B4                                                                                                                                                                  
+141005  MAUA B4                                                                                                                                                                  
+141006  MAUA B4                                                                                                                                                                  
+141007  MAUA B4                                                                                                                                                                  
+141008  MAUA B4                                                                                                                                                                  
+141009  MAUA B4                                                                                                                                                                  
+141010  MAUA B4                                                                                                                                                                  
+   046  N.VENECIA 2      4   EX                                                                                                                                                0.
+046001  N.VENECIA 2                                                                                                                                                      
+046002  N.VENECIA 2                                                                                                                                                      
+   228  O. CANOAS 1      4   NE                                                                                                                                              2.25
+228001  O. CANOAS 1                                                                                                                                                              
+228002  O. CANOAS 1                                                                                                                                                              
+228003  O. CANOAS 1                                                                                                                                                              
+228004  O. CANOAS 1                                                                                                                                                              
+   116  PARNAIBA IV      4   EX                                                                                                                                                0.
+116001  PARNAIBA IV                                                                                                                                                              
+116002  PARNAIBA IV                                                                                                                                                              
+116003  PARNAIBA IV                                                                                                                                                              
+   207  PONTA NEGRA      4   EX                                                                                                                                               64.
+207001  PONTA NEGRA                                                                                                                                                              
+207002  PONTA NEGRA                                                                                                                                                              
+207003  PONTA NEGRA                                                                                                                                                              
+207004  PONTA NEGRA                                                                                                                                                              
+   176  PORTO ITAQUI     4   EX                                                                                                                                                0.
+176001  PORTO ITAQUI                                                                                                                                                             
+   094  SANTANA LM       4   EX                                                                                                                                                0.
+094001  SANTANA LM                                                                                                                                                               
+094002  SANTANA LM                                                                                                                                                               
+094003  SANTANA LM                                                                                                                                                               
+   208  SANTANA W        4   EX                                                                                                                                                0.
+208001  SANTANA W                                                                                                                                                                
+208002  SANTANA W                                                                                                                                                                
+208003  SANTANA W                                                                                                                                                                
+208004  SANTANA W                                                                                                                                                                
+   136  SUZANO MA        4   EX                                                                                                                                            254.84
+136001  SUZANO MA                                                                                                                                                                
+136002  SUZANO MA                                                                                                                                                                
+   209  TAMBAQUI         4   EX                                                                                                                                               63.
+209001  TAMBAQUI                                                                                                                                                         
+209002  TAMBAQUI                                                                                                                                                         
+209003  TAMBAQUI                                                                                                                                                        
+999999                                                                                                                                                                   

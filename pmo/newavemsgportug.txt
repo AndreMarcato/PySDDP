@@ -1,0 +1,3 @@
+0                  Execucao do Modelo Terminou Normalmente
+1                  O Modelo comecou a execucao
+2000               Erro forcou o modelo a terminar
