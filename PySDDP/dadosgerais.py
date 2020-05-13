@@ -1,5 +1,5 @@
 import re
-import mixins.readfile as rf
+import PySDDP.mixins as rf
 
 
 class dadosgerais(object):

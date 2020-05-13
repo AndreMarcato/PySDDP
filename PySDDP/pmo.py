@@ -7,7 +7,7 @@ from PySDDP.resequiv import resequiv
 from PySDDP.submercado import submercado as subsist
 from PySDDP.interc import interc
 import numpy as np
-import mixins.readfile as rf
+import PySDDP.mixins as rf
 import re
 
 
