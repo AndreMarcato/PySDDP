@@ -5,11 +5,25 @@ Python package applied to the planning of the operation of energy systems in the
 USAGE
 ###################
 
-from PySDDP.<class> import <class>
+from PySDDP import sistema
 
 EXAMPLE
 ###################
 
-from PySDDP.pmo import pmo
+from PySDDP import sistema
 
-q = pmo('/')
+q = sistema.PySDDP('pmo/')
+
+Classroom
+###################
+from PySDDP import sistema
+
+q = sistema.Classroom()
+
+q.sistema["DGer"]["Nr_Disc"] = 41
+
+resultado_pdd41 = q.pdd(0, imprime=False)
+
+resultado_plu = q.pl_unico(0, imprime=False)
+
+resultado_pddd = q.pddd(0, imprime=False)

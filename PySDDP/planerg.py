@@ -1,5 +1,5 @@
 import os
-from PySDDP.mddh import mddh
+from PySDDP.sistema import PySDDP
 
 if __name__ == '__main__':
-    sistema = mddh(os.path.join(os.getcwd(), 'pmo/'))
+    sistema = PySDDP(os.path.join(os.getcwd(), 'pmo/'))

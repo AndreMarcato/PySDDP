@@ -1,4 +1,5 @@
 import re
+import mixins.readfile as rf
 
 
 class dadosgerais(object):
@@ -22,8 +23,7 @@ class dadosgerais(object):
 
     def __init__(self, diretorio):
         # Le parâmetros de configuração do deck de entrada do NEWAVE
-        file_name = diretorio + 'DGER.DAT'
-        file = open(file_name, "r")
+        file = rf.read_file(diretorio, 'DGER.DAT')
         arquivo = file.readlines()
         file.close()
         self.NAnosEstudo = int(re.findall("\d+[.]\d+|\d+", arquivo[3])[0])

@@ -7,6 +7,7 @@ from PySDDP.resequiv import resequiv
 from PySDDP.submercado import submercado as subsist
 from PySDDP.interc import interc
 import numpy as np
+import mixins.readfile as rf
 import re
 
 
@@ -61,8 +62,7 @@ class pmo(object):
     def le_caso(self):
 
         # Le nome de arquivo com lista de arquivos de entrada
-        file_name = self.diretorio + 'CASO.DAT'
-        file = open(file_name, "r")
+        file = rf.read_file(self.diretorio, 'CASO.DAT')
         arquivo = file.readlines()
         file.close()
         self.nome_arquivo = arquivo[0][0:len(arquivo[0]) - 1]
@@ -115,8 +115,7 @@ class pmo(object):
 
     def le_hidr(self, cadastro):
 
-        file_name = self.diretorio + self.nome_hidr
-        file = open(file_name, "rb")
+        file = rf.read_file(self.diretorio, self.nome_hidr, 'rb')
         nreg = 320
 
         i = 0
@@ -190,13 +189,11 @@ class pmo(object):
 
     def le_confh(self, conf, cadastro, nanos):
 
-        file_name = self.diretorio + self.nome_confhd
-        file = open(file_name, "r")
+        file = rf.read_file(self.diretorio, self.nome_confhd)
         arquivo = file.readlines()
         file.close()
 
-        vazoes_name = self.diretorio + self.nome_vazoes
-        file_vazoes = open(vazoes_name, 'rb')
+        file_vazoes = rf.read_file(self.diretorio, self.nome_vazoes, mode='rb')
         vazoes = np.fromfile(file_vazoes, dtype=np.int32)
         file_vazoes.close()
         # A principio o numero de anos seria ano corrente - 2, mas
