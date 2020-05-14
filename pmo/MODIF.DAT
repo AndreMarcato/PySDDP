@@ -1,0 +1,1252 @@
+ P.CHAVE  MODIFICACOES E INDICES
+ XXXXXXXX XXXXXXXXXXXXXXXXXXXXX
+ USINA    1                                 CAMARGOS            
+ VAZMIN       34
+ VMAXT     1 2018  46.430 '%'
+ VMAXT     2 2018  70.240 '%'
+ VMAXT     3 2018  94.050 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  53.870 '%'
+ VMAXT    12 2018  44.940 '%'
+ VMAXT     2 2019  49.400 '%'
+ VMAXT     3 2019  77.680 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  53.870 '%'
+ VMAXT    12 2019  44.940 '%'
+ VMAXT     2 2020  49.400 '%'
+ VMAXT     3 2020  77.680 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  53.870 '%'
+ VMAXT    12 2020  44.940 '%'
+ VMAXT     2 2021  49.400 '%'
+ VMAXT     3 2021  77.680 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  53.870 '%'
+ VMAXT    12 2021  44.940 '%'
+ VMAXT     2 2022  49.400 '%'
+ VMAXT     3 2022  77.680 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  53.870 '%'
+ VMAXT    12 2022  44.940 '%'
+ USINA    2                                 ITUTINGA            
+ VAZMIN       34
+ USINA    6                                 FURNAS              
+ VAZMIN      131
+ VMAXT     1 2018  96.320 '%'
+ VMAXT     2 2018  97.480 '%'
+ VMAXT     3 2018  98.960 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  97.100 '%'
+ VMAXT    12 2018  93.130 '%'
+ VMAXT     1 2019  95.240 '%'
+ VMAXT     2 2019  97.070 '%'
+ VMAXT     3 2019  98.760 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  97.100 '%'
+ VMAXT    12 2019  93.130 '%'
+ VMAXT     1 2020  95.240 '%'
+ VMAXT     2 2020  97.070 '%'
+ VMAXT     3 2020  98.760 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  97.100 '%'
+ VMAXT    12 2020  93.130 '%'
+ VMAXT     1 2021  95.240 '%'
+ VMAXT     2 2021  97.070 '%'
+ VMAXT     3 2021  98.760 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  97.100 '%'
+ VMAXT    12 2021  93.130 '%'
+ VMAXT     1 2022  95.240 '%'
+ VMAXT     2 2022  97.070 '%'
+ VMAXT     3 2022  98.760 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  97.100 '%'
+ VMAXT    12 2022  93.130 '%'
+ USINA    7                                 M. DE MORAES        
+ VAZMIN      149
+ VMAXT     1 2018  80.000 '%'
+ VMINT     1 2018  13.230 '%'
+ VMAXT     2 2018  80.600 '%'
+ VMAXT     3 2018  92.000 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  80.000 '%'
+ VMAXT     3 2019  90.400 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  80.000 '%'
+ VMAXT     3 2020  90.400 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  80.000 '%'
+ VMAXT     3 2021  90.400 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  80.000 '%'
+ VMAXT     3 2022  90.400 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  80.000 '%'
+ USINA    8                                 ESTREITO            
+ VAZMIN      153
+ USINA    9                                 JAGUARA             
+ VAZMIN      168
+ USINA    10                                IGARAPAVA           
+ VAZMIN      172
+ USINA    11                                VOLTA GRANDE        
+ VAZMIN      178
+ USINA    12                                P. COLOMBIA         
+ VAZMIN      189
+ USINA    14                                CACONDE             
+ VAZMIN       32
+ VMAXT     1 2018  94.050 '%'
+ VMAXT     2 2018  96.030 '%'
+ VMAXT     3 2018  98.020 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  98.020 '%'
+ VMAXT    12 2018  92.060 '%'
+ VMAXT     1 2019  94.050 '%'
+ VMAXT     2 2019  96.030 '%'
+ VMAXT     3 2019  98.020 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  98.020 '%'
+ VMAXT    12 2019  92.060 '%'
+ VMAXT     1 2020  94.050 '%'
+ VMAXT     2 2020  96.030 '%'
+ VMAXT     3 2020  98.020 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  98.020 '%'
+ VMAXT    12 2020  92.060 '%'
+ VMAXT     1 2021  94.050 '%'
+ VMAXT     2 2021  96.030 '%'
+ VMAXT     3 2021  98.020 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  98.020 '%'
+ VMAXT    12 2021  92.060 '%'
+ VMAXT     1 2022  94.050 '%'
+ VMAXT     2 2022  96.030 '%'
+ VMAXT     3 2022  98.020 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  98.020 '%'
+ VMAXT    12 2022  92.060 '%'
+ USINA    16                                A.S.OLIVEIRA        
+ VAZMIN       19
+ USINA    17                                MARIMBONDO          
+ VAZMINT   1 2018  330.00 
+ VAZMINT   3 2018  312.00 
+ VAZMINT  11 2018  330.00 
+ VAZMINT   3 2019  312.00 
+ VAZMINT  11 2019  330.00 
+ VAZMINT   3 2020  312.00 
+ VAZMINT  11 2020  330.00 
+ VAZMINT   3 2021  312.00 
+ VAZMINT  11 2021  330.00 
+ VAZMINT   3 2022  312.00 
+ VAZMINT  11 2022  330.00 
+ VMAXT     1 2018  71.250 '%'
+ VMAXT     2 2018  78.750 '%'
+ VMAXT     3 2018  88.310 '%'
+ VMAXT     4 2018  95.000 '%'
+ VMAXT    11 2018  76.330 '%'
+ VMAXT    12 2018  58.750 '%'
+ VMAXT     1 2019  64.470 '%'
+ VMAXT     2 2019  76.080 '%'
+ VMAXT     3 2019  86.980 '%'
+ VMAXT     4 2019  95.000 '%'
+ VMAXT    11 2019  76.330 '%'
+ VMAXT    12 2019  58.750 '%'
+ VMAXT     1 2020  64.470 '%'
+ VMAXT     2 2020  76.080 '%'
+ VMAXT     3 2020  86.980 '%'
+ VMAXT     4 2020  95.000 '%'
+ VMAXT    11 2020  76.330 '%'
+ VMAXT    12 2020  58.750 '%'
+ VMAXT     1 2021  64.470 '%'
+ VMAXT     2 2021  76.080 '%'
+ VMAXT     3 2021  86.980 '%'
+ VMAXT     4 2021  95.000 '%'
+ VMAXT    11 2021  76.330 '%'
+ VMAXT    12 2021  58.750 '%'
+ VMAXT     1 2022  64.470 '%'
+ VMAXT     2 2022  76.080 '%'
+ VMAXT     3 2022  86.980 '%'
+ VMAXT     4 2022  95.000 '%'
+ VMAXT    11 2022  76.330 '%'
+ VMAXT    12 2022  58.750 '%'
+ USINA    18                                A. VERMELHA         
+ VMAXT     1 2018  72.740 '%'
+ VMAXT     2 2018  81.370 '%'
+ VMAXT     3 2018  92.320 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  78.600 '%'
+ VMAXT    12 2018  57.460 '%'
+ VMAXT     1 2019  65.160 '%'
+ VMAXT     2 2019  78.330 '%'
+ VMAXT     3 2019  90.790 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  78.600 '%'
+ VMAXT    12 2019  57.460 '%'
+ VMAXT     1 2020  65.160 '%'
+ VMAXT     2 2020  78.330 '%'
+ VMAXT     3 2020  90.790 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  78.600 '%'
+ VMAXT    12 2020  57.460 '%'
+ VMAXT     1 2021  65.160 '%'
+ VMAXT     2 2021  78.330 '%'
+ VMAXT     3 2021  90.790 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  78.600 '%'
+ VMAXT    12 2021  57.460 '%'
+ VMAXT     1 2022  65.160 '%'
+ VMAXT     2 2022  78.330 '%'
+ VMAXT     3 2022  90.790 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  78.600 '%'
+ VMAXT    12 2022  57.460 '%'
+ USINA    24                                EMBORCACAO          
+ VAZMIN      100
+ VMAXT     1 2018  97.350 '%'
+ VMAXT     2 2018  98.180 '%'
+ VMAXT     3 2018  99.260 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  97.920 '%'
+ VMAXT    12 2018  95.070 '%'
+ VMAXT     1 2019  95.760 '%'
+ VMAXT     2 2019  97.890 '%'
+ VMAXT     3 2019  99.100 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  97.920 '%'
+ VMAXT    12 2019  95.070 '%'
+ VMAXT     1 2020  95.760 '%'
+ VMAXT     2 2020  97.890 '%'
+ VMAXT     3 2020  99.100 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  97.920 '%'
+ VMAXT    12 2020  95.070 '%'
+ VMAXT     1 2021  95.760 '%'
+ VMAXT     2 2021  97.890 '%'
+ VMAXT     3 2021  99.100 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  97.920 '%'
+ VMAXT    12 2021  95.070 '%'
+ VMAXT     1 2022  95.760 '%'
+ VMAXT     2 2022  97.890 '%'
+ VMAXT     3 2022  99.100 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  97.920 '%'
+ VMAXT    12 2022  95.070 '%'
+ USINA    25                                NOVA PONTE          
+ VAZMINT   1 2018  110.00 
+ VAZMINT   4 2018   26.80 
+ VAZMINT  11 2018  110.00 
+ VAZMINT   4 2019   26.80 
+ VAZMINT  11 2019  110.00 
+ VAZMINT   4 2020   26.80 
+ VAZMINT  11 2020  110.00 
+ VAZMINT   4 2021   26.80 
+ VAZMINT  11 2021  110.00 
+ VAZMINT   4 2022   26.80 
+ VAZMINT  11 2022  110.00 
+ VMAXT     1 2018  98.030 '%'
+ VMAXT     2 2018  98.640 '%'
+ VMAXT     3 2018  99.440 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  98.440 '%'
+ VMAXT    12 2018  96.060 '%'
+ VMAXT     1 2019  96.540 '%'
+ VMAXT     2 2019  98.420 '%'
+ VMAXT     3 2019  99.340 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  98.440 '%'
+ VMAXT    12 2019  96.060 '%'
+ VMAXT     1 2020  96.540 '%'
+ VMAXT     2 2020  98.420 '%'
+ VMAXT     3 2020  99.340 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  98.440 '%'
+ VMAXT    12 2020  96.060 '%'
+ VMAXT     1 2021  96.540 '%'
+ VMAXT     2 2021  98.420 '%'
+ VMAXT     3 2021  99.340 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  98.440 '%'
+ VMAXT    12 2021  96.060 '%'
+ VMAXT     1 2022  96.540 '%'
+ VMAXT     2 2022  98.420 '%'
+ VMAXT     3 2022  99.340 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  98.440 '%'
+ VMAXT    12 2022  96.060 '%'
+ USINA    26                                MIRANDA             
+ VAZMIN       64
+ USINA    30                                CORUMBA I           
+ VAZMIN      120
+ USINA    31                                ITUMBIARA           
+ VAZMIN       70
+ VMAXT     1 2018  91.260 '%'
+ VMAXT     2 2018  94.020 '%'
+ VMAXT     3 2018  97.530 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  93.130 '%'
+ VMAXT    12 2018  86.030 '%'
+ VMAXT     1 2019  88.130 '%'
+ VMAXT     2 2019  93.040 '%'
+ VMAXT     3 2019  97.050 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  93.130 '%'
+ VMAXT    12 2019  86.030 '%'
+ VMAXT     1 2020  88.130 '%'
+ VMAXT     2 2020  93.040 '%'
+ VMAXT     3 2020  97.050 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  93.130 '%'
+ VMAXT    12 2020  86.030 '%'
+ VMAXT     1 2021  88.130 '%'
+ VMAXT     2 2021  93.040 '%'
+ VMAXT     3 2021  97.050 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  93.130 '%'
+ VMAXT    12 2021  86.030 '%'
+ VMAXT     1 2022  88.130 '%'
+ VMAXT     2 2022  93.040 '%'
+ VMAXT     3 2022  97.050 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  93.130 '%'
+ VMAXT    12 2022  86.030 '%'
+ USINA    32                                CACH.DOURADA        
+ VAZMIN       20
+ USINA    33                                SAO SIMAO           
+ VMAXT     1 2018  70.110 '%'
+ VMAXT     2 2018  79.530 '%'
+ VMAXT     3 2018  91.570 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  76.500 '%'
+ VMAXT    12 2018  53.340 '%'
+ VMAXT     1 2019  61.840 '%'
+ VMAXT     2 2019  76.210 '%'
+ VMAXT     3 2019  89.890 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  76.500 '%'
+ VMAXT    12 2019  53.340 '%'
+ VMAXT     1 2020  61.840 '%'
+ VMAXT     2 2020  76.210 '%'
+ VMAXT     3 2020  89.890 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  76.500 '%'
+ VMAXT    12 2020  53.340 '%'
+ VMAXT     1 2021  61.840 '%'
+ VMAXT     2 2021  76.210 '%'
+ VMAXT     3 2021  89.890 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  76.500 '%'
+ VMAXT    12 2021  53.340 '%'
+ VMAXT     1 2022  61.840 '%'
+ VMAXT     2 2022  76.210 '%'
+ VMAXT     3 2022  89.890 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  76.500 '%'
+ VMAXT    12 2022  53.340 '%'
+ USINA    37                                BARRA BONITA        
+ VMAXT     1 2018  89.050 '%'
+ VMINT     1 2018  48.290 '%'
+ VMAXT     2 2018  92.520 '%'
+ VMAXT     3 2018  95.710 '%'
+ VMAXT     5 2018  96.490 '%'
+ VMAXT     6 2018 100.000 '%'
+ VMAXT    11 2018  91.310 '%'
+ VMAXT    12 2018  75.060 '%'
+ VMAXT     1 2019  77.400 '%'
+ VMAXT     2 2019  81.680 '%'
+ VMAXT     3 2019  89.870 '%'
+ VMAXT     4 2019  95.710 '%'
+ VMAXT     6 2019 100.000 '%'
+ VMAXT    11 2019  91.310 '%'
+ VMAXT    12 2019  75.060 '%'
+ VMAXT     1 2020  77.400 '%'
+ VMAXT     2 2020  81.680 '%'
+ VMAXT     3 2020  89.870 '%'
+ VMAXT     4 2020  95.710 '%'
+ VMAXT     6 2020 100.000 '%'
+ VMAXT    11 2020  91.310 '%'
+ VMAXT    12 2020  75.060 '%'
+ VMAXT     1 2021  77.400 '%'
+ VMAXT     2 2021  81.680 '%'
+ VMAXT     3 2021  89.870 '%'
+ VMAXT     4 2021  95.710 '%'
+ VMAXT     6 2021 100.000 '%'
+ VMAXT    11 2021  91.310 '%'
+ VMAXT    12 2021  75.060 '%'
+ VMAXT     1 2022  77.400 '%'
+ VMAXT     2 2022  81.680 '%'
+ VMAXT     3 2022  89.870 '%'
+ VMAXT     4 2022  95.710 '%'
+ VMAXT     6 2022 100.000 '%'
+ VMAXT    11 2022  91.310 '%'
+ VMAXT    12 2022  75.060 '%'
+ USINA    40                                PROMISSAO           
+ VAZMIN      160
+ VMAXT     1 2018  78.100 '%'
+ VMINT     1 2018  28.950 '%'
+ VMAXT     2 2018  85.670 '%'
+ VMAXT     3 2018  94.130 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  83.550 '%'
+ VMAXT    12 2018  28.950 '%'
+ VMAXT     1 2019  72.980 '%'
+ VMAXT     2 2019  83.360 '%'
+ VMAXT     3 2019  92.900 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  83.550 '%'
+ VMAXT    12 2019  28.950 '%'
+ VMAXT     1 2020  72.980 '%'
+ VMAXT     2 2020  83.360 '%'
+ VMAXT     3 2020  92.900 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  83.550 '%'
+ VMAXT    12 2020  28.950 '%'
+ VMAXT     1 2021  72.980 '%'
+ VMAXT     2 2021  83.360 '%'
+ VMAXT     3 2021  92.900 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  83.550 '%'
+ VMAXT    12 2021  28.950 '%'
+ VMAXT     1 2022  72.980 '%'
+ VMAXT     2 2022  83.360 '%'
+ VMAXT     3 2022  92.900 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  83.550 '%'
+ VMAXT    12 2022  28.950 '%'
+ USINA    45                                JUPIA               
+ VAZMINT   1 2018 3700.00 
+ VAZMINT   3 2018 4000.00 
+ USINA    46                                P. PRIMAVERA        
+ VAZMINT   1 2018 4300.00 
+ VAZMINT   3 2018 4600.00 
+ USINA    49                                CHAVANTES           
+ VMAXT     1 2018  86.530 '%'
+ VMAXT     2 2018  96.680 '%'
+ VMAXT     3 2018  96.720 '%'
+ VMAXT     4 2018  92.570 '%'
+ VMAXT     5 2018  89.820 '%'
+ VMAXT     6 2018  94.350 '%'
+ VMAXT     7 2018  96.620 '%'
+ VMAXT     8 2018  97.900 '%'
+ VMAXT     9 2018  89.850 '%'
+ VMAXT    10 2018  96.950 '%'
+ VMAXT    11 2018  87.050 '%'
+ VMAXT    12 2018  76.980 '%'
+ VMAXT     1 2019  78.480 '%'
+ VMAXT     2 2019  96.680 '%'
+ VMAXT     3 2019  96.720 '%'
+ VMAXT     4 2019  92.570 '%'
+ VMAXT     5 2019  89.820 '%'
+ VMAXT     6 2019  94.350 '%'
+ VMAXT     7 2019  96.620 '%'
+ VMAXT     8 2019  97.900 '%'
+ VMAXT     9 2019  89.850 '%'
+ VMAXT    10 2019  96.950 '%'
+ VMAXT    11 2019  87.050 '%'
+ VMAXT    12 2019  76.980 '%'
+ VMAXT     1 2020  78.480 '%'
+ VMAXT     2 2020  96.680 '%'
+ VMAXT     3 2020  96.720 '%'
+ VMAXT     4 2020  92.570 '%'
+ VMAXT     5 2020  89.820 '%'
+ VMAXT     6 2020  94.350 '%'
+ VMAXT     7 2020  96.620 '%'
+ VMAXT     8 2020  97.900 '%'
+ VMAXT     9 2020  89.850 '%'
+ VMAXT    10 2020  96.950 '%'
+ VMAXT    11 2020  87.050 '%'
+ VMAXT    12 2020  76.980 '%'
+ VMAXT     1 2021  78.480 '%'
+ VMAXT     2 2021  96.680 '%'
+ VMAXT     3 2021  96.720 '%'
+ VMAXT     4 2021  92.570 '%'
+ VMAXT     5 2021  89.820 '%'
+ VMAXT     6 2021  94.350 '%'
+ VMAXT     7 2021  96.620 '%'
+ VMAXT     8 2021  97.900 '%'
+ VMAXT     9 2021  89.850 '%'
+ VMAXT    10 2021  96.950 '%'
+ VMAXT    11 2021  87.050 '%'
+ VMAXT    12 2021  76.980 '%'
+ VMAXT     1 2022  78.480 '%'
+ VMAXT     2 2022  96.680 '%'
+ VMAXT     3 2022  96.720 '%'
+ VMAXT     4 2022  92.570 '%'
+ VMAXT     5 2022  89.820 '%'
+ VMAXT     6 2022  94.350 '%'
+ VMAXT     7 2022  96.620 '%'
+ VMAXT     8 2022  97.900 '%'
+ VMAXT     9 2022  89.850 '%'
+ VMAXT    10 2022  96.950 '%'
+ VMAXT    11 2022  87.050 '%'
+ VMAXT    12 2022  76.980 '%'
+ USINA    61                                CAPIVARA            
+ VMAXT     1 2018  83.400 '%'
+ VMAXT     2 2018  97.760 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    12 2018  83.400 '%'
+ VMAXT     2 2019 100.000 '%'
+ VMAXT    12 2019  83.400 '%'
+ VMAXT     2 2020 100.000 '%'
+ VMAXT    12 2020  83.400 '%'
+ VMAXT     2 2021 100.000 '%'
+ VMAXT    12 2021  83.400 '%'
+ VMAXT     2 2022 100.000 '%'
+ VMAXT    12 2022  83.400 '%'
+ USINA    77                                SLT.SANTIAGO        
+ VMAXT     5 2018  91.490 '%'
+ VMAXT     7 2018 100.000 '%'
+ VMAXT     5 2019  90.040 '%'
+ VMAXT     7 2019 100.000 '%'
+ VMAXT     5 2020  90.040 '%'
+ VMAXT     7 2020 100.000 '%'
+ VMAXT     5 2021  90.040 '%'
+ VMAXT     7 2021 100.000 '%'
+ VMAXT     5 2022  90.040 '%'
+ VMAXT     7 2022 100.000 '%'
+ USINA    78                                SALTO OSORIO        
+ VAZMIN      200
+ USINA    82                                SALTO CAXIAS        
+ VAZMIN      200
+ USINA    92                                ITA                 
+ VAZMIN      150
+ USINA    117                               GUARAPIRANGA        
+ VMAXT     1 2018  77.120 '%'
+ VMAXT     2 2018  85.720 '%'
+ VMAXT     3 2018  85.850 '%'
+ VMAXT     4 2018  92.760 '%'
+ VMAXT     7 2018  95.390 '%'
+ VMAXT    11 2018  94.560 '%'
+ VMAXT    12 2018  89.020 '%'
+ VMAXT     1 2019  77.120 '%'
+ VMAXT     2 2019  85.720 '%'
+ VMAXT     3 2019  85.850 '%'
+ VMAXT     4 2019  92.760 '%'
+ VMAXT     7 2019  95.390 '%'
+ VMAXT    11 2019  94.560 '%'
+ VMAXT    12 2019  89.020 '%'
+ VMAXT     1 2020  77.120 '%'
+ VMAXT     2 2020  85.720 '%'
+ VMAXT     3 2020  85.850 '%'
+ VMAXT     4 2020  92.760 '%'
+ VMAXT     7 2020  95.390 '%'
+ VMAXT    11 2020  94.560 '%'
+ VMAXT    12 2020  89.020 '%'
+ VMAXT     1 2021  77.120 '%'
+ VMAXT     2 2021  85.720 '%'
+ VMAXT     3 2021  85.850 '%'
+ VMAXT     4 2021  92.760 '%'
+ VMAXT     7 2021  95.390 '%'
+ VMAXT    11 2021  94.560 '%'
+ VMAXT    12 2021  89.020 '%'
+ VMAXT     1 2022  77.120 '%'
+ VMAXT     2 2022  85.720 '%'
+ VMAXT     3 2022  85.850 '%'
+ VMAXT     4 2022  92.760 '%'
+ VMAXT     7 2022  95.390 '%'
+ VMAXT    11 2022  94.560 '%'
+ VMAXT    12 2022  89.020 '%'
+ USINA    118                               BILLINGS            
+ VAZMIN        6
+ VMAXT     1 2018  80.990 '%'
+ VMAXT     2 2018  84.300 '%'
+ VMAXT     3 2018  87.150 '%'
+ VMAXT     4 2018  88.850 '%'
+ VMAXT     5 2018  89.960 '%'
+ VMAXT     6 2018  90.260 '%'
+ VMAXT     7 2018  91.670 '%'
+ VMAXT     8 2018  92.280 '%'
+ VMAXT     9 2018  91.370 '%'
+ VMAXT    10 2018  89.450 '%'
+ VMAXT    11 2018  87.950 '%'
+ VMAXT    12 2018  87.050 '%'
+ VMAXT     1 2019  80.990 '%'
+ VMAXT     2 2019  84.300 '%'
+ VMAXT     3 2019  87.150 '%'
+ VMAXT     4 2019  88.850 '%'
+ VMAXT     5 2019  89.960 '%'
+ VMAXT     6 2019  90.260 '%'
+ VMAXT     7 2019  91.670 '%'
+ VMAXT     8 2019  92.280 '%'
+ VMAXT     9 2019  91.370 '%'
+ VMAXT    10 2019  89.450 '%'
+ VMAXT    11 2019  87.950 '%'
+ VMAXT    12 2019  87.050 '%'
+ VMAXT     1 2020  80.990 '%'
+ VMAXT     2 2020  84.300 '%'
+ VMAXT     3 2020  87.150 '%'
+ VMAXT     4 2020  88.850 '%'
+ VMAXT     5 2020  89.960 '%'
+ VMAXT     6 2020  90.260 '%'
+ VMAXT     7 2020  91.670 '%'
+ VMAXT     8 2020  92.280 '%'
+ VMAXT     9 2020  91.370 '%'
+ VMAXT    10 2020  89.450 '%'
+ VMAXT    11 2020  87.950 '%'
+ VMAXT    12 2020  87.050 '%'
+ VMAXT     1 2021  80.990 '%'
+ VMAXT     2 2021  84.300 '%'
+ VMAXT     3 2021  87.150 '%'
+ VMAXT     4 2021  88.850 '%'
+ VMAXT     5 2021  89.960 '%'
+ VMAXT     6 2021  90.260 '%'
+ VMAXT     7 2021  91.670 '%'
+ VMAXT     8 2021  92.280 '%'
+ VMAXT     9 2021  91.370 '%'
+ VMAXT    10 2021  89.450 '%'
+ VMAXT    11 2021  87.950 '%'
+ VMAXT    12 2021  87.050 '%'
+ VMAXT     1 2022  80.990 '%'
+ VMAXT     2 2022  84.300 '%'
+ VMAXT     3 2022  87.150 '%'
+ VMAXT     4 2022  88.850 '%'
+ VMAXT     5 2022  89.960 '%'
+ VMAXT     6 2022  90.260 '%'
+ VMAXT     7 2022  91.670 '%'
+ VMAXT     8 2022  92.280 '%'
+ VMAXT     9 2022  91.370 '%'
+ VMAXT    10 2022  89.450 '%'
+ VMAXT    11 2022  87.950 '%'
+ VMAXT    12 2022  87.050 '%'
+ USINA    278                               MANSO               
+ VAZMIN       95
+ USINA    4                                 FUNIL-GRANDE        
+ VAZMIN       60
+ USINA    28                                CAPIM BRANC2        
+ VAZMIN       72
+ USINA    44                                I. SOLT. EQV        
+ VMAXT     1 2018  53.560 '%'
+ VMINT     1 2018  45.720 '%'
+ VMAXT     2 2018  68.890 '%'
+ VMAXT     3 2018  87.190 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  63.640 '%'
+ VMAXT    12 2018  45.830 '%'
+ VMAXT     2 2019  63.100 '%'
+ VMAXT     3 2019  84.630 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  63.640 '%'
+ VMAXT    12 2019  45.830 '%'
+ VMAXT     2 2020  63.100 '%'
+ VMAXT     3 2020  84.630 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  63.640 '%'
+ VMAXT    12 2020  45.830 '%'
+ VMAXT     2 2021  63.100 '%'
+ VMAXT     3 2021  84.630 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  63.640 '%'
+ VMAXT    12 2021  45.830 '%'
+ VMAXT     2 2022  63.100 '%'
+ VMAXT     3 2022  84.630 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  63.640 '%'
+ VMAXT    12 2022  45.830 '%'
+ USINA    73                                JORDAO              
+ VAZMIN       10
+ USINA    91                                MACHADINHO          
+ VAZMIN      120
+ USINA    27                                CAPIM BRANC1        
+ VAZMIN       72
+ USINA    47                                A.A. LAYDNER        
+ VAZMIN      147
+ VMAXT     1 2018  88.000 '%'
+ VMAXT     2 2018  92.110 '%'
+ VMAXT     3 2018  98.030 '%'
+ VMAXT     4 2018  93.970 '%'
+ VMAXT     5 2018  88.000 '%'
+ VMAXT     6 2018  94.380 '%'
+ VMAXT     7 2018  96.620 '%'
+ VMAXT     8 2018  98.030 '%'
+ VMAXT     9 2018  89.860 '%'
+ VMAXT    10 2018  96.940 '%'
+ VMAXT    11 2018  93.550 '%'
+ VMAXT    12 2018  89.360 '%'
+ VMAXT     1 2019  88.000 '%'
+ VMAXT     2 2019  92.110 '%'
+ VMAXT     3 2019  98.030 '%'
+ VMAXT     4 2019  93.970 '%'
+ VMAXT     5 2019  88.000 '%'
+ VMAXT     6 2019  94.380 '%'
+ VMAXT     7 2019  96.620 '%'
+ VMAXT     8 2019  98.030 '%'
+ VMAXT     9 2019  89.860 '%'
+ VMAXT    10 2019  96.940 '%'
+ VMAXT    11 2019  93.550 '%'
+ VMAXT    12 2019  89.360 '%'
+ VMAXT     1 2020  88.000 '%'
+ VMAXT     2 2020  92.110 '%'
+ VMAXT     3 2020  98.030 '%'
+ VMAXT     4 2020  93.970 '%'
+ VMAXT     5 2020  88.000 '%'
+ VMAXT     6 2020  94.380 '%'
+ VMAXT     7 2020  96.620 '%'
+ VMAXT     8 2020  98.030 '%'
+ VMAXT     9 2020  89.860 '%'
+ VMAXT    10 2020  96.940 '%'
+ VMAXT    11 2020  93.550 '%'
+ VMAXT    12 2020  89.360 '%'
+ VMAXT     1 2021  88.000 '%'
+ VMAXT     2 2021  92.110 '%'
+ VMAXT     3 2021  98.030 '%'
+ VMAXT     4 2021  93.970 '%'
+ VMAXT     5 2021  88.000 '%'
+ VMAXT     6 2021  94.380 '%'
+ VMAXT     7 2021  96.620 '%'
+ VMAXT     8 2021  98.030 '%'
+ VMAXT     9 2021  89.860 '%'
+ VMAXT    10 2021  96.940 '%'
+ VMAXT    11 2021  93.550 '%'
+ VMAXT    12 2021  89.360 '%'
+ VMAXT     1 2022  88.000 '%'
+ VMAXT     2 2022  92.110 '%'
+ VMAXT     3 2022  98.030 '%'
+ VMAXT     4 2022  93.970 '%'
+ VMAXT     5 2022  88.000 '%'
+ VMAXT     6 2022  94.380 '%'
+ VMAXT     7 2022  96.620 '%'
+ VMAXT     8 2022  98.030 '%'
+ VMAXT     9 2022  89.860 '%'
+ VMAXT    10 2022  96.940 '%'
+ VMAXT    11 2022  93.550 '%'
+ VMAXT    12 2022  89.360 '%'
+ USINA    86                                BARRA GRANDE        
+ VAZMIN       16
+ USINA    95                                QUEBRA QUEIX        
+ VAZMIN        1
+ USINA    305                               ITIQUIRA II         
+ VAZMIN       40
+ USINA    119                               HENRY BORDEN        
+ VAZMIN        6
+ USINA    281                               PONTE PEDRA         
+ VAZMIN       35
+ USINA    20                                BATALHA             
+ VAZMIN       23
+ USINA    102                               PASSO S JOAO        
+ VAZMIN       50
+ USINA    101                               SAO JOSE            
+ VAZMIN       44
+ USINA    57                                MAUA                
+ VAZMIN       60
+ USINA    83                                BAIXO IGUACU        
+ VAZMIN      200
+ USINA    89                                GARIBALDI           
+ VAZMIN       81
+ USINA    319                               FICT.MAUA           
+ VAZMIN       60
+ USINA    111                               PASSO REAL          
+ VMAXT     1 2018  90.470 '%'
+ USINA    114                               D. FRANCISCA        
+ VAZMIN       15
+ USINA    120                               JAGUARI             
+ VAZMIN        4
+ VMINT     1 2018  20.000 '%'
+ USINA    122                               SANTA BRANCA        
+ VAZMIN       30
+ VMAXT     1 2018  89.470 '%'
+ VMINT     1 2018  10.000 '%'
+ VMAXT     2 2018  92.110 '%'
+ VMAXT     3 2018 100.000 '%'
+ VMAXT    11 2018  44.270 '%'
+ VMAXT    12 2018  39.010 '%'
+ VMAXT     1 2019  89.470 '%'
+ VMAXT     2 2019  92.110 '%'
+ VMAXT     3 2019 100.000 '%'
+ VMAXT    11 2019  44.270 '%'
+ VMAXT    12 2019  39.010 '%'
+ VMAXT     1 2020  89.470 '%'
+ VMAXT     2 2020  92.110 '%'
+ VMAXT     3 2020 100.000 '%'
+ VMAXT    11 2020  44.270 '%'
+ VMAXT    12 2020  39.010 '%'
+ VMAXT     1 2021  89.470 '%'
+ VMAXT     2 2021  92.110 '%'
+ VMAXT     3 2021 100.000 '%'
+ VMAXT    11 2021  44.270 '%'
+ VMAXT    12 2021  39.010 '%'
+ VMAXT     1 2022  89.470 '%'
+ VMAXT     2 2022  92.110 '%'
+ VMAXT     3 2022 100.000 '%'
+ VMAXT    11 2022  44.270 '%'
+ VMAXT    12 2022  39.010 '%'
+ USINA    123                               FUNIL               
+ VAZMIN       70
+ VMAXT     1 2018  62.050 '%'
+ VMINT     1 2018  30.000 '%'
+ VMAXT     2 2018  65.350 '%'
+ VMAXT     3 2018  83.500 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  76.900 '%'
+ VMAXT    12 2018  57.100 '%'
+ VMAXT     1 2019  62.050 '%'
+ VMAXT     2 2019  65.350 '%'
+ VMAXT     3 2019  83.500 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  76.900 '%'
+ VMAXT    12 2019  57.100 '%'
+ VMAXT     1 2020  62.050 '%'
+ VMAXT     2 2020  65.350 '%'
+ VMAXT     3 2020  83.500 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  76.900 '%'
+ VMAXT    12 2020  57.100 '%'
+ VMAXT     1 2021  62.050 '%'
+ VMAXT     2 2021  65.350 '%'
+ VMAXT     3 2021  83.500 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  76.900 '%'
+ VMAXT    12 2021  57.100 '%'
+ VMAXT     1 2022  62.050 '%'
+ VMAXT     2 2022  65.350 '%'
+ VMAXT     3 2022  83.500 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  76.900 '%'
+ VMAXT    12 2022  57.100 '%'
+ USINA    124                               LAJES               
+ VAZMIN        6
+ VMINT     1 2018  18.800 '%'
+ USINA    133                               P. PASSOS           
+ VAZMIN      120
+ USINA    121                               PARAIBUNA           
+ VAZMIN       10
+ VMINT     1 2018   5.000 '%'
+ USINA    132                               FONTES              
+ VAZMIN        6
+ USINA    134                               SALTO GRANDE        
+ VAZMIN       15
+ USINA    135                               P. ESTRELA          
+ VAZMIN       10
+ USINA    144                               MASCARENHAS         
+ VAZMIN      210
+ USINA    192                               GUILMAN-AMOR        
+ VAZMIN       19
+ USINA    139                               CANDONGA            
+ VAZMIN       58
+ USINA    156                               TRES MARIAS         
+ VAZMINT   1 2018   80.00 
+ VAZMINT   5 2018  420.00 
+ VMAXT     1 2018  83.110 '%'
+ VMAXT     2 2018  92.470 '%'
+ VMAXT     3 2018 100.000 '%'
+ VMAXT    11 2018  89.660 '%'
+ VMAXT    12 2018  75.590 '%'
+ VMAXT     1 2019  83.110 '%'
+ VMAXT     2 2019  92.470 '%'
+ VMAXT     3 2019 100.000 '%'
+ VMAXT    11 2019  89.660 '%'
+ VMAXT    12 2019  75.590 '%'
+ VMAXT     1 2020  83.110 '%'
+ VMAXT     2 2020  92.470 '%'
+ VMAXT     3 2020 100.000 '%'
+ VMAXT    11 2020  89.660 '%'
+ VMAXT    12 2020  75.590 '%'
+ VMAXT     1 2021  83.110 '%'
+ VMAXT     2 2021  92.470 '%'
+ VMAXT     3 2021 100.000 '%'
+ VMAXT    11 2021  89.660 '%'
+ VMAXT    12 2021  75.590 '%'
+ VMAXT     1 2022  83.110 '%'
+ VMAXT     2 2022  92.470 '%'
+ VMAXT     3 2022 100.000 '%'
+ VMAXT    11 2022  89.660 '%'
+ VMAXT    12 2022  75.590 '%'
+ USINA    169                               SOBRADINHO          
+ VAZMINT   1 2018  600.00 
+ VAZMINT   5 2018  900.00 
+ VAZMINT   1 2020 1300.00 
+ VMAXT     1 2018  77.710 '%'
+ VMAXT     2 2018  77.680 '%'
+ VMAXT     3 2018  77.560 '%'
+ VMAXT     4 2018  75.390 '%'
+ VMAXT     5 2018 100.000 '%'
+ VMAXT    11 2018  78.500 '%'
+ VMAXT    12 2018  77.800 '%'
+ VMAXT     1 2019  77.710 '%'
+ VMAXT     2 2019  77.680 '%'
+ VMAXT     3 2019  77.560 '%'
+ VMAXT     4 2019  75.390 '%'
+ VMAXT     5 2019 100.000 '%'
+ VMAXT    11 2019  78.500 '%'
+ VMAXT    12 2019  77.800 '%'
+ VMAXT     1 2020  77.710 '%'
+ VMAXT     2 2020  77.680 '%'
+ VMAXT     3 2020  77.560 '%'
+ VMAXT     4 2020  75.390 '%'
+ VMAXT     5 2020 100.000 '%'
+ VMAXT    11 2020  78.500 '%'
+ VMAXT    12 2020  77.800 '%'
+ VMAXT     1 2021  77.710 '%'
+ VMAXT     2 2021  77.680 '%'
+ VMAXT     3 2021  77.560 '%'
+ VMAXT     4 2021  75.390 '%'
+ VMAXT     5 2021 100.000 '%'
+ VMAXT    11 2021  78.500 '%'
+ VMAXT    12 2021  77.800 '%'
+ VMAXT     1 2022  77.710 '%'
+ VMAXT     2 2022  77.680 '%'
+ VMAXT     3 2022  77.560 '%'
+ VMAXT     4 2022  75.390 '%'
+ VMAXT     5 2022 100.000 '%'
+ VMAXT    11 2022  78.500 '%'
+ VMAXT    12 2022  77.800 '%'
+ USINA    172                               ITAPARICA           
+ VAZMINT   1 2018  600.00 
+ VAZMINT   5 2018  900.00 
+ VAZMINT   1 2020 1300.00 
+ VMAXT     1 2018  56.000 '%'
+ VMAXT     3 2018  61.100 '%'
+ VMAXT     4 2018  99.010 '%'
+ VMAXT     5 2018 100.000 '%'
+ VMAXT    11 2018  77.850 '%'
+ VMAXT    12 2018  58.990 '%'
+ VMAXT     1 2019  56.000 '%'
+ VMAXT     3 2019  61.100 '%'
+ VMAXT     4 2019  99.010 '%'
+ VMAXT     5 2019 100.000 '%'
+ VMAXT    11 2019  77.850 '%'
+ VMAXT    12 2019  58.990 '%'
+ VMAXT     1 2020  56.000 '%'
+ VMAXT     3 2020  61.100 '%'
+ VMAXT     4 2020  99.010 '%'
+ VMAXT     5 2020 100.000 '%'
+ VMAXT    11 2020  77.850 '%'
+ VMAXT    12 2020  58.990 '%'
+ VMAXT     1 2021  56.000 '%'
+ VMAXT     3 2021  61.100 '%'
+ VMAXT     4 2021  99.010 '%'
+ VMAXT     5 2021 100.000 '%'
+ VMAXT    11 2021  77.850 '%'
+ VMAXT    12 2021  58.990 '%'
+ VMAXT     1 2022  56.000 '%'
+ VMAXT     3 2022  61.100 '%'
+ VMAXT     4 2022  99.010 '%'
+ VMAXT     5 2022 100.000 '%'
+ VMAXT    11 2022  77.850 '%'
+ VMAXT    12 2022  58.990 '%'
+ USINA    178                               XINGO               
+ VAZMINT   1 2018  600.00 
+ VAZMINT   5 2018  900.00 
+ VAZMINT   1 2020 1300.00 
+ USINA    162                               QUEIMADO            
+ VAZMINT   1 2018    8.80 
+ VAZMINT   5 2018   17.00 
+ VAZMINT  11 2018    8.80 
+ VAZMINT   5 2019   17.00 
+ VAZMINT  11 2019    8.80 
+ VAZMINT   5 2020   17.00 
+ VAZMINT  11 2020    8.80 
+ VAZMINT   5 2021   17.00 
+ VAZMINT  11 2021    8.80 
+ VAZMINT   5 2022   17.00 
+ VAZMINT  11 2022    8.80 
+ VMAXT     1 2018  64.440 '%'
+ VMAXT     2 2018  63.910 '%'
+ VMAXT     4 2018  66.000 '%'
+ VMAXT     5 2018 100.000 '%'
+ VMAXT    11 2018  69.670 '%'
+ VMAXT    12 2018  67.050 '%'
+ VMAXT     1 2019  64.440 '%'
+ VMAXT     2 2019  63.910 '%'
+ VMAXT     4 2019  66.000 '%'
+ VMAXT     5 2019 100.000 '%'
+ VMAXT    11 2019  69.670 '%'
+ VMAXT    12 2019  67.050 '%'
+ VMAXT     1 2020  64.440 '%'
+ VMAXT     2 2020  63.910 '%'
+ VMAXT     4 2020  66.000 '%'
+ VMAXT     5 2020 100.000 '%'
+ VMAXT    11 2020  69.670 '%'
+ VMAXT    12 2020  67.050 '%'
+ VMAXT     1 2021  64.440 '%'
+ VMAXT     2 2021  63.910 '%'
+ VMAXT     4 2021  66.000 '%'
+ VMAXT     5 2021 100.000 '%'
+ VMAXT    11 2021  69.670 '%'
+ VMAXT    12 2021  67.050 '%'
+ VMAXT     1 2022  64.440 '%'
+ VMAXT     2 2022  63.910 '%'
+ VMAXT     4 2022  66.000 '%'
+ VMAXT     5 2022 100.000 '%'
+ VMAXT    11 2022  69.670 '%'
+ VMAXT    12 2022  67.050 '%'
+ USINA    176                               COMP PAF-MOX        
+ VAZMINT   1 2018  600.00 
+ VAZMINT   5 2018  900.00 
+ VAZMINT   1 2020 1300.00 
+ USINA    155                               RETIRO BAIXO        
+ VAZMIN       28
+ USINA    295                               FICT.TRES MARIAS    
+ VAZMINT   1 2018   80.00 
+ VAZMINT   5 2018  420.00 
+ VMAXT     1 2018  83.110 '%'
+ VMAXT     2 2018  92.470 '%'
+ VMAXT     3 2018 100.000 '%'
+ VMAXT    11 2018  89.660 '%'
+ VMAXT    12 2018  75.590 '%'
+ VMAXT     1 2019  83.110 '%'
+ VMAXT     2 2019  92.470 '%'
+ VMAXT     3 2019 100.000 '%'
+ VMAXT    11 2019  89.660 '%'
+ VMAXT    12 2019  75.590 '%'
+ VMAXT     1 2020  83.110 '%'
+ VMAXT     2 2020  92.470 '%'
+ VMAXT     3 2020 100.000 '%'
+ VMAXT    11 2020  89.660 '%'
+ VMAXT    12 2020  75.590 '%'
+ VMAXT     1 2021  83.110 '%'
+ VMAXT     2 2021  92.470 '%'
+ VMAXT     3 2021 100.000 '%'
+ VMAXT    11 2021  89.660 '%'
+ VMAXT    12 2021  75.590 '%'
+ VMAXT     1 2022  83.110 '%'
+ VMAXT     2 2022  92.470 '%'
+ VMAXT     3 2022 100.000 '%'
+ VMAXT    11 2022  89.660 '%'
+ VMAXT    12 2022  75.590 '%'
+ USINA    294                               FICT.QUEIMADO       
+ VAZMINT   1 2018    8.80 
+ VAZMINT   5 2018   17.00 
+ VAZMINT  11 2018    8.80 
+ VAZMINT   5 2019   17.00 
+ VAZMINT  11 2019    8.80 
+ VAZMINT   5 2020   17.00 
+ VAZMINT  11 2020    8.80 
+ VAZMINT   5 2021   17.00 
+ VAZMINT  11 2021    8.80 
+ VAZMINT   5 2022   17.00 
+ VAZMINT  11 2022    8.80 
+ VMAXT     1 2018  64.440 '%'
+ VMAXT     2 2018  63.910 '%'
+ VMAXT     4 2018  66.000 '%'
+ VMAXT     5 2018 100.000 '%'
+ VMAXT    11 2018  69.670 '%'
+ VMAXT    12 2018  67.050 '%'
+ VMAXT     1 2019  64.440 '%'
+ VMAXT     2 2019  63.910 '%'
+ VMAXT     4 2019  66.000 '%'
+ VMAXT     5 2019 100.000 '%'
+ VMAXT    11 2019  69.670 '%'
+ VMAXT    12 2019  67.050 '%'
+ VMAXT     1 2020  64.440 '%'
+ VMAXT     2 2020  63.910 '%'
+ VMAXT     4 2020  66.000 '%'
+ VMAXT     5 2020 100.000 '%'
+ VMAXT    11 2020  69.670 '%'
+ VMAXT    12 2020  67.050 '%'
+ VMAXT     1 2021  64.440 '%'
+ VMAXT     2 2021  63.910 '%'
+ VMAXT     4 2021  66.000 '%'
+ VMAXT     5 2021 100.000 '%'
+ VMAXT    11 2021  69.670 '%'
+ VMAXT    12 2021  67.050 '%'
+ VMAXT     1 2022  64.440 '%'
+ VMAXT     2 2022  63.910 '%'
+ VMAXT     4 2022  66.000 '%'
+ VMAXT     5 2022 100.000 '%'
+ VMAXT    11 2022  69.670 '%'
+ VMAXT    12 2022  67.050 '%'
+ USINA    308                               FICT.RETIRO BAIXO   
+ VAZMIN       28
+ USINA    251                               SERRA MESA          
+ VAZMIN      300
+ USINA    275                               TUCURUI             
+ VAZMIN     2000
+ CFUGA     1 2018    6.77
+ CFUGA     2 2018    8.85
+ CFUGA     3 2018   12.10
+ CFUGA     5 2018    9.90
+ CFUGA     6 2018    6.60
+ CFUGA     7 2018    5.40
+ CFUGA     1 2019    8.90
+ CFUGA     2 2019   11.00
+ CFUGA     3 2019   12.10
+ CFUGA     5 2019    9.90
+ CFUGA     6 2019    6.60
+ CFUGA     7 2019    5.40
+ CFUGA     1 2020    8.90
+ CFUGA     2 2020   11.00
+ CFUGA     3 2020   12.10
+ CFUGA     5 2020    9.90
+ CFUGA     6 2020    6.60
+ CFUGA     7 2020    5.40
+ CFUGA     1 2021    8.90
+ CFUGA     2 2021   11.00
+ CFUGA     3 2021   12.10
+ CFUGA     5 2021    9.90
+ CFUGA     6 2021    6.60
+ CFUGA     7 2021    5.40
+ CFUGA     1 2022    8.90
+ CFUGA     2 2022   11.00
+ CFUGA     3 2022   12.10
+ CFUGA     5 2022    9.90
+ CFUGA     6 2022    6.60
+ CFUGA     7 2022    5.40
+ CFUGA    12 2022    8.60
+ USINA    261                               LAJEADO             
+ VAZMIN      255
+ USINA    252                               CANA BRAVA          
+ VAZMIN       90
+ USINA    257                               PEIXE ANGIC         
+ VAZMIN      360
+ USINA    267                               ESTREITO TOC        
+ VAZMIN      744
+ USINA    253                               SAO SALVADOR        
+ VAZMIN       90
+ USINA    291                               FICT.SERRA MESA     
+ VAZMIN      300
+ VOLMAX   55.000 '%'
+ USINA    292                               FICT.CANA BRAVA     
+ VAZMIN       90
+ USINA    306                               FICT.SAO SALVADOR   
+ VAZMIN       90
+ USINA    303                               FICT.PEIXE ANGIC    
+ VAZMIN      360
+ USINA    302                               FICT.LAJEADO        
+ VAZMIN      255
+ USINA    272                               CURUA-UNA           
+ VAZMIN       17
+ USINA    288                               BELO MONTE          
+ VAZMIN      300
+ NUMCNJ     1
+ NUMMAQ     7   1
+ USINA    277                               BALBINA             
+ VAZMINT   1 2018  450.00 
+ VAZMINT   4 2018  390.00 
+ VAZMINT   9 2018  450.00 
+ VAZMINT   4 2019  390.00 
+ VAZMINT   9 2019  450.00 
+ VAZMINT   4 2020  390.00 
+ VAZMINT   9 2020  450.00 
+ VAZMINT   4 2021  390.00 
+ VAZMINT   9 2021  450.00 
+ VAZMINT   4 2022  390.00 
+ VAZMINT   9 2022  450.00 
+ USINA    285                               JIRAU               
+ VAZMIN     3240
+ USINA    287                               STO ANTONIO         
+ VAZMIN     3293
+ USINA    227                               SINOP               
+ VMAXT     6 2018  71.974 '%'
+ VMAXT    11 2018 100.000 '%'
+ VMAXT     6 2019  71.974 '%'
+ VMAXT    11 2019 100.000 '%'
+ VMAXT     6 2020  71.974 '%'
+ VMAXT    11 2020 100.000 '%'
+ VMAXT     6 2021  71.974 '%'
+ VMAXT    11 2021 100.000 '%'
+ VMAXT     6 2022  71.974 '%'
+ VMAXT    11 2022 100.000 '%'
+ USINA    230                               SAO MANOEL          
+ NUMCNJ     1
+ NUMMAQ     1   1
+ USINA    154                               ITAPEBI             
+ VAZMIN       38
+ USINA    148                               IRAPE               
+ VAZMIN       23
+ VMAXT     1 2018  90.240 '%'
+ VMAXT     2 2018  95.120 '%'
+ VMAXT     3 2018  95.930 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  92.680 '%'
+ VMAXT    12 2018  88.070 '%'
+ VMAXT     1 2019  90.240 '%'
+ VMAXT     2 2019  95.120 '%'
+ VMAXT     3 2019  95.930 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  92.680 '%'
+ VMAXT    12 2019  88.070 '%'
+ VMAXT     1 2020  90.240 '%'
+ VMAXT     2 2020  95.120 '%'
+ VMAXT     3 2020  95.930 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  92.680 '%'
+ VMAXT    12 2020  88.070 '%'
+ VMAXT     1 2021  90.240 '%'
+ VMAXT     2 2021  95.120 '%'
+ VMAXT     3 2021  95.930 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  92.680 '%'
+ VMAXT    12 2021  88.070 '%'
+ VMAXT     1 2022  90.240 '%'
+ VMAXT     2 2022  95.120 '%'
+ VMAXT     3 2022  95.930 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  92.680 '%'
+ VMAXT    12 2022  88.070 '%'
+ USINA    298                               FICT.IRAPE          
+ VAZMIN       23
+ VMAXT     1 2018  90.240 '%'
+ VMAXT     2 2018  95.120 '%'
+ VMAXT     3 2018  95.930 '%'
+ VMAXT     4 2018 100.000 '%'
+ VMAXT    11 2018  92.680 '%'
+ VMAXT    12 2018  88.070 '%'
+ VMAXT     1 2019  90.240 '%'
+ VMAXT     2 2019  95.120 '%'
+ VMAXT     3 2019  95.930 '%'
+ VMAXT     4 2019 100.000 '%'
+ VMAXT    11 2019  92.680 '%'
+ VMAXT    12 2019  88.070 '%'
+ VMAXT     1 2020  90.240 '%'
+ VMAXT     2 2020  95.120 '%'
+ VMAXT     3 2020  95.930 '%'
+ VMAXT     4 2020 100.000 '%'
+ VMAXT    11 2020  92.680 '%'
+ VMAXT    12 2020  88.070 '%'
+ VMAXT     1 2021  90.240 '%'
+ VMAXT     2 2021  95.120 '%'
+ VMAXT     3 2021  95.930 '%'
+ VMAXT     4 2021 100.000 '%'
+ VMAXT    11 2021  92.680 '%'
+ VMAXT    12 2021  88.070 '%'
+ VMAXT     1 2022  90.240 '%'
+ VMAXT     2 2022  95.120 '%'
+ VMAXT     3 2022  95.930 '%'
+ VMAXT     4 2022 100.000 '%'
+ VMAXT    11 2022  92.680 '%'
+ VMAXT    12 2022  88.070 '%'
+ USINA    189                               P. CAVALO           
+ VAZMIN        3
+ VMINT     1 2018  80.250 '%'
+ VMINT     4 2018   0.000 '%'
+ VMINT     1 2019  80.250 '%'
+ VMINT     4 2019   0.000 '%'
+ VMINT     1 2020  80.250 '%'
+ VMINT     4 2020   0.000 '%'
+ VMINT     1 2021  80.250 '%'
+ VMINT     4 2021   0.000 '%'
+ VMINT     1 2022  80.250 '%'
+ VMINT     4 2022   0.000 '%'
+ USINA    283                               STA CLARA MG        
+ VAZMIN       15
+ USINA    190                               B. ESPERANCA        
+ VAZMIN      240
+ VMAXT     1 2018  64.440 '%'
+ VMAXT     2 2018  63.910 '%'
+ VMAXT     4 2018  66.000 '%'
+ VMAXT     5 2018 100.000 '%'
+ VMAXT    11 2018  69.670 '%'
+ VMAXT    12 2018  67.050 '%'
+ VMAXT     1 2019  64.440 '%'
+ VMAXT     2 2019  63.910 '%'
+ VMAXT     4 2019  66.000 '%'
+ VMAXT     5 2019 100.000 '%'
+ VMAXT    11 2019  69.670 '%'
+ VMAXT    12 2019  67.050 '%'
+ VMAXT     1 2020  64.440 '%'
+ VMAXT     2 2020  63.910 '%'
+ VMAXT     4 2020  66.000 '%'
+ VMAXT     5 2020 100.000 '%'
+ VMAXT    11 2020  69.670 '%'
+ VMAXT    12 2020  67.050 '%'
+ VMAXT     1 2021  64.440 '%'
+ VMAXT     2 2021  63.910 '%'
+ VMAXT     4 2021  66.000 '%'
+ VMAXT     5 2021 100.000 '%'
+ VMAXT    11 2021  69.670 '%'
+ VMAXT    12 2021  67.050 '%'
+ VMAXT     1 2022  64.440 '%'
+ VMAXT     2 2022  63.910 '%'
+ VMAXT     4 2022  66.000 '%'
+ VMAXT     5 2022 100.000 '%'
+ VMAXT    11 2022  69.670 '%'
+ VMAXT    12 2022  67.050 '%'

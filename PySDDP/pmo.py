@@ -7,8 +7,7 @@ from PySDDP.resequiv import resequiv
 from PySDDP.submercado import submercado as subsist
 from PySDDP.interc import interc
 import numpy as np
-import PySDDP.mixins as rf
-import re
+import PySDDP.mixins as mixins
 
 
 class pmo(object):
@@ -51,8 +50,6 @@ class pmo(object):
     nome_cvar = None
     nome_ree = None
     nome_re = None
-    nome_tecno = None
-    nome_dsvagua = None
     nome_hidr = 'HIDR.DAT'
     nome_vazoes = 'VAZOES.DAT'
 
@@ -62,16 +59,16 @@ class pmo(object):
     def le_caso(self):
 
         # Le nome de arquivo com lista de arquivos de entrada
-        file = rf.read_file(self.diretorio, 'CASO.DAT')
+        file = mixins.read_file(self.diretorio, 'CASO.DAT')
         arquivo = file.readlines()
         file.close()
         self.nome_arquivo = arquivo[0][0:len(arquivo[0]) - 1]
 
         # Le nomes de todos os arquivos de entrada e saida do modelo NEWAVE
-        file_name = self.diretorio + self.nome_arquivo
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_arquivo)
         arquivo = file.readlines()
         file.close()
+
         self.nome_dger = arquivo[0][30:len(arquivo[0]) - 1]
         self.nome_sistema = arquivo[1][30:len(arquivo[1]) - 1]
         self.nome_confhd = arquivo[2][30:len(arquivo[2]) - 1]
@@ -106,16 +103,14 @@ class pmo(object):
         self.nome_adterm = arquivo[31][30:len(arquivo[31]) - 1]
         self.nome_ghmin = arquivo[32][30:len(arquivo[32]) - 1]
         self.nome_sar = arquivo[33][30:len(arquivo[33]) - 1]
-        self.nome_cvar = arquivo[34][30:len(arquivo[34]) - 1]
+        self.nome_cvar = arquivo[35][30:len(arquivo[34]) - 1]
         self.nome_ree = arquivo[35][30:len(arquivo[35]) - 1]
         self.nome_re = arquivo[36][30:len(arquivo[36]) - 1]
-        self.nome_tecno = arquivo[37][30:len(arquivo[36]) - 1]
-
         print('OK! Leitura do CASO.DAT e ARQUIVOS.DAT realizada com sucesso.')
 
     def le_hidr(self, cadastro):
 
-        file = rf.read_file(self.diretorio, self.nome_hidr, 'rb')
+        file = mixins.read_file(self.diretorio, self.nome_hidr, mode='rb')
         nreg = 320
 
         i = 0
@@ -123,7 +118,7 @@ class pmo(object):
             cadastro.append(hidr())
             iusi = len(cadastro) - 1
             cadastro[iusi].Codigo = i + 1
-            cadastro[iusi].Nome = struct.unpack('12s', file.read(12))[0].strip()
+            cadastro[iusi].Nome = struct.unpack('12s', file.read(12))[0]
             cadastro[iusi].Posto = struct.unpack('i', file.read(4))[0]
             cadastro[iusi].Bdh = struct.unpack('8s', file.read(8))[0]
             cadastro[iusi].Sist = struct.unpack('i', file.read(4))[0]
@@ -189,11 +184,11 @@ class pmo(object):
 
     def le_confh(self, conf, cadastro, nanos):
 
-        file = rf.read_file(self.diretorio, self.nome_confhd)
+        file = mixins.read_file(self.diretorio, self.nome_confhd)
         arquivo = file.readlines()
         file.close()
 
-        file_vazoes = rf.read_file(self.diretorio, self.nome_vazoes, mode='rb')
+        file_vazoes = mixins.read_file(self.diretorio, self.nome_vazoes, mode='rb')
         vazoes = np.fromfile(file_vazoes, dtype=np.int32)
         file_vazoes.close()
         # A principio o numero de anos seria ano corrente - 2, mas
@@ -213,7 +208,7 @@ class pmo(object):
                 if usina.Codigo == codigo:
                     conf.append(usina)
                     indice = len(conf) - 1
-                    conf[indice].Nome = arquivo[i][6:18].strip()
+                    conf[indice].Nome = arquivo[i][6:18]
                     conf[indice].Posto = int(arquivo[i][19:23])
                     conf[indice].Jusante = int(arquivo[i][25:29])
                     conf[indice].Ree = int(arquivo[i][30:34])
@@ -231,14 +226,12 @@ class pmo(object):
                     # Parametros Temporais controlados pelo MODIF.DAT
                     conf[indice].VolMinT = conf[indice].VolMin * np.ones((nanos, 12), 'f')
                     conf[indice].VolMaxT = conf[indice].VolMax * np.ones((nanos, 12), 'f')
-                    conf[indice].VolUtilT = (conf[indice].VolMax - conf[indice].VolMin) * np.ones((nanos, 12), 'f')
                     conf[indice].VolMinP = conf[indice].VolMin * np.ones((nanos, 12), 'f')
                     conf[indice].VazMinT = conf[indice].VazMin * np.ones((nanos, 12), 'f')
                     conf[indice].CFugaT = conf[indice].CFMed * np.ones((nanos, 12), 'f')
 
                     # Calcula Parametros
                     conf[indice].CalcVolUtil()
-                    conf[indice].CalcVolUtilT()
                     conf[indice].CalcVazEfetiva()
                     conf[indice].CalcPotEfetiva()
                     conf[indice].CalcProdutibs(nanos)
@@ -271,27 +264,15 @@ class pmo(object):
                         vaz_nat_usina[i] = vaz_nat[i][posto]
                     conf[indice].Vazoes = vaz_nat_usina
                     conf[indice].Vazoes.shape = (num_anos, 12)
-                    conf[indice].VazInc = conf[indice].Vazoes  # adicionado por Alexandre
 
                     break
-
-        # Calcula Vazoes Incrementais
-        codigo = [iusi.Codigo for iusi in conf]
-        for iusi, usina in enumerate(conf):
-            codjus = usina.Jusante
-            try:
-                j = codigo.index(codjus)
-                conf[j].VazInc = conf[j].VazInc - conf[iusi].Vazoes
-            except ValueError:
-                pass
 
         print('OK! Leitura do CONFHD e VAZOES realizada com sucesso. (', indice + 1, 'Usinas Hidraulicas )')
         return conf
 
-    def le_term(self, cadastro, nanos):
+    def le_term(self, cadastro):
 
-        file_name = self.diretorio + self.nome_term
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_term)
         arquivo = file.readlines()
         file.close()
 
@@ -300,7 +281,7 @@ class pmo(object):
                 cadastro.append(term())
                 indice = len(cadastro) - 1
                 cadastro[indice].Codigo = int(arquivo[i][1:4])
-                cadastro[indice].Nome = arquivo[i][5:17].strip()
+                cadastro[indice].Nome = arquivo[i][5:17]
                 cadastro[indice].Potencia = float(arquivo[i][19:24])
                 cadastro[indice].FCMax = float(arquivo[i][25:29])
                 cadastro[indice].TEIF = float(arquivo[i][31:37])
@@ -308,11 +289,7 @@ class pmo(object):
                 gtmin = np.zeros(13, float)
                 for j in range(13):
                     gtmin[j] = float(arquivo[i][(45 + j * 7):(51 + j * 7)])
-                cadastro[indice].GTMin = np.zeros((nanos, 12), 'd')
-                cadastro[indice].GTMin[0, :] = gtmin[:-1]
-                for iano in range(1, nanos):
-                    for imes in range(12):
-                        cadastro[indice].GTMin[iano, imes] = gtmin[-1]
+                cadastro[indice].GTMin = gtmin
             else:
                 break
 
@@ -321,8 +298,7 @@ class pmo(object):
 
     def le_conft(self, conf, cadastro):
 
-        file_name = self.diretorio + self.nome_conft
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_conft)
         arquivo = file.readlines()
         file.close()
 
@@ -337,7 +313,7 @@ class pmo(object):
                     encontrei = True
                     conf.append(usina)
                     indice = len(conf) - 1
-                    conf[indice].Nome = arquivo[i][6:18].strip()
+                    conf[indice].Nome = arquivo[i][6:18]
                     conf[indice].Sist = int(arquivo[i][21:25])
                     conf[indice].Status = arquivo[i][30:32]
                     conf[indice].Classe = int(arquivo[i][35:39])
@@ -349,10 +325,9 @@ class pmo(object):
 
         return conf
 
-    def le_clast(self, conf, mes_ini, nanos):
+    def le_clast(self, conf):
 
-        file_name = self.diretorio + self.nome_clast
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_clast)
         arquivo = file.readlines()
         file.close()
 
@@ -367,7 +342,7 @@ class pmo(object):
             for iusi, usina in enumerate(conf):
                 if usina.Classe == codigo:
                     contador += 1
-                    usina.NomeClasse = arquivo[i][6:18].strip()
+                    usina.NomeClasse = arquivo[i][6:18]
                     usina.TipoComb = arquivo[i][19:29]
                     custo = np.zeros(5, float)
                     for j in range(5):
@@ -375,18 +350,12 @@ class pmo(object):
                     usina.Custo = custo
                     break
 
-        for iusina in conf:
-            gtmax = np.zeros(nanos * 12)
-            gtmax[mes_ini - 1:] = (iusina.FCMax / 100) * iusina.Potencia
-            iusina.GTMAX = gtmax.reshape((nanos, 12))
-
         print('OK! Leitura do CLAST realizada com sucesso. (', contador, 'Usinas Termicas )')
 
         return conf
 
     def le_modif(self, conf, anoinicial, nanos):
-        file_name = self.diretorio + self.nome_modif
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_modif)
         arquivo = file.readlines()
         file.close()
 
@@ -420,7 +389,6 @@ class pmo(object):
                     usina.CalcProdutibs(nanos)
                     usina.CalcEngolMaximo()
                     usina.VolMinT = usina.VolMin * np.ones((nanos, 12), 'f')
-                    usina.VolUtilT = usina.VolMaxT - usina.VolMinT
                     usina.VolMinP = usina.VolMin * np.ones((nanos, 12), 'f')
                 elif arquivo[i][1:7] == 'VOLMAX' or arquivo[i][1:7] == 'volmax':
                     j = 7
@@ -436,8 +404,6 @@ class pmo(object):
                     usina.CalcProdutibs(nanos)
                     usina.CalcEngolMaximo()
                     usina.VolMaxT = usina.VolMax * np.ones((nanos, 12), 'f')
-                    usina.VolUtilT = usina.VolMaxT - usina.VolMinT
-
                 elif arquivo[i][1:7] == 'NUMCNJ' or arquivo[i][1:7] == 'numcnj':
                     j = 7
                     texto = arquivo[i][j:len(arquivo[i]) - 1]
@@ -587,10 +553,6 @@ class pmo(object):
                     # else:
                     #    usina.EngolTempo = np.zeros((nanos, 12), 'f')
                     #    usina.PotenciaTempo = np.zeros((nanos, 12), 'f')
-
-                elif arquivo[i][1:6] == 'CMONT' or arquivo[i][1:6] == 'cmont':
-                    pass
-
                 elif arquivo[i][1:6] == 'VMAXT' or arquivo[i][1:6] == 'vmaxt':
                     j = 6
                     texto = arquivo[i][j:len(arquivo[i]) - 1]
@@ -604,7 +566,6 @@ class pmo(object):
                     for iano in range(int(texto[1]) - anoinicial, nanos):
                         for imes in range(mesinicial - 1, 12):
                             usina.VolMaxT[iano][imes] = valor
-                            usina.VolUtilT[iano][imes] = usina.VolMaxT[iano][imes] - usina.VolMinT[iano][imes]
                         mesinicial = 0
                 elif arquivo[i][1:6] == 'VMINT' or arquivo[i][1:6] == 'vmint':
                     j = 6
@@ -619,7 +580,6 @@ class pmo(object):
                     for iano in range(int(texto[1]) - anoinicial, nanos):
                         for imes in range(mesinicial - 1, 12):
                             usina.VolMinT[iano][imes] = valor
-                            usina.VolUtilT[iano][imes] = usina.VolMaxT[iano][imes] - usina.VolMinT[iano][imes]
                         mesinicial = 0
                 elif arquivo[i][1:7] == 'NUMBAS' or arquivo[i][1:7] == 'numbas':
                     j = 7
@@ -664,8 +624,7 @@ class pmo(object):
         return conf
 
     def le_exph(self, conf, anoinicial, nanos):
-        file_name = self.diretorio + self.nome_exph
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_exph)
         arquivo = file.readlines()
         file.close()
 
@@ -777,46 +736,9 @@ class pmo(object):
               'linhas lidas )')
         return (conf)
 
-    def le_desvagua(self, conf):
-        file_name = self.diretorio + self.nome_dsvagua
-        file = open(file_name, "r")
-        arquivo = file.readlines()
-        file.close()
-
-        list_codigos = list()
-
-        i = 2
-        while i < len(arquivo) and len(arquivo[i]) > 2:
-            try:
-
-                codigo = int(arquivo[i][6:9])
-                list_codigos.append(codigo)
-                for iusi, usina in enumerate(conf):
-                    if usina.Codigo == codigo:
-                        usina.VazDesv = np.zeros((5, 12))
-                        for row in range(5):
-                            aux = 9
-                            for col in range(12):
-                                usina.VazDesv[row, col] = float(arquivo[i][aux:aux + 7].strip())
-                                aux += 7
-                            i += 1
-                        break
-            except:
-
-                break
-
-        for iusi, usina in enumerate(conf):
-            if usina.Codigo not in list_codigos:
-                usina.VazDesv = np.zeros((5, 12))
-
-        print('OK! Leitura do DESVAGUA realizada com sucesso. ')
-
-        return conf
-
     def le_ree(self, ree):
 
-        file_name = self.diretorio + self.nome_ree
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_ree)
         arquivo = file.readlines()
         file.close()
 
@@ -825,7 +747,7 @@ class pmo(object):
                 ree.append(resequiv())
                 indice = len(ree) - 1
                 ree[indice].Codigo = int(arquivo[i][1:4])
-                ree[indice].Nome = arquivo[i][5:15].strip()
+                ree[indice].Nome = arquivo[i][5:15]
                 ree[indice].Submercado = int(arquivo[i][18:21])
             else:
                 break
@@ -835,8 +757,7 @@ class pmo(object):
 
     def le_sistema(self, submercado, intercambio, nanos, npmc):
 
-        file_name = self.diretorio + self.nome_sistema
-        file = open(file_name, "r")
+        file = mixins.read_file(self.diretorio, self.nome_sistema)
         arquivo = file.readlines()
         file.close()
 
@@ -848,7 +769,7 @@ class pmo(object):
             submercado.append(subsist(nanos))
             isis = len(submercado) - 1
             submercado[isis].Codigo = int(arquivo[i][1:4])
-            submercado[isis].Nome = arquivo[i][5:15].strip()
+            submercado[isis].Nome = arquivo[i][5:15]
             submercado[isis].Ficticio = int(arquivo[i][17:18])
             if not submercado[isis].Ficticio:
                 for idef in range(4):

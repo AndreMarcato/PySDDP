@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class term(object):
     # Dados de cadastro das usinas termeletrica (presentes no TERM.DAT)
     Codigo = None
@@ -10,7 +7,6 @@ class term(object):
     TEIF = None
     IP = None
     GTMin = None
-    GTMax = None
 
     # Dados Adicionais Especificados no arquivo de configuracao termica (CONFT)
     Sist = None

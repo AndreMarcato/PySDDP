@@ -11,172 +11,41 @@ class resequiv(object):
     Submercado = None  # Submercado ao qual o REE pertence
 
     # Parametros Temporais
-    EAMAX = None  # Energia Armazenavel Maxima (iano,imes)
-    EAMIN = None  # Energia Armazenavel Maxima (iano,imes)
-    EAMED = None  # Energia Armazenavel Maxima (iano,imes)
+    EArmMax = None  # Energia Armazenavel Maxima (iano,imes)
     ENA = None
-    EFIOB = None
+    EFIO = None
     EC = None
-    EVMin = None
-    EVP = None
-    EVM = None
-    FatorSeparacao = None
-    ParamFC = None
-    ParamEVMin = None
-    ParamEVP = None
 
     def CalcEArmMax(self, usinas: List[hidr]):
-
+        self.EArmMax = np.zeros((5, 12), 'd')
         for iano in range(5):
             for imes in range(12):
+                self.EArmMax[iano][imes] = 0.
                 for iusina in usinas:
                     if iusina.VolUtil > 0 and iusina.Ree == self.Codigo and iusina.StatusVolMorto[iano][imes] == 2:
-                        self.EAMAX[iano][imes] = self.EAMAX[iano][imes] + iusina.RoAcum[iano][
+                        self.EArmMax[iano][imes] = self.EArmMax[iano][imes] + iusina.RoAcum[iano][
                             imes] * iusina.VolUtil / 2.63
-
-    def CalcEArmMin(self, usinas: List[hidr]):
-        self.EAMIN = np.zeros((5, 12), 'd')
-        # for iano in range(5):
-        #     for imes in range(12):
-        #         for iusina in usinas:
-        #             if iusina.VolUtil > 0 and iusina.Ree == self.Codigo and iusina.StatusVolMorto[iano][imes] == 2:
-        #                 self.EAMIN[iano][imes] = self.EAMIN[iano][imes] + iusina.RoAcum[iano][imes]*iusina.VolUtil/2.63
-
-    def CalcEArmMed(self, usinas: List[hidr]):
-        self.EAMED = np.zeros((5, 12), 'd')
-        for iano in range(5):
-            for imes in range(12):
-                for iusina in usinas:
-                    if iusina.VolUtil > 0 and iusina.Ree == self.Codigo and iusina.StatusVolMorto[iano][imes] == 2:
-                        self.EAMED[iano][imes] = self.EAMED[iano][imes] + iusina.RoAcum[iano][
-                            imes] * iusina.VolUtil * 0.65 / 2.63
 
     def CalcENA(self, usinas: List[hidr]):
 
         anos_hist = len(usinas[0].Vazoes)
 
-        self.ENA = np.zeros((anos_hist, 12), 'd')
-        self.EC = np.zeros((anos_hist, 12), 'd')
-        self.EFIOB = np.zeros((anos_hist, 12), 'd')
+        self.ENA = np.zeros((5, 12, anos_hist), 'd')
+        self.EC = np.zeros((5, 12, anos_hist), 'd')
+        self.EFIO = np.zeros((5, 12, anos_hist), 'd')
 
-        for iano in range(anos_hist):
+        for iano in range(5):
             for imes in range(12):
                 for iusina in usinas:
-                    if iusina.Ree == self.Codigo:
-                        if iusina.TipoReg == b'M':
-                            self.EC[iano, imes] = self.EC[iano, imes] + iusina.RoAcum[0, 0] * iusina.QIncHistEntreRes(
-                                usinas, iano, imes)
+                    if iusina.Ree == self.Codigo and iusina.StatusVolMorto[iano][imes] == 2:
+                        if iusina.VolUtil > 0:
+                            self.EC[iano, imes] = self.EC[iano, imes] + iusina.RoAcumMed[iano][
+                                imes] * iusina.QIncEntreRes(usinas, iano, imes)
                         else:
-                            self.EFIOB[iano, imes] = self.EFIOB[iano, imes] + iusina.RoEquiv[
-                                0, 0] * iusina.QIncHistEntreRes(usinas, iano, imes)
-        self.ENA = self.EC + self.EFIOB
-
-    def CalcFatorSep(self, usinas: List[hidr]):
-
-        anos_hist = len(usinas[0].Vazoes)
-
-        aux_1 = 0
-        aux_2 = 0
-        for iano in range(anos_hist):
-            for imes in range(12):
-                aux_1 += self.ENA[iano, imes] * self.EC[iano, imes]
-                aux_2 += self.ENA[iano, imes] * self.ENA[iano, imes]
-        self.FatorSeparacao = aux_1 / aux_2
-
-    def CalcParamFC(self, usinas: List[hidr]):
-
-        aux_1 = 0
-        aux_2 = 0
-        aux_3 = 0
-        aux_4 = 0
-        for iusina in usinas:
-            if iusina.Ree == self.Codigo:
-                aux_1 += iusina.RoAcumMax[0, 0] * iusina.QIncHistEntreRes(usinas, 0, 0)
-                aux_2 += iusina.RoAcumMin[0, 0] * iusina.QIncHistEntreRes(usinas, 0, 0)
-                aux_3 += iusina.RoAcumMed[0, 0] * iusina.QIncHistEntreRes(usinas, 0, 0)
-                aux_4 += iusina.RoAcum[0, 0] * iusina.QIncHistEntreRes(usinas, 0, 0)
-        fcmax = aux_1 / aux_4
-        fcmin = aux_2 / aux_4
-        fcmed = aux_3 / aux_4
-
-        if self.EAMAX[0, 0] == 0 and self.EAMIN[0, 0] == 0 and self.EAMED[0, 0] == 0:
-            param = np.array([0., 0., fcmed])
-        else:
-            param = np.polyfit(np.array([self.EAMIN[0, 0], self.EAMED[0, 0], self.EAMAX[0, 0]]),
-                               np.array([fcmin, fcmed, fcmax]), deg=2)
-
-        self.ParamFC = param
-
-    def CalcParamEVMin(self, usinas: List[hidr]):
-
-        self.EVMin = 0
-
-        evmin_max = 0
-        evmin_min = 0
-        evmin_med = 0
-        for iusina in usinas:
-            if iusina.Ree == self.Codigo:
-                self.EVMin += iusina.VazMin * iusina.RoAcum[0, 0]
-                evmin_max += iusina.VazMin * iusina.RoAcumMax[0, 0]
-                evmin_min += iusina.VazMin * iusina.RoAcumMin[0, 0]
-                evmin_med += iusina.VazMin * iusina.RoAcum[0, 0]
-
-        if self.EAMAX[0, 0] == 0 and self.EAMIN[0, 0] == 0 and self.EAMED[0, 0] == 0:
-            param = np.array([0., 0., evmin_med])
-        else:
-            param = np.polyfit(np.array([self.EAMIN[0, 0], self.EAMED[0, 0], self.EAMAX[0, 0]]),
-                               np.array([evmin_min, evmin_med, evmin_max]), deg=2)
-
-        self.ParamEVMin = param
-
-    def CalcParamEVP(self, usinas: List[hidr]):
-
-        self.EVP = np.zeros((1, 12), 'd')
-        self.ParamEVP = np.zeros((3, 12), 'd')
-
-        for imes in range(12):
-            evp_max = 0
-            evp_min = 0
-            evp_med = 0
-            for iusina in usinas:
-                if iusina.Ree == self.Codigo:
-                    area_max = iusina.PolCotaArea[0] + iusina.PolCotaArea[1] * iusina.CotaMax + iusina.PolCotaArea[
-                        2] * iusina.CotaMax ** 2 + \
-                               iusina.PolCotaArea[3] * iusina.CotaMax ** 3 + iusina.PolCotaArea[4] * iusina.CotaMax ** 4
-                    area_min = iusina.PolCotaArea[0] + iusina.PolCotaArea[1] * iusina.CotaMin + iusina.PolCotaArea[
-                        2] * iusina.CotaMin ** 2 + \
-                               iusina.PolCotaArea[3] * iusina.CotaMin ** 3 + iusina.PolCotaArea[4] * iusina.CotaMin ** 4
-                    cota_med = iusina.PolCotaVol[0] + iusina.PolCotaVol[1] * (iusina.VolUtil * 0.65) + \
-                               iusina.PolCotaVol[2] * (iusina.VolUtil * 0.65) ** 2 + \
-                               iusina.PolCotaVol[3] * (iusina.VolUtil * 0.65) ** 3 + iusina.PolCotaVol[4] * (
-                                       iusina.VolUtil * 0.65) ** 4
-                    area_med = iusina.PolCotaArea[0] + iusina.PolCotaArea[1] * cota_med + iusina.PolCotaArea[
-                        2] * cota_med ** 2 + \
-                               iusina.PolCotaArea[3] * cota_med ** 3 + iusina.PolCotaArea[4] * cota_med ** 4
-
-                    evp_med += (1 / (1000 * 2.63)) * area_med * iusina.RoAcum[0, 0]
-                    evp_max += (1 / (1000 * 2.63)) * area_max * iusina.RoAcumMax[0, 0]
-                    evp_min += (1 / (1000 * 2.63)) * area_min * iusina.RoAcumMin[0, 0]
-
-            self.EVP[0, imes] = evp_med
-
-            if self.EAMAX[0, 0] == 0 and self.EAMIN[0, 0] == 0 and self.EAMED[0, 0] == 0:
-                param = np.array([0., 0., evp_med])
-            else:
-                param = np.polyfit(np.array([self.EAMIN[0, 0], self.EAMED[0, 0], self.EAMAX[0, 0]]),
-                                   np.array([evp_min, evp_med, evp_max]), deg=2)
-
-            self.ParamEVP[:, imes] = param
-
-    def CalcEVM(self, usinas: List[hidr]):
-
-        self.EVM = np.zeros((5, 12), 'd')
-
-        for iusina in usinas:
-            if iusina.Ree == self.Codigo:
-                for iano in range(5):
-                    for imes in range(12):
-                        self.EVM[iano, imes] += (1 / 2.63) * iusina.VolMortoTempo[iano, imes] * iusina.RoAcum[0, 0]
+                            if iusina.StatusMotoriz[iano][imes] == 2:
+                                self.EFIO[iano, imes] = self.EFIO[iano, imes] + iusina.RoEquiv[iano][
+                                    imes] * iusina.QIncEntreRes(usinas, iano, imes)
+        self.ENA = self.EC + self.EFIO
 
     #############################################################################
     #############################################################################
