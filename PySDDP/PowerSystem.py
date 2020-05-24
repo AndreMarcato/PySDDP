@@ -15,7 +15,7 @@ from multiprocessing import Pool
 from matplotlib import cm
 
 
-class PySDDP(object):
+class importa_pmo(object):
     # Classe contendo informacoes sobre os arquivos de entrada e saida
     caso = None
     dger = None
