@@ -1,6 +1,8 @@
 # coding=utf-8
 
 import os
+
+import cvxopt
 import numpy as np
 from matplotlib import pyplot as plt
 from cvxopt.modeling import variable, solvers, op, matrix
@@ -15,7 +17,7 @@ from multiprocessing import Pool
 from matplotlib import cm
 
 
-class importa_pmo(object):
+class ImportaPmo(object):
     # Classe contendo informacoes sobre os arquivos de entrada e saida
     caso = None
     dger = None
@@ -606,92 +608,99 @@ class importa_pmo(object):
 
 
 class Classroom(object):
-    lista_uhe = []
 
-    usina = {
-        "Nome": "UHE DO MARCATO",  # Nome da Usina
-        "Vmax": 100.,  # Volume Máximo em hm^3
-        "Vmin": 20.,  # Volume Mínimo em hm^3
-        "VI": 65.,
-        "Prod": 0.95,  # Produtibilidade em MWmed/hm^3
-        "Engol": 60.,  # Engolimento Máximo em hm^3
-        "Afl": [  # Cenários de Afluências (linha: Estágio, coluna: cenário)
-            [23, 16],
-            [19, 14],
-            [15, 11]
-        ]
-    }
+    sistema = None
 
-    lista_uhe.append(usina)
+    def __init__(self):
+        lista_uhe = []
 
-    #
-    # Retirar os comentários abaixo para considerar 2 UHEs
-    #
-    # usina = {
-    #    "Nome": "UHE DO VASCAO",
-    #    "Vmax": 200.,
-    #    "Vmin": 40.,
-    #    "VI": 80,
-    #    "Prod": 0.85,
-    #    "Engol": 100.,
-    #    "Afl": [
-    #            [ 46, 32],
-    #            [ 38, 28],
-    #            [ 30, 22]
-    #    ]
-    # }
-    # lista_uhe.append(usina)
+        usina = {
+            "Nome": "UHE DO MARCATO",  # Nome da Usina
+            "Vmax": 100.,  # Volume Máximo em hm^3
+            "Vmin": 20.,  # Volume Mínimo em hm^3
+            "VI": 65.,
+            "Prod": 0.95,  # Produtibilidade em MWmed/hm^3
+            "Engol": 60.,  # Engolimento Máximo em hm^3
+            "Afl": [  # Cenários de Afluências (linha: Estágio, coluna: cenário)
+                [23, 16],
+                [19, 14],
+                [15, 11]
+            ]
+        }
 
-    usina = {
-        "Nome": "GT_1",  # Nome da Usina Térmica 1
-        "Capac": 15.,  # Capacidade Máxima de Geração MWMed
-        "Custo": 10.  # Custo de Operação $/MWMed
-    }
+        lista_uhe.append(usina)
 
-    lista_ute = []
+        #
+        # Retirar os comentários abaixo para considerar 2 UHEs
+        #
+        # usina = {
+        #    "Nome": "UHE DO VASCAO",
+        #    "Vmax": 200.,
+        #    "Vmin": 40.,
+        #    "VI": 80,
+        #    "Prod": 0.85,
+        #    "Engol": 100.,
+        #    "Afl": [
+        #            [ 46, 32],
+        #            [ 38, 28],
+        #            [ 30, 22]
+        #    ]
+        # }
+        # lista_uhe.append(usina)
 
-    lista_ute.append(usina)
+        usina = {
+            "Nome": "GT_1",  # Nome da Usina Térmica 1
+            "Capac": 15.,  # Capacidade Máxima de Geração MWMed
+            "Custo": 10.  # Custo de Operação $/MWMed
+        }
 
-    usina = {
-        "Nome": "GT_2",  # Nome da Usina Térmica 2
-        "Capac": 10.,  # Capacidade Máxima de Geração MWmed
-        "Custo": 25.  # Custo de Operação $/MWMed
-    }
+        lista_ute = []
 
-    lista_ute.append(usina)
+        lista_ute.append(usina)
 
-    #
-    # d_gerais para o caso 1 UHE
-    #
-    d_gerais = {
-        "CDef": 500.,  # Custo de Déficit $/MWMed
-        "Carga": [50, 50., 50],  # Lista com carga a ser atendida por estágio
-        "Nr_Disc": 3,  # Número de Discretizações
-        "Nr_Est": 3,  # Número de Estágios
-        "Nr_Cen": 2  # Número de Cenários de Afluências
-    }
+        usina = {
+            "Nome": "GT_2",  # Nome da Usina Térmica 2
+            "Capac": 10.,  # Capacidade Máxima de Geração MWmed
+            "Custo": 25.  # Custo de Operação $/MWMed
+        }
 
-    #
-    # d_gerais para o caso 2 UHE (Comentar o bloco acima e descomentar o bloco abaixo)
-    #
-    # d_gerais = {
-    #    "CDef": 500.,
-    #    "Carga": [ 100, 100., 100],
-    #    "Nr_Disc": 5,
-    #    "Nr_Est": 3,
-    #    "Nr_Cen": 2
-    # }
+        lista_ute.append(usina)
 
-    #
-    # Cria dicionário de dados com todas as informações do sistema em estudo
-    #
-    sistema = {
-        "DGer": d_gerais,
-        "UHE": lista_uhe,
-        "UTE": lista_ute
-    }
+        #
+        # d_gerais para o caso 1 UHE
+        #
+        d_gerais = {
+            "CDef": 500.,  # Custo de Déficit $/MWMed
+            "Carga": [50, 50., 50],  # Lista com carga a ser atendida por estágio
+            "Nr_Disc": 3,  # Número de Discretizações
+            "Nr_Est": 3,  # Número de Estágios
+            "Nr_Cen": 2  # Número de Cenários de Afluências
+        }
+
+        #
+        # d_gerais para o caso 2 UHE (Comentar o bloco acima e descomentar o bloco abaixo)
+        #
+        # d_gerais = {
+        #    "CDef": 500.,
+        #    "Carga": [ 100, 100., 100],
+        #    "Nr_Disc": 5,
+        #    "Nr_Est": 3,
+        #    "Nr_Cen": 2
+        # }
+
+        #
+        # Cria dicionário de dados com todas as informações do sistema em estudo
+        #
+        self.sistema = {
+            "DGer": d_gerais,
+            "UHE": lista_uhe,
+            "UTE": lista_ute
+        }
 
     def despacho_pdd(self, VI, VF, AFL, custofuturo, iest, imprime):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
 
         Num_UHE = len(self.sistema["UHE"])
 
@@ -816,7 +825,7 @@ class Classroom(object):
         # Imprime resultados em tela
         #
 
-        if imprime and (problema.status == 'optmal'):
+        if imprime and (problema.status == 'optimal'):
             print("Custo Total:", fob.value())
 
             for i, usi in enumerate(self.sistema["UHE"]):
@@ -919,7 +928,7 @@ class Classroom(object):
                     #
                     # Chama função de despacho hidrotérmico
                     #
-                    resultado = self.despacho_pdd(VI, VF, AFL, CustoFuturo, iest - 1, imprime=False)
+                    resultado = self.despacho_pdd(VI, VF, AFL, CustoFuturo, iest - 1, imprime)
                     todos.append([iest - 1, VI, VF, resultado])
                     if (resultado["DGer"]["CustoTotal"] < menor):
                         menor = resultado["DGer"]["CustoTotal"]
@@ -1047,6 +1056,9 @@ class Classroom(object):
         return resultado
 
     def pl_unico(self, cenario, imprime):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
 
         #
         # Cria função de despacho hidrotérmico
@@ -1239,6 +1251,9 @@ class Classroom(object):
         return resultado
 
     def despacho_pddd(self, VI, AFL, pote_de_corte, iest, imprime):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
 
         Num_UHE = len(self.sistema["UHE"])
 
@@ -1441,9 +1456,9 @@ class Classroom(object):
                 #
                 # Chama função de despacho hidrotérmico
                 #
-                resultado = self.despacho_pddd(VI, AFL, pote_de_corte, iest + 1, imprime=False)
-                if iteracao == 1:
-                    print(iest, resultado)
+                resultado = self.despacho_pddd(VI, AFL, pote_de_corte, iest + 1, imprime)
+                #if iteracao == 1:
+                #    print(iest, resultado)
                 ZSUP[iteracao] += resultado["DGer"]["CustoTotal"] - resultado["DGer"]["CustoFuturo"]
                 if iest == 0:
                     ZINF[iteracao] = resultado["DGer"]["CustoTotal"]
@@ -1471,7 +1486,7 @@ class Classroom(object):
                 #
                 # Chama função de despacho hidrotérmico
                 #
-                resultado = self.despacho_pddd(VI, AFL, pote_de_corte, iest + 1, imprime=False)
+                resultado = self.despacho_pddd(VI, AFL, pote_de_corte, iest + 1, imprime)
                 term_indep = resultado["DGer"]["CustoTotal"]
                 coefs = []
                 for i, iusi in enumerate(resultado["UHE"]):
