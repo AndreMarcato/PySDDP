@@ -1212,7 +1212,7 @@ class Classroom(object):
         lista_deficit = []
         for i_est in range(self.sistema["DGer"]["Nr_Est"]):
             cmo.append(restricoes[pula + i_est].multiplier.value[0])
-            lista_deficit.append(deficit[iest].value()[0])
+            lista_deficit.append(deficit[i_est].value()[0])
 
         Dger = {
             "CustoTotal": fob.value()[0],
@@ -1305,7 +1305,7 @@ class Classroom(object):
 
         AD += deficit[0]
 
-        restricoes.append(AD == self.sistema["DGer"]["Carga"][iest - 2])
+        restricoes.append(AD == self.sistema["DGer"]["Carga"][iest - 1])
 
         # Restricoes Canalização
 
