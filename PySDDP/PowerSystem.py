@@ -14,6 +14,8 @@ import time
 from timeit import default_timer as timer
 from functools import partial
 from multiprocessing import Pool
+from graphviz import Digraph
+
 from matplotlib import cm
 
 
@@ -622,10 +624,10 @@ class Classroom(object):
             "Prod": 0.95,  # Produtibilidade em MWmed/hm^3
             "Engol": 60.,  # Engolimento Máximo em hm^3
             "Afl": [  # Cenários de Afluências (linha: Estágio, coluna: cenário)
-                [23, 16],
-                [19, 14],
-                [15, 11]
-            ]
+                    [23, 16],
+                    [19, 14],
+                    [15, 11]
+                   ]
         }
 
         lista_uhe.append(usina)
@@ -633,7 +635,7 @@ class Classroom(object):
         #
         # Retirar os comentários abaixo para considerar 2 UHEs
         #
-        # usina = {
+        #usina2 = {
         #    "Nome": "UHE DO VASCAO",
         #    "Vmax": 200.,
         #    "Vmin": 40.,
@@ -646,7 +648,7 @@ class Classroom(object):
         #            [ 30, 22]
         #    ]
         # }
-        # lista_uhe.append(usina)
+        #lista_uhe.append(usina2)
 
         usina = {
             "Nome": "GT_1",  # Nome da Usina Térmica 1
@@ -671,7 +673,7 @@ class Classroom(object):
         #
         d_gerais = {
             "CDef": 500.,  # Custo de Déficit $/MWMed
-            "Carga": [50, 50., 50],  # Lista com carga a ser atendida por estágio
+            "Carga": [50., 50., 50.],  # Lista com carga a ser atendida por estágio
             "Nr_Disc": 3,  # Número de Discretizações
             "Nr_Est": 3,  # Número de Estágios
             "Nr_Cen": 2  # Número de Cenários de Afluências
@@ -680,7 +682,7 @@ class Classroom(object):
         #
         # d_gerais para o caso 2 UHE (Comentar o bloco acima e descomentar o bloco abaixo)
         #
-        # d_gerais = {
+        #d_gerais = {
         #    "CDef": 500.,
         #    "Carga": [ 100, 100., 100],
         #    "Nr_Disc": 5,
@@ -1128,7 +1130,7 @@ class Classroom(object):
 
         for i_est in range(self.sistema["DGer"]["Nr_Est"]):
             AD = 0
-            for i, usi in enumerate(self.sistema["UHE"]):
+            for i, iusi in enumerate(self.sistema["UHE"]):
                 AD += iusi["Prod"] * vt[i][i_est]
             for i, usi in enumerate(self.sistema["UTE"]):
                 AD += gt[i][i_est]
@@ -1297,7 +1299,7 @@ class Classroom(object):
 
         AD = 0
 
-        for i, usi in enumerate(self.sistema["UHE"]):
+        for i, iusi in enumerate(self.sistema["UHE"]):
             AD += iusi["Prod"] * vt[i]
 
         for i, usi in enumerate(self.sistema["UTE"]):
@@ -1587,3 +1589,584 @@ class Classroom(object):
         }
 
         return resultado
+
+    def plot_tree(self, Cenario, Estagios, Aberturas, Nome_Arq):
+        """Gera um pdf com estágios e aberturas.
+
+        Keyword arguments:
+        Cenario -- Especifique o cenario de afluencia a ser utilizado no primeiro estagio
+        Estagios -- Especifique a profundidade da árvore, ou seja, quantas camadas terá a árvore
+        Aberturas -- Especifique o número aberturas para cada nó
+        Nome_Arq -- Especifique o Nome do arquivo de saída
+        """
+
+        if Aberturas > self.sistema["DGer"]["Nr_Cen"]:
+            print ("Número de Cenários Menor que Número de Aberturas")
+            print ("Método plot_tree interrompido!")
+            return
+
+        if Cenario > self.sistema["DGer"]["Nr_Cen"]:
+            print ("Cenario escolhido superior ao Número de Cenários disponíveis")
+            print ("Método plot_tree interrompido!")
+            return
+
+        if Estagios > self.sistema["DGer"]["Nr_Est"]:
+            print ("Número de Estágios Superior aos dados informados no problema.")
+            print("Método plot_tree interrompido!")
+            return
+
+        def cria_tree(lista, CasoEstudo, Aberturas, Estagios):
+
+          estagio = lista[-1]["Estagio"] + 1
+          anterior = lista[-1]["Ordem"]
+          if estagio == Estagios:
+            return
+          for icen in range(Aberturas):
+            elemento = { "Anterior": anterior,
+                         "Estagio": estagio,
+                         "Afluencia": CasoEstudo.sistema["UHE"][0]["Afl"][estagio][icen],
+                         "Ordem": len(lista),
+                       }
+            lista.append(elemento)
+            cria_tree(lista, CasoEstudo, Aberturas, Estagios)
+
+        estagio = 0
+        elemento = {
+                      "Anterior" : None,
+                      "Estagio" : 0,
+                      "Afluencia" : self.sistema["UHE"][0]["Afl"][estagio][0],
+                      "Ordem" : 0,
+                   }
+
+        lista = []
+        lista.append(elemento)
+        cria_tree(lista, self, Aberturas, Estagios)
+
+        g = Digraph('G', filename=Nome_Arq)
+        for elemento in lista:
+          if (elemento["Anterior"] != None):
+            probabilidade = 100/(Aberturas**elemento["Estagio"])
+            g.edge(str(elemento["Anterior"]), str(elemento["Ordem"]),
+                   label=str(round(probabilidade,2))+'%')
+
+        for elemento in lista:
+          g.node(str(elemento["Ordem"]),label= " Afl: "+ str(elemento["Afluencia"]))
+
+        g.node("0", style="filled", fillcolor="green")
+
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+          if (iest%2) == 0:
+            Cor = 'red'
+            Preenche = 'green:cyan'
+          else:
+            Cor = 'red'
+            Preenche = 'lightblue:cyan'
+
+          with g.subgraph(name='cluster'+str(iest+1)) as c:
+            c.attr(fillcolor=Preenche,
+                   label='Estágio '+str(iest+1),
+                   fontcolor=Cor,
+                   style='filled',
+                   gradientangle='270')
+            c.attr('node',
+                   shape='box',
+                   fillcolor='red:yellow',
+                   style='filled',
+                   gradientangle='90')
+            for elemento in lista:
+              if elemento["Estagio"]==iest:
+                c.node(str(elemento["Ordem"]))
+
+        g.attr("graph",pad="0.5", nodesep="1", ranksep="2")
+
+        g.view()
+
+    def pl_unico_est(self, Cenario, imprime = False):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
+
+        #
+        # Cria Variáveis de Decisão
+        # vf, vt, vv, gt ===> [iest][abertura][0][usina]
+        # deficit ===> [iest][abertura]
+        #
+
+        vf = []
+        vt = []
+        vv = []
+        gt = []
+        deficit = []
+
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            vf.append([])
+            vt.append([])
+            vv.append([])
+            gt.append([])
+            deficit.append([])
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                vf[iest].append([])
+                vt[iest].append([])
+                vv[iest].append([])
+                gt[iest].append([])
+                deficit[iest].append([])
+                vf[iest][iabertura].append(variable(len(self.sistema["UHE"]),
+                                                    "Volume Final no Estagio " +
+                                                    str(iest) +
+                                                    " Abertura " +
+                                                    str(iabertura)))
+                vt[iest][iabertura].append(variable(len(self.sistema["UHE"]),
+                                                    "Volume Turbinado no Estagio " +
+                                                    str(iest) +
+                                                    " Abertura " +
+                                                    str(iabertura)))
+                vv[iest][iabertura].append(variable(len(self.sistema["UHE"]),
+                                                    "Volume Vertido no Estagio " +
+                                                    str(iest) +
+                                                    " Abertura " +
+                                                    str(iabertura)))
+                gt[iest][iabertura].append(variable(len(self.sistema["UTE"]),
+                                                    "Geração Térmica no Estagio " +
+                                                    str(iest) +
+                                                    " Abertura " +
+                                                    str(iabertura)))
+                deficit[iest][iabertura].append(variable(1,
+                                                         "Déficit no Estagio " +
+                                                         str(iest) +
+                                                         " Abertura " +
+                                                         str(iabertura)))
+        #
+        # Define Função Objetivo (fob)
+        #
+
+        fob = 0
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                constante = 1 / (self.sistema["DGer"]["Nr_Cen"] ** iest)
+                for iusi, termica in enumerate(self.sistema["UTE"]):
+                    fob += float(constante) * termica["Custo"] * gt[iest][iabertura][0][iusi]
+                fob += float(constante) * self.sistema["DGer"]["CDef"] * deficit[iest][iabertura][0]
+                for iusi, hidreletrica in enumerate(self.sistema["UHE"]):
+                    fob += float(constante) * 0.001 * vv[iest][iabertura][0][iusi]
+
+        # Constrói Conjunto de Restrições
+
+        restricoes = []
+
+        #
+        # Balanço Hídrico
+        # Para cada nó existe uma restrição de Balanço Hídrico por Usina
+        #
+
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            abertura_anterior = 0
+            contador = 0
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                if contador == self.sistema["DGer"]["Nr_Cen"]:
+                    contador = 0
+                    abertura_anterior += 1
+                for iusi, uhe in enumerate(self.sistema["UHE"]):
+                    if iest == 0:
+                        restricoes.append(vf[iest][iabertura][0][iusi] ==
+                                          float(self.sistema["UHE"][iusi]["VI"]) +
+                                          float(self.sistema["UHE"][iusi]["Afl"][iest][Cenario]) -
+                                          vt[iest][iabertura][0][iusi] -
+                                          vv[iest][iabertura][0][iusi])
+                    else:
+                        restricoes.append(vf[iest][iabertura][0][iusi] ==
+                                          vf[iest - 1][abertura_anterior][0][iusi] +
+                                          float(self.sistema["UHE"][iusi]["Afl"][iest][contador]) -
+                                          vt[iest][iabertura][0][iusi] -
+                                          vv[iest][iabertura][0][iusi])
+
+                contador += 1
+
+        #
+        # Atendimento à Demanda
+        # Para cada nó existe uma Restrição de Atendimento à Demanda
+        #
+
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                demanda = 0
+                for iusi, uhe in enumerate(self.sistema["UHE"]):
+                    demanda += float(self.sistema["UHE"][iusi]["Prod"]) * vt[iest][iabertura][0][iusi]
+                for iusi, ute in enumerate(self.sistema["UTE"]):
+                    demanda += gt[iest][iabertura][0][iusi]
+                demanda += deficit[iest][iabertura][0]
+                restricoes.append(demanda == self.sistema["DGer"]["Carga"][iest])
+
+        #
+        # Restricoes de Canalização
+        #
+
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                for iusi, uhe in enumerate(self.sistema["UHE"]):
+                    restricoes.append(vf[iest][iabertura][0][iusi] >= self.sistema["UHE"][iusi]["Vmin"])
+                    restricoes.append(vf[iest][iabertura][0][iusi] <= self.sistema["UHE"][iusi]["Vmax"])
+                    restricoes.append(vt[iest][iabertura][0][iusi] >= 0)
+                    restricoes.append(vt[iest][iabertura][0][iusi] <= self.sistema["UHE"][iusi]["Engol"])
+                    restricoes.append(vv[iest][iabertura][0][iusi] >= 0)
+                for iusi, ute in enumerate(self.sistema["UTE"]):
+                    restricoes.append(gt[iest][iabertura][0][iusi] >= 0)
+                    restricoes.append(gt[iest][iabertura][0][iusi] <= self.sistema["UTE"][iusi]["Capac"])
+                restricoes.append(deficit[iest][iabertura][0] >= 0)
+
+        #
+        # Computa o instante de tempo no qual o processo iterativo iniciou
+        #
+        t = time.time()
+
+        #
+        # Cria problema de otimização
+        #
+
+        problema = op(fob, restricoes)
+
+        #
+        # Chama solver GLPK e resolve o problema de otimização linear
+        #
+
+        problema.solve('dense', 'glpk')
+
+        #
+        # Calcula o tempo decorrido desde o início do algoritmo
+        #
+        print("Tempo decorrido no PL Único - Árvore Completa", time.time() - t)
+
+        #
+        # Armazena Resultado
+        #
+
+        ResNos = []
+        Contador = 0
+        Pula = len(self.sistema["UHE"])*(self.sistema["DGer"]["Nr_Cen"]**self.sistema["DGer"]["Nr_Est"]-1)/(self.sistema["DGer"]["Nr_Cen"]-1)
+        Pula = int(Pula)
+        for iest in range(self.sistema["DGer"]["Nr_Est"]):
+            for iabertura in range(self.sistema["DGer"]["Nr_Cen"] ** iest):
+                lista_uhe = []
+                CustoTotal = 0.
+                for i, iusi in enumerate(self.sistema["UHE"]):
+                    elemento = {
+                                    "vf": vf[iest][iabertura][0][i].value()[0],
+                                    "vt": vt[iest][iabertura][0][i].value()[0],
+                                    "vv": vv[iest][iabertura][0][i].value()[0],
+                                    "cma": restricoes[Contador].multiplier.value[0]
+                               }
+                    CustoTotal += 0.01 * vv[iest][iabertura][0][i].value()[0]
+                    lista_uhe.append(elemento)
+                    Contador += 1
+                lista_ute = []
+                for i, iusi in enumerate(self.sistema["UTE"]):
+                    elemento = {
+                                    "gt": gt[iest][iabertura][0][i].value()[0]
+                               }
+                    CustoTotal += iusi["Custo"] * gt[iest][iabertura][0][i].value()[0]
+                    lista_ute.append(elemento)
+                CustoTotal += self.sistema["DGer"]["CDef"] * deficit[iest][iabertura][0].value[0]
+                DGer = {
+                         "Deficit": deficit[iest][iabertura][0].value[0],
+                         "CMO": restricoes[Pula].multiplier.value[0],
+                         "CustoImediato": CustoTotal
+                       }
+                Pula += 1
+                No = { "Dger": DGer,
+                       "UHE": lista_uhe,
+                       "UTE": lista_ute,
+                     }
+                NoCompleto = {
+                                "Estagio": iest,
+                                "Ordem": iabertura,
+                                "Resultado": No
+                             }
+                ResNos.append(NoCompleto)
+
+        return(ResNos, fob.value()[0])
+
+
+    def despacho_pddd_est(self, VI, AFL, pote_de_corte, iest, ordem, imprime):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
+
+        Num_UHE = len(self.sistema["UHE"])
+
+        Num_UTE = len(self.sistema["UTE"])
+
+        #
+        # Cria Variáveis de Decisão
+        #
+
+        vf = variable(Num_UHE, "Volume Final na Usina")
+        vt = variable(Num_UHE, "Volume Turbinado na Usina")
+        vv = variable(Num_UHE, "Volume Vertido na Usina")
+        gt = variable(Num_UTE, "Geração na Usina Térmica")
+        deficit = variable(1, "Déficit de Energia no Sistema")
+        alpha = variable(1, "Custo Futuro")
+
+        # Construção da Função Objetivo
+
+        fob = 0
+
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            fob += iusi['Custo'] * gt[i]
+
+        fob += self.sistema["DGer"]["CDef"] * deficit[0]
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            fob += 0.01 * vv[i]
+
+        fob += 1.0 * alpha[0]
+
+        # Definição das Restrições
+
+        restricoes = []
+
+        # Balanço Hídrico
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            restricoes.append(vf[i] == float(VI[i]) + float(AFL[i]) - vt[i] - vv[i])
+
+        # Atendimento à Demanda
+
+        AD = 0
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            AD += iusi["Prod"] * vt[i]
+
+        for i, usi in enumerate(self.sistema["UTE"]):
+            AD += gt[i]
+
+        AD += deficit[0]
+
+        restricoes.append(AD == self.sistema["DGer"]["Carga"][iest - 1])
+
+        # Restricoes Canalização
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            restricoes.append(vf[i] >= iusi["Vmin"])
+            restricoes.append(vf[i] <= iusi["Vmax"])
+            restricoes.append(vt[i] >= 0)
+            restricoes.append(vt[i] <= iusi["Engol"])
+            restricoes.append(vv[i] >= 0)
+
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            restricoes.append(gt[i] >= 0)
+            restricoes.append(gt[i] <= iusi["Capac"])
+
+        restricoes.append(deficit[0] >= 0)
+
+        restricoes.append(alpha[0] >= 0)
+
+        #
+        # Insere inequações correspondentes aos cortes
+        #
+
+        for icorte in pote_de_corte:
+            if icorte['Estagio'] == iest and icorte["Ordem"] == ordem:
+                equacao = 0
+                for iusi in range(Num_UHE):
+                    equacao += float(icorte['Coefs'][iusi]) * vf[iusi]
+                equacao += float(icorte['Termo_Indep'])
+                restricoes.append(alpha[0] >= equacao)
+
+        #
+        # Cria problema de otimização
+        #
+
+        problema = op(fob, restricoes)
+
+        #
+        # Chama solver GLPK e resolve o problema de otimização linear
+        #
+
+        problema.solve('dense', 'glpk')
+
+        #
+        # Armazena resultados do problema em um dicionário de dados
+        #
+
+        Dger = {
+            "Deficit": deficit[0].value()[0],
+            "CMO": restricoes[Num_UHE].multiplier.value[0],
+            "CustoTotal": fob.value()[0],
+            "CustoFuturo": alpha[0].value()[0]
+        }
+
+        lista_uhe = []
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            resultado = {
+                "vf": vf[i].value()[0],
+                "vt": vt[i].value()[0],
+                "vv": vv[i].value()[0],
+                "cma": restricoes[i].multiplier.value[0]
+            }
+            lista_uhe.append(resultado)
+
+        lista_ute = []
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            resultado = {
+                "gt": gt[i].value()[0]
+            }
+            lista_ute.append(resultado)
+
+        resultado = {
+            "DGer": Dger,
+            "UHE": lista_uhe,
+            "UTE": lista_ute
+        }
+
+        #
+        # Imprime resultados em tela
+        #
+
+        if imprime:
+            print("Custo Total:", fob.value())
+
+            for i, usi in enumerate(self.sistema["UHE"]):
+                print(vf.name, i, "é", vf[i].value(), "hm3")
+                print(vt.name, i, "é", vt[i].value(), "hm3")
+                print(vv.name, i, "é", vv[i].value(), "hm3")
+
+            for i, usi in enumerate(self.sistema["UTE"]):
+                print(gt.name, i, "é", gt[i].value(), "MWmed")
+
+            print(deficit.name, "é", deficit[0].value(), "MWmed")
+
+            print(alpha.name, "é", alpha[0].value(), "$")
+
+            for i, iusi in enumerate(self.sistema["UHE"]):
+                print("O valor da água na usina", i, "é: ", restricoes[i].multiplier.value)
+
+            print("O Custo Marginal de Operação é: ", restricoes[Num_UHE].multiplier.value)
+
+            print("----- x ------ ")
+
+        #
+        # Retorna da função exportando os resultados
+        #
+
+        return resultado
+
+    def pddd_est(self, Cenario, imprime = False):
+
+
+        def recursiva(Caso, VI, AFL, Estagio, Ordem, PoteDeCorte, ResNos, imprime = False):
+            Ordem_Deste_No = Ordem
+            #
+            # Somente no Estágio Inicial Existe um Nó Somente
+            #
+            if Estagio == 0:
+                Fator = float(1)
+            #
+            # Em todos os outros nós existirão Tantas bifurcações quanto o número de cenários
+            #
+            else:
+                Fator = float(Caso.sistema["DGer"]["Nr_Cen"])
+            #
+            # Despacha Nó - Forward
+            #
+            resultado_fwd = Caso.despacho_pddd_est(VI, AFL, PoteDeCorte, Estagio+1, Ordem_Deste_No, imprime)
+            CI = (resultado_fwd["DGer"]["CustoTotal"] - resultado_fwd["DGer"]["CustoFuturo"])
+            CT = resultado_fwd["DGer"]["CustoTotal"]
+            Guarda = {
+                        "Estagio": Estagio,
+                        "Ordem": Ordem_Deste_No,
+                        "Resultado": resultado_fwd
+                     }
+            ResNos.append(Guarda)
+            #
+            # Caso o nó resolvido seja de último estágio não há necessidade de bifurcar mais
+            #
+            if Estagio == Caso.sistema["DGer"]["Nr_Est"]-1:
+                term_indep = resultado_fwd["DGer"]["CustoTotal"]
+                coefs = []
+                for i, iusi in enumerate(resultado_fwd["UHE"]):
+                    coefs.append(-iusi["cma"])
+                    term_indep -= VI[i] * coefs[i]
+                Corte = {
+                            "Estagio": Estagio,
+                            "Ordem": Ordem,
+                            "Termo_Indep": term_indep/Fator,
+                            "Coefs": [ coef/Fator for coef in coefs ]
+                        }
+                return (CT, CI/Fator, Corte, Ordem, ResNos)
+            #
+            # Caso o nó resolvido não seja de último estágio deve-se bifurcar o número de cenários
+            #
+            VF = []
+            for iusi in resultado_fwd["UHE"]:
+                VF.append(iusi["vf"])
+            #
+            # Cria Corte Médio (Inicializa com Zero)
+            #
+            Corte = {
+                        "Estagio": Estagio+1,
+                        "Ordem": Ordem_Deste_No,
+                        "Termo_Indep": 0.,
+                        "Coefs": [0.] * len(Caso.sistema["UHE"])
+                    }
+            for icen in range(Caso.sistema["DGer"]["Nr_Cen"]):
+                AFL_CEN = []
+                for iusi in Caso.sistema["UHE"]:
+                    AFL_CEN.append(iusi["Afl"][Estagio+1][icen])
+                Ordem += 1
+                [CTMedio, CIMedio, CorteMedio, Ordem, ResNos] = recursiva(Caso, VF, AFL_CEN, Estagio+1, Ordem, PoteDeCorte, ResNos, imprime)
+                Corte["Termo_Indep"] += CorteMedio["Termo_Indep"]
+                for i in range(len(CorteMedio["Coefs"])):
+                    Corte["Coefs"][i] += CorteMedio["Coefs"][i]
+                CI += CIMedio
+            PoteDeCorte.append(Corte)
+            resultado_bkd = Caso.despacho_pddd_est(VI, AFL, PoteDeCorte, Estagio+1, Ordem_Deste_No, imprime)
+            term_indep = resultado_bkd["DGer"]["CustoTotal"]
+            coefs = []
+            for i, iusi in enumerate(resultado_bkd["UHE"]):
+                coefs.append(-iusi["cma"])
+                term_indep -= VI[i] * coefs[i]
+            Corte = {
+                "Estagio": Estagio,
+                "Ordem": Ordem,
+                "Termo_Indep": term_indep/Fator,
+                "Coefs": [ coef/Fator for coef in coefs ]
+            }
+
+            return (CT, CI/Fator, Corte, Ordem, ResNos)
+
+        tol = 0.01
+        iteracao = 1
+        Estagio = 0
+        VI = []
+        AFL = []
+        PoteDeCorte = []
+        for iusi in self.sistema["UHE"]:
+            VI.append(iusi["VI"])
+            AFL.append(iusi["Afl"][Estagio][Cenario])
+
+        #
+        # Computa o instante de tempo no qual o processo iterativo iniciou
+        #
+        t = time.time()
+
+        zinf_lista = []
+        zsup_lista = []
+        while True:
+            Estagio = 0
+            Ordem = 0
+            ResNos = []
+            [ ZINF, ZSUP, Corte, Ordem, ResNos] = recursiva(self, VI, AFL, Estagio, Ordem, PoteDeCorte, ResNos, imprime)
+            zinf_lista.append(ZINF)
+            zsup_lista.append(ZSUP)
+
+            if np.abs(ZSUP - ZINF) < tol:
+                break
+            else:
+                iteracao += 1
+
+        #
+        # Calcula o tempo decorrido desde o início do algoritmo
+        #
+        print("Tempo decorrido na PDDD - Árvore Completa", time.time() - t)
+
+        return(ResNos, ZINF, zinf_lista, zsup_lista)
+
