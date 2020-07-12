@@ -33,10 +33,10 @@ if __name__ == '__main__':
     CasoEstudo.plot_tree(0,4,2,"/Users/andremarcato/Downloads/arvore")
 
 
-    [ res_plu, fob_plu ] = CasoEstudo.pl_unico_est(0,imprime=False)
+    [ res_plu, fob_plu ] = CasoEstudo.pl_unico_tree(0,imprime=False)
     print(round(fob_plu,2))
 
-    [ res_pddd, fob_pddd, zinf, zsup ] = CasoEstudo.pddd_est(0, imprime=False)
+    [ res_pddd, fob_pddd, zinf, zsup ] = CasoEstudo.pddd_tree(0, imprime=False)
     print(round(fob_pddd,2))
     print(zinf)
     print(zsup)

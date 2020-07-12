@@ -1681,7 +1681,7 @@ class Classroom(object):
 
         g.view()
 
-    def pl_unico_est(self, Cenario, imprime = False):
+    def pl_unico_tree(self, Cenario, imprime = False):
 
         solvers.options['show_progress'] = True
         solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
@@ -2049,7 +2049,7 @@ class Classroom(object):
 
         return resultado
 
-    def pddd_est(self, Cenario, imprime = False):
+    def pddd_tree(self, Cenario, imprime = False):
 
 
         def recursiva(Caso, VI, AFL, Estagio, Ordem, PoteDeCorte, ResNos, imprime = False):
