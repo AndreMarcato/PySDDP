@@ -15,6 +15,8 @@ from timeit import default_timer as timer
 from functools import partial
 from multiprocessing import Pool
 from graphviz import Digraph
+import random
+from copy import copy, deepcopy
 
 from matplotlib import cm
 
@@ -2169,4 +2171,682 @@ class Classroom(object):
         print("Tempo decorrido na PDDD - Árvore Completa", time.time() - t)
 
         return(ResNos, ZINF, zinf_lista, zsup_lista)
+
+    def plot_tree_pdde(self, Estagios, Aberturas, caminhos, Nome_Arq):
+        """Gera um pdf com estágios e aberturas.
+
+        Keyword arguments:
+        Cenario -- Especifique o cenario de afluencia a ser utilizado no primeiro estagio
+        Estagios -- Especifique a profundidade da árvore, ou seja, quantas camadas terá a árvore
+        Aberturas -- Especifique o número aberturas para cada nó
+        caminhos -- Lista com caminhos a serem destacados
+        Nome_Arq -- Especifique o Nome do arquivo de saída
+        """
+
+        if Aberturas > self.sistema["DGer"]["Nr_Cen"]:
+            print ("Número de Cenários Menor que Número de Aberturas")
+            print ("Método plot_tree interrompido!")
+            return
+
+        if Estagios > self.sistema["DGer"]["Nr_Est"]:
+            print ("Número de Estágios Superior aos dados informados no problema.")
+            print("Método plot_tree interrompido!")
+            return
+
+        def cria_tree(lista, CasoEstudo, Aberturas, Estagios):
+
+            if not lista:
+                estagio = 0
+                anterior = None
+            else:
+                estagio = lista[-1]["Estagio"] + 1
+                anterior = lista[-1]["Ordem"]
+            if estagio == Estagios:
+                return
+            for icen in range(Aberturas):
+                elemento = { "Anterior": anterior,
+                         "Estagio": estagio,
+                         "Afluencia": CasoEstudo.sistema["UHE"][0]["Afl"][estagio][icen],
+                         "Ordem": len(lista),
+                       }
+                lista.append(elemento)
+                cria_tree(lista, CasoEstudo, Aberturas, Estagios)
+
+        lista = []
+        cria_tree(lista, self, Aberturas, Estagios)
+
+        #
+        # Cria Grafo
+        #
+
+        g = Digraph('G', filename=Nome_Arq, strict=True)
+
+
+        #
+        # Cria nós do grafo com nome e label
+        #
+
+        for elemento in lista:
+          g.node(str(elemento["Ordem"]),label= " Afl: "+ str(elemento["Afluencia"]))
+
+
+        #
+        # Cria arestas do grafo ( o label é a probabilidade
+        #
+
+        for elemento in lista:
+          if (elemento["Anterior"] != None):
+            probabilidade = 100/(Aberturas**(elemento["Estagio"]+1))
+            g.edge(str(elemento["Anterior"]), str(elemento["Ordem"]),
+                   label=str(round(probabilidade,2))+'%')
+
+
+        #g.node("0", style="filled", fillcolor="green")
+
+        Cor = 'red'
+        for iest in range(Estagios):
+            if (iest%2) == 0:
+                Preenche = 'green:cyan'
+            else:
+                Preenche = 'lightblue:cyan'
+
+            #
+            # Cria um cluster para cada estágio
+            #
+            with g.subgraph(name='cluster'+str(iest+1)) as c:
+                #
+                # Define parâmetros do cluster
+                #
+                c.attr(fillcolor=Preenche,
+                   label='Estágio '+str(iest+1),
+                   fontcolor=Cor,
+                   style='filled',
+                   gradientangle='270')
+                c.attr('node',
+                       shape='box',
+                       fillcolor='red:yellow',
+                       style='filled',
+                       gradientangle='90')
+
+                #
+                # Joga para dentro do cluster todos os nós do estágio iest
+                #
+                for elemento in lista:
+                    if elemento["Estagio"]==iest:
+                        c.node(str(elemento["Ordem"]))
+
+        g.attr("graph",pad="0.5", nodesep="1", ranksep="2")
+
+
+        #caminhos = [ 3, 7, 12, 15]
+
+        for posicao in caminhos:
+            contador = 0
+            for elemento in lista:
+                if elemento["Estagio"] == Estagios-1:
+                    contador = contador + 1
+                    if contador == posicao:
+                        break
+
+            while elemento["Anterior"] != None:
+                probabilidade = 100 / (Aberturas ** (elemento["Estagio"] + 1))
+                g.edge(str(elemento["Anterior"]), str(elemento["Ordem"]),
+                       label=str(round(probabilidade, 2)) + '%', fontcolor = 'red', color='red', penwidth='6.0')
+                for candidato in lista:
+                    if candidato["Ordem"] == elemento["Anterior"]:
+                        elemento = candidato
+                        break
+
+
+        g.view()
+
+
+    def plot_pente_pdde(self, Estagios, Cenarios, Aberturas, SeqForw, Nome_Arq):
+        """Gera um pdf com estágios e aberturas.
+
+        Keyword arguments:
+        Estagios -- Especifique a profundidade da árvore, ou seja, quantas camadas terá a árvore
+        Cenarios -- Especifique o número cenarios a serem considerados
+        Aberturas -- Especifique o número de aberturas
+        SeqForw -- Especifique o número de sequências forward
+        Nome_Arq -- Especifique o Nome do arquivo de saída
+        """
+
+        if Cenarios > self.sistema["DGer"]["Nr_Cen"]:
+            print ("Número de Cenários Menor que Número de Aberturas")
+            print ("Método plot_pente_pdde interrompido!")
+            return
+
+        if Estagios > self.sistema["DGer"]["Nr_Est"]:
+            print ("Número de Estágios Superior aos dados informados no problema.")
+            print("Método plot_pente_pdde interrompido!")
+            return
+
+        if Aberturas > Cenarios:
+            print ("Número de Aberturas Superior ao número de Cenários.")
+            print("Método plot_pente_pdde interrompido!")
+            return
+
+
+        Ordem = 0
+        lista = []
+        random.seed(30)
+        for iest in range(Estagios):
+            escolhidos = random.sample(range(Cenarios), Aberturas)
+            for icen in range(Cenarios):
+                valida = False
+                for procura in escolhidos:
+                    if procura == icen:
+                        valida = True
+                elemento =  {   "Estagio": iest,
+                                "Afluencia": self.sistema["UHE"][0]["Afl"][iest][icen],
+                                "Ordem": Ordem,
+                                "Abertura": valida
+                            }
+                lista.append(elemento)
+                Ordem += 1
+
+        #
+        # Cria Grafo
+        #
+
+        g = Digraph('G', filename=Nome_Arq, strict=True)
+
+        #
+        # Cria nós do grafo com nome e label
+        #
+
+        for elemento in lista:
+            if elemento["Abertura"]:
+                g.node(str(elemento["Ordem"]),label= " Afl: "+ str(elemento["Afluencia"]), color="red", fillcolor="red", style="filled")
+            else:
+                g.node(str(elemento["Ordem"]),label= " Afl: "+ str(elemento["Afluencia"]))
+
+        #
+        # Cria arestas do grafo ( o label é a probabilidade
+        #
+
+        probabilidade = 100 / Cenarios
+        for elemento in lista:
+            if (elemento["Estagio"] != 0):
+                for candidato in lista:
+                    if candidato["Estagio"] == elemento["Estagio"]-1:
+                        g.edge(str(candidato["Ordem"]), str(elemento["Ordem"]))
+                               # label=str(round(probabilidade,2))+'%')
+
+        Cor = 'red'
+        for iest in range(Estagios):
+            if (iest%2) == 0:
+                Preenche = 'green:cyan'
+            else:
+                Preenche = 'lightblue:cyan'
+
+            #
+            # Cria um cluster para cada estágio
+            #
+            with g.subgraph(name='cluster'+str(iest+1)) as c:
+                #
+                # Define parâmetros do cluster
+                #
+                c.attr(fillcolor=Preenche,
+                   label='Estágio '+str(iest+1),
+                   fontcolor=Cor,
+                   style='filled',
+                   gradientangle='270')
+                c.attr('node',
+                       shape='box',
+                       fillcolor='red:yellow',
+                       style='filled',
+                       gradientangle='90')
+
+                #
+                # Joga para dentro do cluster todos os nós do estágio iest
+                #
+                for elemento in lista:
+                    if elemento["Estagio"]==iest:
+                        c.node(str(elemento["Ordem"]))
+
+
+        g.attr("graph",pad="0.5", nodesep="1", ranksep="2")
+
+        g.view()
+
+        #
+        # Cria Pente
+        #
+
+        pente = Digraph('Pente', filename=Nome_Arq+"Pente")
+
+        for iest in range(Estagios):
+            for ifwd in range(SeqForw):
+                codigo = iest*SeqForw+ifwd
+                if ifwd%2 == 1:
+                    Cor = "red"
+                else:
+                    Cor = "green"
+                pente.node(str(codigo),label= " Afl: " + str(codigo), color=Cor, fillcolor=Cor, style="filled")
+                if iest >= 1:
+                    pente.edge(str((iest-1)*SeqForw+ifwd), str(iest*SeqForw+ifwd), color= Cor)
+
+        Cor = 'red'
+        for iest in range(Estagios):
+            if (iest%2) == 0:
+                Preenche = 'gray:cyan'
+            else:
+                Preenche = 'gray:cyan'
+
+            #
+            # Cria um cluster para cada estágio
+            #
+            with pente.subgraph(name='cluster'+str(iest+1)) as c:
+                #
+                # Define parâmetros do cluster
+                #
+                c.attr(fillcolor=Preenche,
+                   label='Estágio '+str(iest+1),
+                   fontcolor=Cor,
+                   style='filled',
+                   gradientangle='270')
+                c.attr('node',
+                       shape='box',
+                       fillcolor='red:yellow',
+                       style='filled',
+                       gradientangle='90')
+
+                #
+                # Joga para dentro do cluster todos os nós do estágio iest
+                #
+                for ifwd in range(SeqForw):
+                    c.node(str(iest*SeqForw+ifwd))
+
+
+
+
+        h = deepcopy(g)
+
+        for copia in range(SeqForw):
+
+            g = deepcopy(h)
+
+            g.filename = g.filename + '_' + str(copia)
+
+            iest = Estagios - 1
+            no = random.randint(0,Aberturas-1)
+
+            conta = 0
+
+            for elemento_front in lista:
+                if elemento_front["Estagio"] == iest and elemento_front["Abertura"]:
+                    if conta == no:
+                        break
+                    else:
+                        conta += 1
+
+            pente.node(str(iest*SeqForw+copia),label="Afl: " + str(elemento_front["Afluencia"]))
+
+            while iest > 0:
+                iest -= 1
+                no = random.randint(0,Aberturas-1)
+                conta = 0
+                for elemento_back in lista:
+                    if elemento_back["Estagio"] == iest and elemento_back["Abertura"]:
+                        if conta == no:
+                            break
+                        else:
+                            conta += 1
+
+                g.edge(str(elemento_back["Ordem"]), str(elemento_front["Ordem"]), color='red', penwidth='2.0')
+
+                elemento_front = elemento_back
+
+                pente.node(str(iest*SeqForw+copia),label="Afl: " + str(elemento_front["Afluencia"]))
+
+            g.view()
+
+
+        pente.view()
+
+    def despacho_pdde(self, VI, AFL, pote_de_corte, iest, imprime):
+
+        solvers.options['show_progress'] = True
+        solvers.options['glpk'] = dict(msg_lev='GLP_MSG_OFF')
+
+        Num_UHE = len(self.sistema["UHE"])
+
+        Num_UTE = len(self.sistema["UTE"])
+
+        #
+        # Cria Variáveis de Decisão
+        #
+
+        vf = variable(Num_UHE, "Volume Final na Usina")
+        vt = variable(Num_UHE, "Volume Turbinado na Usina")
+        vv = variable(Num_UHE, "Volume Vertido na Usina")
+        gt = variable(Num_UTE, "Geração na Usina Térmica")
+        deficit = variable(1, "Déficit de Energia no Sistema")
+        alpha = variable(1, "Custo Futuro")
+
+        # Construção da Função Objetivo
+
+        fob = 0
+
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            fob += iusi['Custo'] * gt[i]
+
+        fob += self.sistema["DGer"]["CDef"] * deficit[0]
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            fob += 0.01 * vv[i]
+
+        fob += 1.0 * alpha[0]
+
+        # Definição das Restrições
+
+        restricoes = []
+
+        # Balanço Hídrico
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            restricoes.append(vf[i] == float(VI[i]) + float(AFL[i]) - vt[i] - vv[i])
+
+        # Atendimento à Demanda
+
+        AD = 0
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            AD += iusi["Prod"] * vt[i]
+
+        for i, usi in enumerate(self.sistema["UTE"]):
+            AD += gt[i]
+
+        AD += deficit[0]
+
+        restricoes.append(AD == self.sistema["DGer"]["Carga"][iest - 1])
+
+        # Restricoes Canalização
+
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            restricoes.append(vf[i] >= iusi["Vmin"])
+            restricoes.append(vf[i] <= iusi["Vmax"])
+            restricoes.append(vt[i] >= 0)
+            restricoes.append(vt[i] <= iusi["Engol"])
+            restricoes.append(vv[i] >= 0)
+
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            restricoes.append(gt[i] >= 0)
+            restricoes.append(gt[i] <= iusi["Capac"])
+
+        restricoes.append(deficit[0] >= 0)
+
+        restricoes.append(alpha[0] >= 0)
+
+        #
+        # Insere inequações correspondentes aos cortes
+        #
+
+        for icorte in pote_de_corte:
+            if icorte['Estagio'] == iest:
+                equacao = 0
+                for iusi in range(Num_UHE):
+                    equacao += float(icorte['Coefs'][iusi]) * vf[iusi]
+                equacao += float(icorte['Termo_Indep'])
+                restricoes.append(alpha[0] >= equacao)
+
+        #
+        # Cria problema de otimização
+        #
+
+        problema = op(fob, restricoes)
+
+        #
+        # Chama solver GLPK e resolve o problema de otimização linear
+        #
+
+        problema.solve('dense', 'glpk')
+
+        #
+        # Armazena resultados do problema em um dicionário de dados
+        #
+
+        Dger = {
+            "Deficit": deficit[0].value()[0],
+            "CMO": restricoes[Num_UHE].multiplier.value[0],
+            "CustoTotal": fob.value()[0],
+            "CustoFuturo": alpha[0].value()[0]
+        }
+
+        lista_uhe = []
+        for i, iusi in enumerate(self.sistema["UHE"]):
+            resultado = {
+                "vf": vf[i].value()[0],
+                "vt": vt[i].value()[0],
+                "vv": vv[i].value()[0],
+                "cma": restricoes[i].multiplier.value[0]
+            }
+            lista_uhe.append(resultado)
+
+        lista_ute = []
+        for i, iusi in enumerate(self.sistema["UTE"]):
+            resultado = {
+                "gt": gt[i].value()[0]
+            }
+            lista_ute.append(resultado)
+
+        resultado = {
+            "DGer": Dger,
+            "UHE": lista_uhe,
+            "UTE": lista_ute
+        }
+
+        #
+        # Imprime resultados em tela
+        #
+
+        if imprime:
+            print("Custo Total:", fob.value())
+
+            for i, usi in enumerate(self.sistema["UHE"]):
+                print(vf.name, i, "é", vf[i].value(), "hm3")
+                print(vt.name, i, "é", vt[i].value(), "hm3")
+                print(vv.name, i, "é", vv[i].value(), "hm3")
+
+            for i, usi in enumerate(self.sistema["UTE"]):
+                print(gt.name, i, "é", gt[i].value(), "MWmed")
+
+            print(deficit.name, "é", deficit[0].value(), "MWmed")
+
+            print(alpha.name, "é", alpha[0].value(), "$")
+
+            for i, iusi in enumerate(self.sistema["UHE"]):
+                print("O valor da água na usina", i, "é: ", restricoes[i].multiplier.value)
+
+            print("O Custo Marginal de Operação é: ", restricoes[Num_UHE].multiplier.value)
+
+            print("----- x ------ ")
+
+        #
+        # Retorna da função exportando os resultados
+        #
+
+        return resultado
+
+
+    def pdde(self, nr_est, nr_aberturas, nr_forwards, imprime):
+        """Gera um pdf com estágios e aberturas.
+
+        Keyword arguments:
+        nr_est -- Define horizonte de estudo
+        nr_aberturas -- Número de aberturas
+        nr_forwards -- Número de seqüências forward
+        """
+
+        if nr_aberturas > self.sistema["DGer"]["Nr_Cen"]:
+            print ("Número de Aberturas Superior ao número de Cenários.")
+            print ("Método pdde interrompido!")
+            return
+
+        if nr_est > self.sistema["DGer"]["Nr_Est"]:
+            print ("Número de Estágios Superior aos dados informados no problema.")
+            print("Método pdde interrompido!")
+            return
+
+        random.seed(30)
+
+        # Calcula as aberturas
+
+        MatrizAberturas = np.zeros( (nr_est,nr_aberturas), dtype=int)
+
+        for i in range(nr_est):
+            sorteados = random.sample(range(0,self.sistema["DGer"]["Nr_Cen"]),nr_aberturas)
+            MatrizAberturas[i] = sorteados
+
+        # Calcula as sequencias forward
+
+        SeqForward = np.zeros( (nr_est,nr_forwards), dtype=int)
+
+        for iest in range(nr_est):
+            for ifwd in range(nr_forwards):
+                posicao = random.randint(0,nr_aberturas-1)
+                SeqForward[iest,ifwd] = MatrizAberturas[iest,posicao]
+
+        Num_UHE = len(self.sistema["UHE"])
+
+        #
+        # Esta é uma lista com dicionários contendo todos os cortes criados
+        # Inicia vazia
+        #
+
+        pote_de_corte = []
+
+        #
+        # Computa o instante de tempo no qual o processo iterativo iniciou
+        #
+        t = time.time()
+
+        iteracao = 0
+        Convergiu = False
+
+        ZSUP_MED = []
+        ZINF_MED = []
+        LINF = []
+        LSUP = []
+
+        while not Convergiu:
+
+            #
+            # Forward - Laço ou Loop direto de estágios (do início para o fim)
+            #
+
+            ZSUP_MED.append(0.)
+            ZINF_MED.append(0.)
+
+            memoria = []
+            ZSUP = np.zeros(nr_forwards, dtype=float)
+
+            for iest in range(nr_est):
+                linha = list()
+                for ifwd in range(nr_forwards):
+                    VI = []
+                    if iest == 0:
+                        for i, iusi in enumerate(self.sistema["UHE"]):
+                            VI.append(iusi["VI"])
+                    else:
+                        resultado = memoria[iest-1][ifwd]
+                        for i, iusi in enumerate(resultado["UHE"]):
+                            VI.append(iusi["vf"])
+                    AFL = []
+                    for i, iusi in enumerate(self.sistema["UHE"]):
+                        AFL.append(iusi["Afl"][iest][SeqForward[iest,ifwd]])
+
+                    #
+                    # Chama função de despacho hidrotérmico
+                    #
+                    resultado = self.despacho_pdde(VI, AFL, pote_de_corte, iest + 1, imprime)
+
+                    ZSUP[ifwd] += resultado["DGer"]["CustoTotal"] - resultado["DGer"]["CustoFuturo"]
+                    if iest == 0:
+                        ZINF_MED[iteracao] += resultado["DGer"]["CustoTotal"]
+                    linha.append(resultado)
+                memoria.append(linha)
+
+            ZINF_MED[iteracao] = ZINF_MED[iteracao] / nr_forwards
+            for ifwd in range(nr_forwards):
+                ZSUP_MED[iteracao] = ZSUP_MED[iteracao] + ZSUP[ifwd]
+            ZSUP_MED[iteracao] = ZSUP_MED[iteracao] / nr_forwards
+
+            # Calcula Desvio Padrão do ZSUP
+            desvio = 0
+            for ifwd in range(nr_forwards):
+                desvio = desvio + (ZSUP_MED[iteracao] - ZSUP[ifwd])**2
+            desvio = np.sqrt(desvio)/nr_forwards
+            LINF.append(ZSUP_MED[iteracao] - 1.96*desvio)
+            LSUP.append(ZSUP_MED[iteracao] + 1.96*desvio)
+
+            if ZINF_MED[iteracao] >= LINF[iteracao] and ZINF_MED[iteracao] <= LSUP[iteracao]:
+                Convergiu = True
+                break
+
+            print(f"Fim da Iteração {(iteracao+1)}")
+
+            # Backward
+
+            for iest in np.arange(nr_est-1,0,-1):
+                for ifwd in range(nr_forwards):
+                    #
+                    # Corte Médio
+                    #
+                    Corte_Medio = {
+                        "Estagio": iest,
+                        "Termo_Indep": 0.,
+                        "Coefs": [0.] * Num_UHE
+                    }
+
+                    for iabt in range(nr_aberturas):
+                        resultado = memoria[iest-1][ifwd]
+                        VI = []
+                        for i, iusi in enumerate(resultado["UHE"]):
+                            VI.append(iusi["vf"])
+                        AFL = []
+                        for i, iusi in enumerate(self.sistema["UHE"]):
+                            AFL.append(iusi["Afl"][iest][MatrizAberturas[iest, iabt]])
+                        #
+                        # Chama função de despacho hidrotérmico
+                        #
+                        resultado = self.despacho_pdde(VI, AFL, pote_de_corte, iest + 1, imprime)
+
+                        Corte = {
+                            "Estagio": iest,
+                            "Termo_Indep": resultado["DGer"]["CustoTotal"],
+                            "Coefs": [0.] * Num_UHE
+                        }
+
+                        for i, iusi in enumerate(resultado["UHE"]):
+                            Corte["Coefs"][i] = -iusi["cma"]
+                            Corte["Termo_Indep"] -= VI[i] * Corte["Coefs"][i]
+
+                        Corte_Medio["Termo_Indep"] = Corte_Medio["Termo_Indep"] + Corte["Termo_Indep"]
+                        for i in range(Num_UHE):
+                            Corte_Medio["Coefs"][i] = Corte_Medio["Coefs"][i] + Corte["Coefs"][i]
+
+                    Corte_Medio["Termo_Indep"] = Corte_Medio["Termo_Indep"]/nr_aberturas
+                    for i in range(Num_UHE):
+                        Corte_Medio["Coefs"][i] = Corte_Medio["Coefs"][i]/nr_aberturas
+
+                    #
+                    # Insere o corte no final da lista pote_de_corte
+                    #
+                    pote_de_corte.append(Corte_Medio)
+
+            iteracao = iteracao + 1
+
+            if iteracao == 20:
+                Convergiu = True
+                print("Execução interrompida após vigésima iteração por número máximo de iteraçoes")
+
+        #
+        # Calcula o tempo decorrido desde o início do algoritmo
+        #
+        print("Tempo decorrido na PDDE", time.time() - t)
+
+        return(ZINF_MED, ZSUP_MED, LINF, LSUP, pote_de_corte)
 
