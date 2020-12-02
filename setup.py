@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.15"
+VERSION = "0.0.16"
 
 
 def readme():
@@ -58,7 +58,7 @@ setup(
     ],
     keywords='pysddp',
     #packages=["PySDDP"],
-    packages=find_packages(),
+    packages=find_packages(include=["PySDDP", "PySDDP.*"]),
     py_modules=[],
     install_requires=["numpy", "matplotlib", "cvxopt", "pyswarm", "scipy", "typing", "pandas"],
     include_package_data=True,
