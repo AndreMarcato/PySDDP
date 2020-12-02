@@ -2769,7 +2769,7 @@ class Classroom(object):
                     linha.append(resultado)
                 memoria.append(linha)
 
-            ZINF_MED[iteracao] = ZINF_MED[iteracao] / nr_forwards
+            ZINF_MED[iteracao] = ZINF_MED[iteracao]/nr_forwards
             for ifwd in range(nr_forwards):
                 ZSUP_MED[iteracao] = ZSUP_MED[iteracao] + ZSUP[ifwd]
             ZSUP_MED[iteracao] = ZSUP_MED[iteracao] / nr_forwards
@@ -2778,7 +2778,7 @@ class Classroom(object):
             desvio = 0
             for ifwd in range(nr_forwards):
                 desvio = desvio + (ZSUP_MED[iteracao] - ZSUP[ifwd])**2
-            desvio = np.sqrt(desvio)/nr_forwards
+            desvio = np.sqrt(desvio/nr_forwards)
             LINF.append(ZSUP_MED[iteracao] - 1.96*desvio)
             LSUP.append(ZSUP_MED[iteracao] + 1.96*desvio)
 

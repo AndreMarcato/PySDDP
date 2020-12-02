@@ -11,7 +11,7 @@ from setuptools import setup
 from setuptools.command.install import install
 
 # current version
-VERSION = "0.0.13"
+VERSION = "0.0.14"
 
 
 def readme():
