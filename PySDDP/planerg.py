@@ -69,7 +69,7 @@ if __name__ == '__main__':
     #print(res_pddd[0])
     #print(res_plu[0])
 
-    #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
+    CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
     print(MedioPrazo.arquivos.nome_arquivo )

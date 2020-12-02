@@ -9,9 +9,10 @@ import sys
 
 from setuptools import setup
 from setuptools.command.install import install
+from setuptools import find_packages
 
 # current version
-VERSION = "0.0.14"
+VERSION = "0.0.15"
 
 
 def readme():
@@ -56,7 +57,8 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
     ],
     keywords='pysddp',
-    packages=["PySDDP"],
+    #packages=["PySDDP"],
+    packages=find_packages(),
     py_modules=[],
     install_requires=["numpy", "matplotlib", "cvxopt", "pyswarm", "scipy", "typing", "pandas"],
     include_package_data=True,
