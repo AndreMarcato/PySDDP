@@ -35,13 +35,14 @@ class Arquivos(ArquivosTemplate):
 
         lista_mneumos = list(self.dados.keys()) + list(self.arquivos.keys())
 
+        arquivos: dict = dict()
+
         # noinspection PyBroadException
         try:
 
             with open(file_name, 'r', encoding='latin-1') as f:  # type: IO[str]
 
                 continua = True
-                arquivos: dict = dict()
 
                 while continua:
 
@@ -78,10 +79,10 @@ class Arquivos(ArquivosTemplate):
                     setattr(self, mneumo, arquivos[mneumo])
 
         except Exception as err:
-            print(self.linha)
             if isinstance(err, StopIteration):
                 # Armazeno num atributo o conteudo do arquivo, exceto os comentários
                 self._conteudo_ = arquivos
+                print("OK! Leitura do", os.path.split(file_name)[1], "realizada com sucesso.")
             else:
                 raise
 
