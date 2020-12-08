@@ -9,6 +9,7 @@ from PySDDP.Pen import Newave
 
 if __name__ == '__main__':
     #sistema = ImportaPmo(os.path.join(os.getcwd(), 'pmo/'))
+
     #CasoEstudo = Classroom()
     #CasoEstudo.sistema[ "UHE"][0]["Afl"] += CasoEstudo.sistema[ "UHE"][0]["Afl"] + CasoEstudo.sistema[ "UHE"][0]["Afl"]
     #CasoEstudo.sistema["DGer"]["Carga"] += CasoEstudo.sistema["DGer"]["Carga"] + CasoEstudo.sistema["DGer"]["Carga"]
@@ -69,9 +70,10 @@ if __name__ == '__main__':
     #print(res_pddd[0])
     #print(res_plu[0])
 
-    CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
+    #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
+    MedioPrazo.confhd.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/confhd2.dat")
 
 # ver downloads no PyPi
 # https://pypistats.org/packages/pysddp

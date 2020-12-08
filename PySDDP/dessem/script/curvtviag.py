@@ -46,7 +46,7 @@ class Curvtviag(CurvtviagTemplate):
         self.curvtviag['num_hr'] = list()
         self.curvtviag['fator'] = list()
 
-
+        self.curvtviag_comentarios = list()
         self._comentarios_ = list()
 
         # noinspection PyBroadException
@@ -64,10 +64,11 @@ class Curvtviag(CurvtviagTemplate):
                     # Se a linha for comentario não faço nada e pulo pra proxima linha
                     if linha[0] == COMENTARIO:
                         self._comentarios_.append(linha)
+                        self.curvtviag_comentarios.append(linha)
                         continue
 
                     mneumo = linha[:6].strip().lower()
-
+                    self.curvtviag_comentarios.append(linha)
                     # Leitura dos dados
                     self.curvtviag['mneumo'].append(self.linha[:6])
                     self.curvtviag['num_mont'].append(self.linha[9:12])
@@ -97,15 +98,24 @@ class Curvtviag(CurvtviagTemplate):
         try:
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
 
-                linha = self.dados['curvtviag']['cabecalho']
-                f.write(linha)
+               num_linhas = len(self.curvtviag_comentarios)
+               i_dados = 0
 
-                # Tratando caractere '\n'
-                self.curvtviag_df['fator'] = self.curvtviag_df['fator'].str.replace('\n', '')
-
-                for idx, value in self.curvtviag_df.iterrows():
-                    linha = self.dados['curvtviag']['formato'].format(**value)
-                    f.write(linha)
-
+               for i in range(num_linhas):
+                   # Verifica comentário
+                   linha = self.curvtviag_comentarios[i]
+                   self.curvtviag_comentarios[i] = self.curvtviag_comentarios[i].replace('\n', '')
+                   verifica_comentario = linha[0] == COMENTARIO
+                   if verifica_comentario:
+                       f.write(self.curvtviag_comentarios[i])
+                       f.write("\n")
+                   else:
+                        # Tratando caractere '\n'
+                        self.curvtviag_df['fator'] = self.curvtviag_df['fator'].str.replace('\n', '')
+                        for idx, value in self.curvtviag_df.iterrows():
+                            if idx == i_dados:
+                                linha = self.dados['curvtviag']['formato'].format(**value)
+                                f.write(linha)
+                        i_dados = i_dados + 1
         except Exception:
             raise

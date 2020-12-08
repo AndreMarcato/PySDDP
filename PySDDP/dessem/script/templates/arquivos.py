@@ -53,7 +53,8 @@ class ArquivosTemplate(ArquivoEntrada):
         self.rmpflx = None
         self.restseg = None
         self.respotele = None
-        self.colar = None
+        self.rstlpp = None
+        self.solar = None
         self.bateria = None
         self.versdeco = None
 

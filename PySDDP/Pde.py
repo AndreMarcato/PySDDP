@@ -39,9 +39,9 @@ class Dessem(object):
         self.arquivos = Arquivos()
         self.arquivos.ler(os.path.join(self.path_, self.file_))
 
-        #file_areacont = self.arquivos.areacont
-        #self.areacont = Areacont()
-        #self.areacont.ler(os.path.join(self.path_, file_areacont))
+        file_areacont = self.arquivos.areacont
+        self.areacont = Areacont()
+        self.areacont.ler(os.path.join(self.path_, file_areacont))
 
         #file_bateria = self.arquivos.bateria
         #self.bateria = Bateria()
@@ -126,6 +126,14 @@ class Dessem(object):
         #file_tolperd = self.arquivos.tolperd
         #self.tolperd = Tolperd()
         #self.tolperd.ler(os.path.join(self.path_, file_tolperd))
+
+        #file_solar = self.arquivos.solar
+        #self.solar = Solar()
+        #self.solar.ler(os.path.join(self.path_, file_solar))
+
+        file_rstlpp= self.arquivos.rstlpp
+        self.rstlpp = Rstlpp()
+        self.rstlpp.ler(os.path.join(self.path_, file_rstlpp))
 
 
 

@@ -23,19 +23,19 @@ class RmpflxTemplate(ArquivoEntrada):
         self.blocorest = {
             'mne': 'REST',
             'descricao': 'Registros de Definição',
-            'cabecalho': '&MNEM  MNEM NUM  VALOR      T\n'
+            'cabecalho': '&MPFLX REST NUM  VALOR      T\n'
                          '&XXXXX XXXX XXXX XXXXXXXXXX X\n',
-            'formato': '{mne:<6} {mne:<4} {num:>4} {valor:<10} {tipo:1}\n',
+            'formato': '{mne:<11} {num:>4} {valor:<10} {tipo:1}\n',
             'valor': None
         }
 
         self.blocolimi = {
             'mne': 'LIMI',
             'descricao': None,
-            'cabecalho': '&MNEM  MNEM DI HI F DF HF F NUM  RINFERIOR  RSUPERIOR  T\n'
+            'cabecalho': '&MPFLX LIMI DI HI F DF HF F NUM  RINFERIOR  RSUPERIOR  T\n'
                          '&XXXXX XXXX XX XX X XX XX X XXXX XXXXXXXXXX XXXXXXXXXX X\n',
-            'formato': '{mne:<6} {mne:<4} {di:<2} {hi:<2} {flagi:1} {df:<2} {hf:<2} {flagf:1} {num:<4} {rinferior:<10}'
-                       '{rsuperior:<10} {t:1}\n',
+            'formato': '{mne:<11} {di:<2} {hi:<2} {fi:1} {df:<2} {hf:<2} {ff:1} {num:<4} {rinferior:<10}'
+                       ' {rsuperior:<10} {t:1}\n',
             'valor': None
         }
 

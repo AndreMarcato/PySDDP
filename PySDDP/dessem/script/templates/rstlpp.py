@@ -34,7 +34,7 @@ class RstlppTemplate(ArquivoEntrada):
             'descricao': None,
             'cabecalho': '&MNEM  CHA1    NUM  DREF CHAVE IDENT   DESCRICAO\n'
                          '&XXXXX xxxxxxx XXXX XXXX xxxxx xxxxx XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n',
-            'formato': '{mne:<6} {cha1:<7} {num:>4} {flag:1} {dref:>4} {chave:<5} {ident:>5} {descricao:<40}\n',
+            'formato': '{mne:<6} {cha1:<7} {num:>4}{flag:1}{dref:>4} {chave:<5} {ident:>5} {descricao:<40}\n',
             'valor': None
         }
 
@@ -43,7 +43,7 @@ class RstlppTemplate(ArquivoEntrada):
             'descricao': None,
             'cabecalho': '&MNEM  CHA1    NUM  DREF CHAVE IDENT   DESCRICAO\n'
                          '&XXXXX xxxxxxx XXXX XXXX xxxxx xxxxx XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n',
-            'formato': '{mne:<6} {cha1:<7} {num:>4} {flag:1} {dref:>4} {chave:<5} {ident:>5} {descricao:<40}\n',
+            'formato': '{mne:<6} {cha1:<7} {num:>4}{flag:1}{dref:>4} {chave:<5} {ident:>5} {descricao:<40}\n',
             'valor': None
         }
 

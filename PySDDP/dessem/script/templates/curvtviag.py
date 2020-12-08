@@ -36,9 +36,7 @@ class CurvtviagTemplate(ArquivoEntrada):
         self.dados = {
             "curvtviag":{
                 'descricao':'Arquivo com as curvas de propagacao do tempo de viagem',
-                # 'cabecalho': "&CURVTV TPELEM ID  TP.VAR DI HI M DF HF M  VALORVAR\n"
-                #              "&TOPER xxxxxx xxx xxxxxx xx xx x xx xx x xxxxxxxxxx\n",
-                'formato': "{mneumo:>6} {num_mont:>2} {num_jus:>2} {tipo_jus:1} {num_hr:>9} {fator:>9}\n",
+                'formato': "{mneumo:>6}   {num_mont:>2}  {num_jus:>2}  {tipo_jus:1}    {num_hr:>9}{fator:>9}\n",
 
                 'valor': None
 

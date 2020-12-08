@@ -28,87 +28,87 @@ class HidrTemplate(ArquivoEntrada):
 
         # Dados de cadastro das usinas hidreletricas (presentes no HIDR.DAT)
 
-        self.codigo = {
+        self._codigo = {
                     'descricao': 'Codigo da UHE',
                     'valor': list()
                  }
-        self.nome = {
+        self._nome = {
                     'descricao': 'Nome da UHE',
                     "valor": list()
                }
-        self.posto = {
+        self._posto = {
                     'descricao': 'Numero do Posto',
                     "valor": list()
                }
-        self.bdh = {
+        self._bdh = {
                     'descricao': 'Banco de Dados Hidrometeorologico',
                     "valor": list()
                }
-        self.sist = {
+        self._sist = {
                     'descricao': 'Submercado',
                     "valor": list()
                }
-        self.empr = {
+        self._empr = {
                     'descricao': 'Codigo da empresa',
                     "valor": list()
                }
-        self.jusante = {
+        self._jusante = {
                     'descricao': 'Codigo de Jusante',
                     "valor": list()
                }
-        self.desvio = {
+        self._desvio = {
                     'descricao': 'Desvio de água',
                     "valor": list()
                }
-        self.vol_min = {
+        self._vol_min = {
                     'descricao': 'Volume Minimo',
                     "valor": list()
                }
-        self.vol_max = {
+        self._vol_max = {
                     'descricao': 'Volume Maximo',
                     "valor": list()
                }
-        self.vol_vert = {
+        self._vol_vert = {
                     'descricao': 'Volume Vertimento',
                     "valor": list()
                }
-        self.vol_min_desv = {
+        self._vol_min_desv = {
                     'descricao': 'Volume Minimo para Desvio',
                     "valor": list()
                }
-        self.cota_min = {
+        self._cota_min = {
                     'descricao': 'Cota Minima',
                     "valor": list()
                }
-        self.cota_max = {
+        self._cota_max = {
                     'descricao': 'Cota Maxima',
                     "valor": list()
                }
-        self.pol_cota_vol = {
+        self._pol_cota_vol = {
                     'descricao': 'Polinomio Cota-Volume',
                     "valor": list()
                }
-        self.pol_cota_area = {
+        self._pol_cota_area = {
                     'descricao': 'Polinomio Cata-Area',
                     "valor": list()
                }
-        self.coef_evap = {
+        self._coef_evap = {
                     'descricao': 'Coeficientes de Evaporacao',
                     "valor": list()
                }
-        self.num_conj_maq = {
+        self._num_conj_maq = {
                     'descricao': 'Numero de Conjuntos de Maquinas',
                     "valor": list()
                }
-        self.maq_por_conj = {
+        self._maq_por_conj = {
                     'descricao': 'Numero de Maquinas por Conjunto',
                     "valor": list()
                }
-        self.pef_por_conj = {
+        self._pef_por_conj = {
                     'descricao': 'Potencia Efetiva por Maquina do Conjunto',
                     "valor": list()
                }
-        self.cf_hbqt = {
+        self._cf_hbqt = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list(),
                     "valor_2": list(),
@@ -116,7 +116,7 @@ class HidrTemplate(ArquivoEntrada):
                     "valor_4": list(),
                     "valor_5": list()
         }
-        self.cf_hbqg = {
+        self._cf_hbqg = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list(),
                     "valor_2": list(),
@@ -124,7 +124,7 @@ class HidrTemplate(ArquivoEntrada):
                     "valor_4": list(),
                     "valor_5": list()
                }
-        self.cf_hbpt = {
+        self._cf_hbpt = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list(),
                     "valor_2": list(),
@@ -132,27 +132,27 @@ class HidrTemplate(ArquivoEntrada):
                     "valor_4": list(),
                     "valor_5": list()
                }
-        self.alt_efet_conj = {
+        self._alt_efet_conj = {
                     'descricao': 'Altura de Queda Efetiva do Conjunto',
                     "valor": list()
                }
-        self.vaz_efet_conj = {
+        self._vaz_efet_conj = {
                     'descricao': 'Vazao Efetiva do Conjunto',
                     "valor": list()
                }
-        self.prod_esp = {
+        self._prod_esp = {
                     'descricao': 'Produtibilidade Especifica',
                     "valor": list()
                }
-        self.perda_hid = {
+        self._perda_hid = {
                     'descricao': 'Perda Hidraulica',
                     "valor": list()
                }
-        self.num_pol_vnj = {
+        self._num_pol_vnj = {
                     'descricao': 'Numero de Polinomios Vazao Nivel Jusante',
                     "valor": list()
                }
-        self.pol_vaz_niv_jus = {
+        self._pol_vaz_niv_jus = {
                     'descricao': 'Polinomios Vazao Nivel Jusante',
                     "valor": list(),
                     "valor_2": list(),
@@ -160,67 +160,67 @@ class HidrTemplate(ArquivoEntrada):
                     "valor_4": list(),
                     "valor_5": list()
                }
-        self.cota_ref_nivel_jus = {
+        self._cota_ref_nivel_jus = {
                     'descricao': 'Cota Referencia Nivel de Jusante',
                     "valor": list()
                }
-        self.cfmed = {
+        self._cfmed = {
                     'descricao': 'Cota Media do Canal de Fuga',
                     "valor": list()
                }
-        self.inf_canal_fuga = {
+        self._inf_canal_fuga = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list()
                }
-        self.fator_carga_max = {
+        self._fator_carga_max = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list()
                }
-        self.fator_carga_min = {
+        self._fator_carga_min = {
                     'descricao': 'Fator de Caga Minimo - Checar esta informacao ??????',
                     "valor": list()
                }
-        self.vaz_min = {
+        self._vaz_min = {
                     'descricao': 'Vazao Minima Obrigatoria',
                     "valor": list()
                }
-        self.unid_base = {
+        self._unid_base = {
                     'descricao': 'Numero de Unidades de Base',
                     "valor": list()
                }
-        self.tipo_turb = {
+        self._tipo_turb = {
                     'descricao': 'Tipo de Turbina Hidraulica',
                     "valor": list()
                }
-        self.repres_conj = {
+        self._repres_conj = {
                     'descricao': 'Representacao Conjunto de Maquina - Nao sei qual e esta informacao ?????',
                     "valor": list()
                }
-        self.teifh = {
+        self._teifh = {
                     'descricao': 'Taxa Equivalente de Indisponibilidade Forcada Hidraulica',
                     "valor": list()
                }
-        self.ip = {
+        self._ip = {
                     'descricao': 'Indisponibilidade Programada',
                     "valor": list()
                }
-        self.tipo_perda = {
+        self._tipo_perda = {
                     'descricao': 'Tipo Perda Hidraulica',
                     "valor": list()
                }
-        self.data = {
+        self._data = {
                     'descricao': 'Checar esta informacao ??????',
                     "valor": list()
                }
-        self.observ = {
+        self._observ = {
                     'descricao': 'Observacao',
                     "valor": list()
                }
-        self.vol_ref = {
+        self._vol_ref = {
                     'descricao': 'Volume de Referencia',
                     "valor": list()
                }
-        self.tipo_reg = {
+        self._tipo_reg = {
                     'descricao': 'Tipo de Regularizacao',
                     "valor": list()
                }

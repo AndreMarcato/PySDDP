@@ -24,7 +24,7 @@ class Cotasr11Template(ArquivoEntrada):
         self.bloco_dados = {
             'df': None,
             'formato':
-                "{dia:>2} {hora:>2} {meiahora:1} {cota:>10};\n"
+                "{dia:>2} {hora:>2} {meiahora:1}         {cota:>10}\n"
         }
 
     @abstractmethod

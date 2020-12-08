@@ -19,7 +19,7 @@ class Bateria(BateriaTemplate):
     def __init__(self):
 
         super().__init__()
-
+        self.cad = dict()
         self.cad['mneumo'] = list()
         self.cad['num'] = list()
         self.cad['nome'] = list()
@@ -30,6 +30,7 @@ class Bateria(BateriaTemplate):
         self.cad['barra'] = list()
         self.cad['subm'] = list()
 
+        self.inic = dict()
         self.inic['mneumo'] = list()
         self.inic['num'] = list()
         self.inic['carreg'] = list()
@@ -67,7 +68,6 @@ class Bateria(BateriaTemplate):
                         self.inic['num'].append(linha[19:23])
                         self.inic['carreg'].append(linha[24:34])
                         continue
-
 
         except Exception as err:
             if isinstance(err, StopIteration):

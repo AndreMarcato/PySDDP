@@ -3,6 +3,7 @@ from PySDDP.newave.script.caso import Caso
 from PySDDP.newave.script.arquivos import Arquivos
 from PySDDP.newave.script.hidr import Hidr
 from PySDDP.newave.script.vazoes import Vazoes
+from PySDDP.newave.script.confhd import Confhd
 
 
 class Newave(object):
@@ -26,4 +27,7 @@ class Newave(object):
         self.hidr.ler(os.path.join(self.path_, 'HIDR.DAT'))
         # Realiza a Leitura do VAZOES.DAT
         self.vazoes = Vazoes()
-        self.vazoes.ler(os.path.join(self.path_, 'VAZOES.DAT'),self.hidr.numero_postos)
+        self.vazoes.ler(os.path.join(self.path_, 'VAZOES.DAT'), self.hidr.numero_postos)
+        # Realiza a Leitura do CONFHD.DAT
+        self.confhd = Confhd()
+        self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes)

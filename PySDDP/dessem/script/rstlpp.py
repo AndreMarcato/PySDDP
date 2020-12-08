@@ -4,7 +4,6 @@ import pandas as pd
 from PySDDP.dessem.script.templates.rstlpp import RstlppTemplate
 import os
 
-
 class Rstlpp(RstlppTemplate):
     """
     Classe que contem todos os elementos comuns a qualquer versao do arquivo Rstlpp do Dessem.
@@ -47,7 +46,7 @@ class Rstlpp(RstlppTemplate):
 
         # Listas de Comentários:
         self._comentarios_ = list()
-
+        self.rstlpp = list()
         # Dicionário para armazenar registros de definição:
         self.rstseg['mne'] = list()
         self.rstseg['cha1'] = list()
@@ -105,9 +104,13 @@ class Rstlpp(RstlppTemplate):
 
                 while continua:
                     self.next_line(f)
-
                     linha = self.linha.strip()
-
+                    # Se a linha for comentario não faço nada e pula para proxima linha
+                    if linha[0] == '&':
+                        self.rstlpp.append(linha)
+                        continue
+                    mneumo = linha[:6].strip().lower()
+                    self.rstlpp.append(linha[:6])
                     if linha[:6] == 'RSTSEG':
 
                         self.rstseg['mne'].append(self.linha[:6])
@@ -117,7 +120,7 @@ class Rstlpp(RstlppTemplate):
                         self.rstseg['dref'].append(self.linha[20:24])
                         self.rstseg['chave'].append(self.linha[25:30])
                         self.rstseg['ident'].append(self.linha[31:36])
-                        self.rstseg['descricao'].append(self.linha[37:77])
+                        self.rstseg['descricao'].append(self.linha[37:79])
 
                         continue
 
@@ -181,6 +184,7 @@ class Rstlpp(RstlppTemplate):
                         raise NotImplementedError(f'A linha {self.linha} não corresponde aos registros do arquivo ou o '
                                                   f'fim da leitura foi concluído!')
 
+
         except Exception as err:
             if isinstance(err, StopIteration):
 
@@ -203,6 +207,7 @@ class Rstlpp(RstlppTemplate):
                 self.reslpp_df = pd.DataFrame(self.reslpp)
 
                 print("OK! Leitura do", os.path.split(file_name)[1], "realizada com sucesso.")
+
             else:
                 raise
 
@@ -217,65 +222,76 @@ class Rstlpp(RstlppTemplate):
         try:
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
 
-                # Escreve registros de definição (cabeçalho):
-                linha = self.blocorstseg['cabecalho']
-                f.write(linha)
+                num_linhas = len(self.rstlpp)
+                i_rstseg = 0
+                i_param = 0
+                i_vparam = 0
+                i_adicrs = 0
+                i_reslpp = 0
+                for i in range(num_linhas):
+                    # Verifica se a linha é um comentário
+                    linha = self.rstlpp[i]
+                    verifica_comentario = linha[0] == '&'
 
-                # Escreve registros de definição:
-                for idx, value in self.rstseg_df.iterrows():
-                    if value['descricao'][-1] == '\n':
-                        value['descricao'] = value['descricao'][:-1]
-                    linha = self.blocorstseg['formato'].format(**value)
-                    f.write(linha)
+                    if verifica_comentario:
+                        f.write(self.rstlpp[i])
+                        f.write("\n")
+                        continue
 
-                f.write('\n&&&&&&\n')
-
-                # Escreve registros de adição de mais de uma restrição controlada (cabeçalho):
-                linha = self.blocoadicrs['cabecalho']
-                f.write(linha)
-
-                # Escreve registros de adição de mais de uma restrição controlada:
-                for idx, value in self.adicrs_df.iterrows():
-                    if value['descricao'][-1] == '\n':
-                        value['descricao'] = value['descricao'][:-1]
-                    linha = self.blocoadicrs['formato'].format(**value)
-                    f.write(linha)
-
-                f.write('\n&&&&&&\n')
-
-                # Escreve registros de definição dos parâmetros (cabeçalho):
-                linha = self.blocoparam['cabecalho']
-                f.write(linha)
-
-                # Escreve registros de definição dos parâmetros:
-                for idx, value in self.param_df.iterrows():
-                    linha = self.blocoparam['formato'].format(**value)
-                    f.write(linha)
-
-                f.write('\n&&&&&&\n')
-
-                # Escreve registros de definição dos valores dos parâmetros para a escolha da LPP (cabeçalho):
-                linha = self.blocovparm['cabecalho']
-                f.write(linha)
-
-                # Escreve registros de definição dos valores dos parâmetros para a escolha da LPP:
-                for idx, value in self.vparm_df.iterrows():
-                    linha = self.blocovparm['formato'].format(**value)
-                    f.write(linha)
-
-                f.write('\n&&&&&&\n')
-
-                # Escreve registros de definição das LPP para cada valor de parâmetro definido nos resgitros III.22.1.4
-                # (cabeçalho):
-                linha = self.blocoreslpp['cabecalho']
-                f.write(linha)
-
+                    if linha == 'RSTSEG':
+                        self.rstseg_df['descricao'] = self.rstseg_df['descricao'].str.replace('\n', '')
+                        # Escreve registros de definição:
+                        for idx, value in self.rstseg_df.iterrows():
+                            if idx == i_rstseg:
+                                linha = self.blocorstseg['formato'].format(**value)
+                                f.write(linha)
+                                continue
+                        i_rstseg = i_rstseg + 1
+                        continue
+                    if linha == 'ADICRS':
+                        self.adicrs_df['descricao'] = self.adicrs_df['descricao'].str.replace('\n','')
+                        # Escreve registros de adição de mais de uma restrição controlada:
+                        for idx, value in self.adicrs_df.iterrows():
+                            if idx == i_adicrs:
+                                linha = self.blocoadicrs['formato'].format(**value)
+                                f.write(linha)
+                                continue
+                        i_adicrs = i_adicrs + 1
+                        continue
+                    if linha == 'PARAM ':
+                        self.param_df['ident'] = self.param_df['ident'].str.replace('\n','')
+                        # Escreve registros de definição dos parâmetros:
+                        for idx, value in self.param_df.iterrows():
+                            if idx == i_param:
+                                linha = self.blocoparam['formato'].format(**value)
+                                f.write(linha)
+                                continue
+                        i_param = i_param + 1
+                        continue
+                    if linha == 'VPARM ':
+                        self.vparm_df['valsupseg'] = self.vparm_df['valsupseg'].str.replace('\n','')
+                        self.vparm_df['valsuppri'] = self.vparm_df['valsuppri'].str.replace('\n', '')
+                        # Escreve registros de definição dos valores dos parâmetros para a escolha da LPP:
+                        for idx, value in self.vparm_df.iterrows():
+                            if idx == i_vparam:
+                                linha = self.blocovparm['formato'].format(**value)
+                                f.write(linha)
+                                continue
+                        i_vparam = i_vparam + 1
+                        continue
+                    if linha == 'RESLPP':
+                        self.reslpp_df['4 contro'] = self.reslpp_df['4 contro'].str.replace('\n','')
+                        self.reslpp_df['3 contro'] = self.reslpp_df['3 contro'].str.replace('\n', '')
+                        self.reslpp_df['2 contro'] = self.reslpp_df['2 contro'].str.replace('\n', '')
+                        self.reslpp_df['coeflin'] = self.reslpp_df['coeflin'].str.replace('\n', '')
                 # Escreve registros de definição das LPP para cada valor de parâmetro definido nos resgitros III.22.1.4:
-                for idx, value in self.reslpp_df.iterrows():
-                    linha = self.blocoreslpp['formato'].format(**value)
-                    f.write(linha)
-
-                f.write('\n&&&&&&\n')
+                        for idx, value in self.reslpp_df.iterrows():
+                            if idx == i_reslpp:
+                                linha = self.blocoreslpp['formato'].format(**value)
+                                f.write(linha)
+                                continue
+                        i_reslpp = i_reslpp + 1
+                        continue
 
         except Exception:
             raise
