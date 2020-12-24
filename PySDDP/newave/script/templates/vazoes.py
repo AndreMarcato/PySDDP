@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
+
 # from typing import Optional
 
 from PySDDP.newave.script.templates.arquivo_entrada import ArquivoEntrada

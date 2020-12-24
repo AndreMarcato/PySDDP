@@ -28,7 +28,7 @@ class Confhd(ConfhdTemplate):
 
         self.dir_base = os.path.split(file_name)[0]
         self.nome_arquivo = os.path.split(file_name)[1]
-
+        self._copiavazoes = vazoes.vaz_nat
         self._numero_registros_ = 0
         self.nuhe = 0
 
@@ -430,6 +430,12 @@ class Confhd(ConfhdTemplate):
         self._ro_min['valor'][posicao] = uhe['ro_min']
         self._ro_max['valor'][posicao] = uhe['ro_max']
         self._engolimento['valor'][posicao] = uhe['engolimento']
+
+        print(np.shape(self._copiavazoes))
+        for iano in range(np.shape(self._copiavazoes)[0]):
+            for imes in range(12):
+                self._copiavazoes[iano][imes][self._posto['valor'][posicao]-1] = self._vazoes['valor'][posicao][iano][imes]
+
         return 'sucesso'
 
     def help(self, parametro):

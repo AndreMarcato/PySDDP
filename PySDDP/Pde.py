@@ -25,6 +25,7 @@ from PySDDP.dessem.script.rstlpp import Rstlpp   # Não está lendo o nome deste
 from PySDDP.dessem.script.simul import Simul
 from PySDDP.dessem.script.solar import Solar     # Não está lendo o nome deste arquivo
 from PySDDP.dessem.script.tolperd import Tolperd
+from PySDDP.dessem.script.dadger import Dadger
 
 
 class Dessem(object):
@@ -43,10 +44,6 @@ class Dessem(object):
         self.areacont = Areacont()
         self.areacont.ler(os.path.join(self.path_, file_areacont))
 
-        #file_bateria = self.arquivos.bateria
-        #self.bateria = Bateria()
-        #self.bateria.ler(os.path.join(self.path_, file_bateria))
-
         file_cadterm = self.arquivos.cadterm
         self.cadterm = CadTerm()
         self.cadterm.ler(os.path.join(self.path_, file_cadterm))
@@ -54,14 +51,6 @@ class Dessem(object):
         file_hidr = self.arquivos.cadusih
         self.hidr = Hidr()
         self.hidr.ler(os.path.join(self.path_, file_hidr))
-
-        #file_cotasr11 = self.arquivos.cotasr11
-        #self.cotasr11 = Cotasr11()
-        #self.cotasr11.ler(os.path.join(self.path_, file_cotasr11))
-
-        #file_curvatviag = self.arquivos.curvtviag
-        #self.curvatviag = Curvtviag()
-        #self.curvatviag.ler(os.path.join(self.path_, file_curvatviag))
 
         file_dadvaz = self.arquivos.vazoes
         self.dadvaz = DadVaz()
@@ -78,10 +67,6 @@ class Dessem(object):
         file_ilstri = self.arquivos.ilstri
         self.ilstri = Ilstri()
         self.ilstri.ler(os.path.join(self.path_, file_ilstri))
-
-        file_indelet = self.arquivos.indelet
-        self.indelet = Indelet()
-        self.indelet.ler(os.path.join(self.path_, file_indelet))
 
         file_infofcf = self.arquivos.infofcf
         self.infofcf = Infofcf()
@@ -115,6 +100,30 @@ class Dessem(object):
         self.restseg = Restseg()
         self.restseg.ler(os.path.join(self.path_, file_restseg))
 
+        file_dadger = self.arquivos.dadger
+        self.dadger = Dadger()
+        self.dadger.ler(os.path.join(self.path_, file_dadger))
+
+        file_rstlpp= self.arquivos.rstlpp
+        self.rstlpp = Rstlpp()
+        self.rstlpp.ler(os.path.join(self.path_, file_rstlpp))
+
+        #file_cotasr11 = self.arquivos.cotasr11
+        #self.cotasr11 = Cotasr11()
+        #self.cotasr11.ler(os.path.join(self.path_, file_cotasr11))
+
+        #file_curvatviag = self.arquivos.curvtviag
+        #self.curvatviag = Curvtviag()
+        #self.curvatviag.ler(os.path.join(self.path_, file_curvatviag))
+
+        #file_bateria = self.arquivos.bateria
+        #self.bateria = Bateria()
+        #self.bateria.ler(os.path.join(self.path_, file_bateria))
+
+        #file_indelet = self.arquivos.indelet
+        #self.indelet = Indelet()
+        #self.indelet.ler(os.path.join(self.path_, file_indelet))
+
         #file_rmpflx = self.arquivos.rmpflx
         #self.rmpflx = Rmpflx()
         #self.rmpflx.ler(os.path.join(self.path_, file_rmpflx))
@@ -130,13 +139,6 @@ class Dessem(object):
         #file_solar = self.arquivos.solar
         #self.solar = Solar()
         #self.solar.ler(os.path.join(self.path_, file_solar))
-
-        file_rstlpp= self.arquivos.rstlpp
-        self.rstlpp = Rstlpp()
-        self.rstlpp.ler(os.path.join(self.path_, file_rstlpp))
-
-
-
 
 
 

@@ -4,6 +4,7 @@ from PySDDP.newave.script.arquivos import Arquivos
 from PySDDP.newave.script.hidr import Hidr
 from PySDDP.newave.script.vazoes import Vazoes
 from PySDDP.newave.script.confhd import Confhd
+from PySDDP.newave.script.dger import Dger
 
 
 class Newave(object):
@@ -22,6 +23,9 @@ class Newave(object):
         # Realiza a Leitura dos Nomes dos Arquivos de Entrada
         self.arquivos = Arquivos()
         self.arquivos.ler(os.path.join(self.path_, self.caso.nome_arquivos))
+        # Realiza a Leitura do DGER.DAT
+        self.dger = Dger()
+        self.dger.ler(os.path.join(self.path_, self.arquivos.dger))
         # Realiza a Leitura do HIDR.DAT
         self.hidr = Hidr()
         self.hidr.ler(os.path.join(self.path_, 'HIDR.DAT'))

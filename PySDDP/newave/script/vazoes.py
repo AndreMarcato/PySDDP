@@ -1,6 +1,7 @@
 import os
 from typing import IO
 import numpy as np
+import struct
 
 from PySDDP.newave.script.templates.vazoes import VazoesTemplate
 
@@ -50,20 +51,23 @@ class Vazoes(VazoesTemplate):
 
     def escrever(self, file_out: str) -> None:
         """
-        Escreve o arquivo CASO.DAT que contem o nome do
-        arquivo que contém a lista de arquivos de entrada para execucao do Newave
+        Escreve o arquivo VAZOES.DAT que contem o o historico de vazoes das UHEs para execucao do Newave
 
         :param file_out: caminho completo para o arquivo
         """
 
-        formato = "{nome: <12}\n"
         try:
-            with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
+            with open(file_out, 'wb') as f:  # type: IO[bytes]
 
-                linha = dict(nome=self.nome_arquivos)
-                f.write(formato.format(**linha))
+                nanos = np.shape(self.vaz_nat)[0]
+                npostos = np.shape(self.vaz_nat)[2]
+                print(nanos, npostos)
+                for iano in range(nanos):
+                    for imes in range(12):
+                        for iposto in range(npostos):
+                            f.write(struct.pack('i', self.vaz_nat[iano][imes][iposto]))
 
         except Exception:
             raise
 
-        print("OK! Escrita do CASO.DAT realizada com sucesso.")
+        print("OK! Escrita do", os.path.split(file_out)[1], "realizada com sucesso.")

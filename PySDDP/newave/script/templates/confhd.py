@@ -26,6 +26,7 @@ class ConfhdTemplate(ArquivoEntrada):
         self.lista: Optional[list] = None
         self.lista_entrada: Optional[list] = None
         self.lista_resultados: Optional[list] = None
+        self._copiavazoes = None
 
         # Dados de cadastro das usinas hidreletricas (presentes no HIDR.DAT)
 

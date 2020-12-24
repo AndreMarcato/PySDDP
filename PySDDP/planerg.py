@@ -73,7 +73,10 @@ if __name__ == '__main__':
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
-    MedioPrazo.confhd.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/confhd2.dat")
+    uhe = MedioPrazo.confhd.get('sto antonio')
+
+    MedioPrazo.dger.escrever(os.path.join(MedioPrazo.path_, 'TESTE.DAT'))
+    #MedioPrazo.confhd.plot_vaz(uhe)
 
 # ver downloads no PyPi
 # https://pypistats.org/packages/pysddp
