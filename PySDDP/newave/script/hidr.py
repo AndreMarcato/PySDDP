@@ -127,6 +127,9 @@ class Hidr(HidrTemplate):
         :param file_out: caminho completo para o arquivo
         """
 
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
+
         try:
             with open(file_out, 'wb') as f:  # type: IO[bytes]
 

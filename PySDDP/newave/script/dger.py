@@ -524,6 +524,9 @@ class Dger(DgerTemplate):
         :param file_out: caminho completo para o arquivo
         """
 
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
+
         try:
             with open(file_out, 'w', encoding='utf8') as f:  # type: IO[str]
 

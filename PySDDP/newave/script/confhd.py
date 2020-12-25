@@ -196,6 +196,9 @@ class Confhd(ConfhdTemplate):
 
         formato = "{codigo: >5} {nome: <12} {posto: >4} {jusante: >5} {ree: >4} {vol_ini: >6} {status: >4} {modif: >6} {ano_i: >8} {ano_f: >8}\n"
 
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
+
         try:
 
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]

@@ -56,12 +56,14 @@ class Vazoes(VazoesTemplate):
         :param file_out: caminho completo para o arquivo
         """
 
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
+
         try:
             with open(file_out, 'wb') as f:  # type: IO[bytes]
 
                 nanos = np.shape(self.vaz_nat)[0]
                 npostos = np.shape(self.vaz_nat)[2]
-                print(nanos, npostos)
                 for iano in range(nanos):
                     for imes in range(12):
                         for iposto in range(npostos):

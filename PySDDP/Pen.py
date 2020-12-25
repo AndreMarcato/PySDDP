@@ -35,3 +35,11 @@ class Newave(object):
         # Realiza a Leitura do CONFHD.DAT
         self.confhd = Confhd()
         self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes)
+
+    def escrever(self, caminho):
+        self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
+        self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))
+        self.dger.escrever(os.path.join(caminho, self.arquivos.dger))
+        self.hidr.escrever(os.path.join(caminho, 'HIDR.DAT'))
+        self.vazoes.escrever(os.path.join(caminho, 'VAZOES.DAT'))
+        self.confhd.escrever(os.path.join(caminho, self.arquivos.confhd))

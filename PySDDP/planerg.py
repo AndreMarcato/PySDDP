@@ -75,7 +75,8 @@ if __name__ == '__main__':
 
     uhe = MedioPrazo.confhd.get('sto antonio')
 
-    MedioPrazo.dger.escrever(os.path.join(MedioPrazo.path_, 'TESTE.DAT'))
+    MedioPrazo.dger.escrever(os.path.join("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/Teste", 'TESTE.DAT'))
+    MedioPrazo.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/Teste2")
     #MedioPrazo.confhd.plot_vaz(uhe)
 
 # ver downloads no PyPi

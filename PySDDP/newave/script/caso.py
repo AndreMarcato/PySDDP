@@ -55,6 +55,9 @@ class Caso(CasoTemplate):
         :param file_out: caminho completo para o arquivo
         """
 
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
+
         formato = "{nome: <12}\n"
         try:
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
