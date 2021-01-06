@@ -38,9 +38,9 @@ class Hidr(HidrTemplate):
 
                 while continua:
                     self.codigo["valor"].append(self._numero_registros_)
-                    self.nome["valor"].append(struct.unpack('12s', f.read(12))[0])
+                    self.nome["valor"].append(struct.unpack('12s', f.read(12))[0].decode())
                     self.posto["valor"].append(struct.unpack('i', f.read(4))[0])
-                    self.bdh["valor"].append(struct.unpack('8s', f.read(8))[0])
+                    self.bdh["valor"].append(struct.unpack('8s', f.read(8))[0].decode())
                     self.sist["valor"].append(struct.unpack('i', f.read(4))[0])
                     self.empr["valor"].append(struct.unpack('i', f.read(4))[0])
                     self.jusante["valor"].append(struct.unpack('i', f.read(4))[0])
@@ -94,8 +94,8 @@ class Hidr(HidrTemplate):
                     self.teifh["valor"].append(struct.unpack('f', f.read(4))[0])
                     self.ip["valor"].append(struct.unpack('f', f.read(4))[0])
                     self.tipo_perda["valor"].append(struct.unpack('i', f.read(4))[0])
-                    self.data["valor"].append(struct.unpack('8s', f.read(8))[0])
-                    self.observ["valor"].append(struct.unpack('43s', f.read(43))[0])
+                    self.data["valor"].append(struct.unpack('8s', f.read(8))[0].decode())
+                    self.observ["valor"].append(struct.unpack('43s', f.read(43))[0].decode())
                     self.vol_ref["valor"].append(struct.unpack('f', f.read(4))[0])
                     self.tipo_reg["valor"].append(struct.unpack('c', f.read(1))[0])
 
@@ -128,9 +128,9 @@ class Hidr(HidrTemplate):
             with open(file_out, 'wb') as f:  # type: IO[bytes]
 
                 for i in range(self._numero_registros_-1):
-                    f.write(struct.pack('12s', self.nome["valor"][i]))
+                    f.write(struct.pack('12s', bytes(self.nome["valor"][i],'utf-8')))
                     f.write(struct.pack('i', self.posto["valor"][i]))
-                    f.write(struct.pack('8s', self.bdh["valor"][i]))
+                    f.write(struct.pack('8s', bytes(self.bdh["valor"][i],'utf-8')))
                     f.write(struct.pack('i', self.sist["valor"][i]))
                     f.write(struct.pack('i', self.empr["valor"][i]))
                     f.write(struct.pack('i', self.jusante["valor"][i]))
@@ -212,8 +212,8 @@ class Hidr(HidrTemplate):
                     f.write(struct.pack('f', self.teifh["valor"][i]))
                     f.write(struct.pack('f', self.ip["valor"][i]))
                     f.write(struct.pack('i', self.tipo_perda["valor"][i]))
-                    f.write(struct.pack('8s', self.data["valor"][i]))
-                    f.write(struct.pack('43s', self.observ["valor"][i]))
+                    f.write(struct.pack('8s', bytes(self.data["valor"][i],'utf-8')))
+                    f.write(struct.pack('43s', bytes(self.observ["valor"][i],'utf-8')))
                     f.write(struct.pack('f', self.vol_ref["valor"][i]))
                     f.write(struct.pack('c', self.tipo_reg["valor"][i]))
 

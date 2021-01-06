@@ -33,7 +33,7 @@ class EolicaTemplate(ArquivoEntrada):
             'cabecalho':
                 "&XXXXXX;XXXXX ;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ;XXXXXXXXXX ;XXX ;X;\n",
             'formato':
-                "{mneumo:>7};{codigo:>5};{nome:<41};{pmax:>10};{fcap:>3};{c:>1};\n",
+                "{mneumo:>6} ;{codigo:>5} ;{nome:<41};{pmax:>10} ;{fcap:>3} ;{c:>1};\n",
             'colunas': ['&', 'CODIGO', 'NOME Usina e Barra', 'PMAX', 'FCAP', 'C', 'LIXO']
         }
 
@@ -44,7 +44,7 @@ class EolicaTemplate(ArquivoEntrada):
             'cabecalho':
                 "&XXXXXXXXXX ;XXXXX ;XXXXX ;\n",
             'formato':
-                "{mneumo:>12};{codigo:>5};{barra:>5};\n",
+                "{mneumo:>11} ;{codigo:>5} ;{barra:>5} ;\n",
             'colunas': ['&', 'CODIGO', 'BARRA']
         }
 
@@ -55,7 +55,7 @@ class EolicaTemplate(ArquivoEntrada):
             'cabecalho':
                 "&XXXXXXXXXX;XXXXX ;XX ;\n",
             'formato':
-                "{mneumo:>11};{codigo:>5};{submercado:>3};\n",
+                "{mneumo:>10} ;{codigo:>5} ;{submercado:>2} ;\n",
             'colunas': ['&', 'CODIGO', 'SBM']
         }
 
@@ -66,7 +66,7 @@ class EolicaTemplate(ArquivoEntrada):
             'cabecalho':
                 "&XXXXXXXXXXXXXX;XXXXX ;XX ;XX ;X ;XX ;XX ;X ;XXXXXXXXXX ;\n",
             'formato':
-                "{mneumo:>15};{codigo:>5};{DI:>2};{HI:>2};{FI:<2};{DF:>2};{HF:>2};{FF:<2};{geracao:>10};\n",
+                "{mneumo:>14} ;{codigo:>5} ;{DI:>2} ;{HI:>2} ;{FI:1} ;{DF:>2} ;{HF:>2} ;{FF:1} ;{geracao:>10} ;\n",
             'colunas': ['&', 'CODIGO', 'DI', 'HI', 'FI', 'DF', 'HF', 'FF', 'GERACAO']
         }
 

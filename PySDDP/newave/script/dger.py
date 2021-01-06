@@ -31,101 +31,121 @@ class Dger(DgerTemplate):
                 contador = 1
                 self.next_line(f)
                 self.titu_caso['valor'] = self.linha.strip()
+                self.titu_caso['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.tipo_exec['resumo'] = self.linha[00:21]
                 self.tipo_exec['valor'] = int(self.linha[21:25])
                 self.tipo_exec['comentarios'] = self.linha[25:]
+                self.tipo_exec['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.dura_peri['resumo'] = self.linha[00:21]
                 self.dura_peri['valor'] = int(self.linha[21:25])
                 self.dura_peri['comentarios'] = self.linha[25:]
+                self.dura_peri['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.num_anos['resumo'] = self.linha[00:21]
                 self.num_anos['valor'] = int(self.linha[21:25])
                 self.num_anos['comentarios'] = self.linha[25:]
+                self.num_anos['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.mesi_pre_est['resumo'] = self.linha[00:21]
                 self.mesi_pre_est['valor'] = int(self.linha[21:25])
                 self.mesi_pre_est['comentarios'] = self.linha[25:]
+                self.mesi_pre_est['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.mesi_est['resumo'] = self.linha[00:21]
                 self.mesi_est['valor'] = int(self.linha[21:25])
                 self.mesi_est['comentarios'] = self.linha[25:]
+                self.mesi_est['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.ano_ini['resumo'] = self.linha[00:21]
                 self.ano_ini['valor'] = int(self.linha[21:25])
                 self.ano_ini['comentarios'] = self.linha[25:]
+                self.ano_ini['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.anos_pre['resumo'] = self.linha[00:21]
                 self.anos_pre['valor'] = int(self.linha[21:25])
                 self.anos_pre['comentarios'] = self.linha[25:]
+                self.anos_pre['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.anos_pos['resumo'] = self.linha[00:21]
                 self.anos_pos['valor'] = int(self.linha[21:25])
                 self.anos_pos['comentarios'] = self.linha[25:]
+                self.anos_pre['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.anos_pos_fin['resumo'] = self.linha[00:21]
                 self.anos_pos_fin['valor'] = int(self.linha[21:25])
                 self.anos_pos_fin['comentarios'] = self.linha[25:]
+                self.anos_pos_fin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.imp_dado['resumo'] = self.linha[00:21]
                 self.imp_dado['valor'] = int(self.linha[21:25])
                 self.imp_dado['comentarios'] = self.linha[25:]
+                self.imp_dado['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.imp_merc['resumo'] = self.linha[00:21]
                 self.imp_merc['valor'] = int(self.linha[21:25])
                 self.imp_merc['comentarios'] = self.linha[25:]
+                self.imp_merc['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.imp_ener['resumo'] = self.linha[00:21]
                 self.imp_ener['valor'] = int(self.linha[21:25])
                 self.imp_ener['comentarios'] = self.linha[25:]
+                self.imp_ener['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.imp_mode_est['resumo'] = self.linha[00:21]
                 self.imp_mode_est['valor'] = int(self.linha[21:25])
                 self.imp_mode_est['comentarios'] = self.linha[25:]
+                self.imp_mode_est['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.imp_ree['resumo'] = self.linha[00:21]
                 self.imp_ree['valor'] = int(self.linha[21:25])
                 self.imp_ree['comentarios'] = self.linha[25:]
+                self.imp_ree['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.max_iter['resumo'] = self.linha[00:21]
                 self.max_iter['valor'] = int(self.linha[21:25])
                 self.max_iter['comentarios'] = self.linha[25:]
+                self.max_iter['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.nr_forw['resumo'] = self.linha[00:21]
                 self.nr_forw['valor'] = int(self.linha[21:25])
                 self.nr_forw['comentarios'] = self.linha[25:]
+                self.nr_forw['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.nr_aber['resumo'] = self.linha[00:21]
                 self.nr_aber['valor'] = int(self.linha[21:25])
                 self.nr_aber['comentarios'] = self.linha[25:]
+                self.nr_aber['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.nr_forw_fin['resumo'] = self.linha[00:21]
                 self.nr_forw_fin['valor'] = int(self.linha[21:25])
                 self.nr_forw_fin['comentarios'] = self.linha[25:]
+                self.nr_forw_fin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.ord_max_parp['resumo'] = self.linha[00:21]
                 self.ord_max_parp['valor'] = int(self.linha[21:25])
                 self.ord_max_parp['comentarios'] = self.linha[25:]
+                self.ord_max_parp['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.anoi_hist['resumo'] = self.linha[00:21]
@@ -134,51 +154,62 @@ class Dger(DgerTemplate):
                 self.flag_tam_vaz['resumo'] = self.linha[00:21]
                 self.flag_tam_vaz['valor'] = int(self.linha[28:29])
                 self.flag_tam_vaz['comentarios'] = self.linha[29:]
+                self.anoi_hist['ordem'] = contador
+                self.flag_tam_vaz['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_earm_inic['resumo'] = self.linha[00:21]
                 self.flag_earm_inic['valor'] = int(self.linha[21:25])
                 self.flag_earm_inic['comentarios'] = self.linha[25:]
-                contador += 1
+                self.flag_earm_inic['ordem'] = contador
+                contador += 2
                 self.next_line(f)
                 self.next_line(f)
                 self.vol_earm_inic['resumo'] = self.linha[00:21]
                 self.vol_earm_inic['valor'] = list()
+                fim = 21
                 for i in range(len(self.linha[19:])//7):
                     ini = 19+(i*7)
                     fim = ini+7
                     self.vol_earm_inic['valor'].append(float(self.linha[ini:fim]))
                 self.vol_earm_inic['comentarios'] = self.linha[fim:]
+                self.vol_earm_inic['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.int_conf['resumo'] = self.linha[00:21]
                 self.int_conf['valor'] = float(self.linha[21:26])
                 self.int_conf['comentarios'] = self.linha[26:]
+                self.int_conf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.tx_desc['resumo'] = self.linha[00:21]
                 self.tx_desc['valor'] = float(self.linha[21:26])
                 self.tx_desc['comentarios'] = self.linha[26:]
+                self.tx_desc['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_sim_fin['resumo'] = self.linha[00:21]
                 self.flag_sim_fin['valor'] = int(self.linha[21:25])
                 self.flag_sim_fin['comentarios'] = self.linha[25:]
+                self.flag_sim_fin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_impr_sim_fin['resumo'] = self.linha[00:21]
                 self.flag_impr_sim_fin['valor'] = int(self.linha[21:25])
                 self.flag_impr_sim_fin['comentarios'] = self.linha[25:]
+                self.flag_impr_sim_fin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_impr_risc_def['resumo'] = self.linha[00:21]
                 self.flag_impr_risc_def['valor'] = int(self.linha[21:25])
                 self.flag_impr_risc_def['comentarios'] = self.linha[25:]
+                self.flag_impr_risc_def['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.ser_grav_rel['resumo'] = self.linha[00:21]
                 self.ser_grav_rel['valor'] = int(self.linha[21:25])
                 self.ser_grav_rel['comentarios'] = self.linha[25:]
+                self.ser_grav_rel['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.num_min_iter['resumo'] = self.linha[00:21]
@@ -191,16 +222,20 @@ class Dger(DgerTemplate):
                 else:
                     self.num_min_iter['comentarios'] = self.linha[25:]
                     self.iter_inic_zinf['comentarios'] = self.linha[25:]
+                self.num_min_iter['ordem'] = contador
+                self.iter_inic_zinf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.rac_prev['resumo'] = self.linha[00:21]
                 self.rac_prev['valor'] = int(self.linha[21:25])
                 self.rac_prev['comentarios'] = self.linha[25:]
+                self.rac_prev['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.nr_anos_mnut['resumo'] = self.linha[00:21]
                 self.nr_anos_mnut['valor'] = int(self.linha[21:25])
                 self.nr_anos_mnut['comentarios'] = self.linha[25:]
+                self.nr_anos_mnut['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.tend_hidr_pol['resumo'] = self.linha[00:21]
@@ -209,56 +244,68 @@ class Dger(DgerTemplate):
                 self.tend_hidr_sim['valor'] = int(self.linha[26:30])
                 self.tend_hidr_pol['comentarios'] = self.linha[30:]
                 self.tend_hidr_sim['comentarios'] = self.linha[30:]
+                self.tend_hidr_sim['ordem'] = contador
+                self.tend_hidr_pol['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_itpu['resumo'] = self.linha[00:21]
                 self.flag_itpu['valor'] = int(self.linha[21:25])
                 self.flag_itpu['comentarios'] = self.linha[25:]
+                self.flag_itpu['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_bid_dem['resumo'] = self.linha[00:21]
                 self.flag_bid_dem['valor'] = int(self.linha[21:25])
                 self.flag_bid_dem['comentarios'] = self.linha[25:]
+                self.flag_bid_dem['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_tran_loss['resumo'] = self.linha[00:21]
                 self.flag_tran_loss['valor'] = int(self.linha[21:25])
                 self.flag_tran_loss['comentarios'] = self.linha[25:]
+                self.flag_tran_loss['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_el_nino['resumo'] = self.linha[00:21]
                 self.flag_el_nino['valor'] = int(self.linha[21:25])
                 self.flag_el_nino['comentarios'] = self.linha[25:]
+                self.flag_el_nino['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_enso['resumo'] = self.linha[00:21]
                 self.flag_enso['valor'] = int(self.linha[21:25])
                 self.flag_enso['comentarios'] = self.linha[25:]
+                self.flag_enso['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_pat['resumo'] = self.linha[00:21]
                 self.flag_pat['valor'] = int(self.linha[21:25])
                 self.flag_pat['comentarios'] = self.linha[25:]
+                self.flag_pat['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_dsv_agua['resumo'] = self.linha[00:21]
                 self.flag_dsv_agua['valor'] = int(self.linha[21:25])
                 self.flag_dsv_agua['comentarios'] = self.linha[25:]
+                self.flag_dsv_agua['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_dsv_ena['resumo'] = self.linha[00:21]
                 self.flag_dsv_ena['valor'] = int(self.linha[21:25])
                 self.flag_dsv_ena['comentarios'] = self.linha[25:]
+                self.flag_dsv_ena['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_curv_segu['resumo'] = self.linha[00:21]
                 self.flag_curv_segu['valor'] = int(self.linha[21:25])
                 self.flag_curv_segu['comentarios'] = self.linha[25:]
+                self.flag_curv_segu['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_gera_cen['resumo'] = self.linha[00:21]
                 self.flag_gera_cen['valor'] = int(self.linha[21:25])
                 self.flag_gera_cen['comentarios'] = self.linha[25:]
+                self.flag_gera_cen['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.prof_risc_1['resumo'] = self.linha[00:21]
@@ -267,66 +314,80 @@ class Dger(DgerTemplate):
                 self.prof_risc_2['valor'] = float(self.linha[27:31])
                 self.prof_risc_1['comentarios'] = self.linha[31:]
                 self.prof_risc_2['comentarios'] = self.linha[31:]
+                self.prof_risc_1['ordem'] = contador
+                self.prof_risc_2['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.func_part_quen['resumo'] = self.linha[00:21]
                 self.func_part_quen['valor'] = int(self.linha[21:25])
                 self.func_part_quen['comentarios'] = self.linha[25:]
+                self.func_part_quen['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_agru_int['resumo'] = self.linha[00:21]
                 self.flag_agru_int['valor'] = int(self.linha[21:25])
                 self.flag_agru_int['comentarios'] = self.linha[25:]
+                self.flag_agru_int['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_pen_int['resumo'] = self.linha[00:21]
                 self.flag_pen_int['valor'] = int(self.linha[21:25])
                 self.flag_pen_int['comentarios'] = self.linha[25:]
+                self.flag_pen_int['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_sub_mot['resumo'] = self.linha[00:21]
                 self.flag_sub_mot['valor'] = int(self.linha[21:25])
                 self.flag_sub_mot['comentarios'] = self.linha[25:]
+                self.flag_sub_mot['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_ord_auto['resumo'] = self.linha[00:21]
                 self.flag_ord_auto['valor'] = int(self.linha[21:25])
                 self.flag_ord_auto['comentarios'] = self.linha[25:]
+                self.flag_ord_auto['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_carg_adic['resumo'] = self.linha[00:21]
                 self.flag_carg_adic['valor'] = int(self.linha[21:25])
                 self.flag_carg_adic['comentarios'] = self.linha[25:]
+                self.flag_carg_adic['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.zsup_linf_perc['resumo'] = self.linha[00:21]
                 self.zsup_linf_perc['valor'] = float(self.linha[21:25])
                 self.zsup_linf_perc['comentarios'] = self.linha[25:]
+                self.zsup_linf_perc['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.delt_zinf['resumo'] = self.linha[00:21]
                 self.delt_zinf['valor'] = float(self.linha[21:25])
                 self.delt_zinf['comentarios'] = self.linha[25:]
+                self.delt_zinf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.num_delt_zinf['resumo'] = self.linha[00:21]
                 self.num_delt_zinf['valor'] = int(self.linha[21:25])
                 self.num_delt_zinf['comentarios'] = self.linha[25:]
+                self.num_delt_zinf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_desp_gnl['resumo'] = self.linha[00:21]
                 self.flag_desp_gnl['valor'] = int(self.linha[21:25])
                 self.flag_desp_gnl['comentarios'] = self.linha[25:]
+                self.flag_desp_gnl['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_modi_gnl['resumo'] = self.linha[00:21]
                 self.flag_modi_gnl['valor'] = int(self.linha[21:25])
                 self.flag_modi_gnl['comentarios'] = self.linha[25:]
+                self.flag_modi_gnl['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_ghid_min['resumo'] = self.linha[00:21]
                 self.flag_ghid_min['valor'] = int(self.linha[21:25])
                 self.flag_ghid_min['comentarios'] = self.linha[25:]
+                self.flag_ghid_min['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.mini_sim_fin['resumo'] = self.linha[00:21]
@@ -345,6 +406,9 @@ class Dger(DgerTemplate):
                 self.mini_sim_fin['comentarios'] = self.linha[fim:]
                 self.aini_sim_fin['comentariso'] = self.linha[fim:]
                 self.vini_ree_sim_fin['comentarios'] = self.linha[fim:]
+                self.mini_sim_fin['ordem'] = contador
+                self.aini_sim_fin['ordem'] = contador
+                self.vini_ree_sim_fin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_ger_ext['resumo'] = self.linha[00:21]
@@ -362,41 +426,53 @@ class Dger(DgerTemplate):
                 self.flag_armz_loc["comentarios"] = self.linha[45:]
                 self.flag_mem_ena["comentarios"] = self.linha[45:]
                 self.flag_mem_fcf["comentarios"] = self.linha[45:]
+                self.flag_ger_ext['ordem'] = contador
+                self.flag_comu_2niv['ordem'] = contador
+                self.flag_armz_loc['ordem'] = contador
+                self.flag_mem_ena['ordem'] = contador
+                self.flag_mem_fcf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_sar['resumo'] = self.linha[00:21]
                 self.flag_sar['valor'] = int(self.linha[21:25])
                 self.flag_sar['comentarios'] = self.linha[25:]
+                self.flag_sar['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_cvar['resumo'] = self.linha[00:21]
                 self.flag_cvar['valor'] = int(self.linha[21:25])
                 self.flag_cvar['comentarios'] = self.linha[25:]
+                self.flag_cvar['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_min_zsup['resumo'] = self.linha[00:21]
                 self.flag_min_zsup['valor'] = int(self.linha[21:25])
                 self.flag_min_zsup['comentarios'] = self.linha[25:]
+                self.flag_min_zsup['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_req_vmin['resumo'] = self.linha[00:21]
                 self.flag_req_vmin['valor'] = int(self.linha[21:25])
                 self.flag_req_vmin['comentarios'] = self.linha[25:]
+                self.flag_req_vmin['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_elet_ree['resumo'] = self.linha[00:21]
                 self.flag_elet_ree['valor'] = int(self.linha[21:25])
                 self.flag_elet_ree['comentarios'] = self.linha[25:]
+                self.flag_elet_ree['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_sele_cort['resumo'] = self.linha[00:21]
                 self.flag_sele_cort['valor'] = int(self.linha[21:25])
                 self.flag_sele_cort['comentarios'] = self.linha[25:]
+                self.flag_sele_cort['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_jane_cort['resumo'] = self.linha[00:21]
                 self.flag_jane_cort['valor'] = int(self.linha[21:25])
                 self.flag_jane_cort['comentarios'] = self.linha[25:]
+                self.flag_jane_cort['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_cons_ream['resumo'] = self.linha[00:21]
@@ -408,101 +484,123 @@ class Dger(DgerTemplate):
                 self.flag_cons_ream['comentarios'] = self.linha[35:]
                 self.flag_ream_cena['comentarios'] = self.linha[35:]
                 self.flag_pass_ream['comentarios'] = self.linha[35:]
+                self.flag_cons_ream['ordem'] = contador
+                self.flag_ream_cena['ordem'] = contador
+                self.flag_pass_ream['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_no_zero['resumo'] = self.linha[00:21]
                 self.flag_no_zero['valor'] = int(self.linha[21:25])
                 self.flag_no_zero['comentarios'] = self.linha[25:]
+                self.flag_no_zero['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_fcf_pdde['resumo'] = self.linha[00:21]
                 self.flag_fcf_pdde['valor'] = int(self.linha[21:25])
                 self.flag_fcf_pdde['comentarios'] = self.linha[25:]
+                self.flag_fcf_pdde['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_imp_ena['resumo'] = self.linha[00:21]
                 self.flag_imp_ena['valor'] = int(self.linha[21:25])
                 self.flag_imp_ena['comentarios'] = self.linha[25:]
+                self.flag_imp_ena['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_imp_cor['resumo'] = self.linha[00:21]
                 self.flag_imp_cor['valor'] = int(self.linha[21:25])
                 self.flag_imp_cor['comentarios'] = self.linha[25:]
+                self.flag_imp_cor['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_proc_agre['resumo'] = self.linha[00:21]
                 self.flag_proc_agre['valor'] = int(self.linha[21:25])
                 self.flag_proc_agre['comentarios'] = self.linha[25:]
+                self.flag_proc_agre['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_corr_espa['resumo'] = self.linha[00:21]
                 self.flag_corr_espa['valor'] = int(self.linha[21:25])
                 self.flag_corr_espa['comentarios'] = self.linha[25:]
+                self.flag_corr_espa['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_conv_estat['resumo'] = self.linha[00:21]
                 self.flag_conv_estat['valor'] = int(self.linha[21:25])
                 self.flag_conv_estat['comentarios'] = self.linha[25:]
+                self.flag_conv_estat['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_mom_ream['resumo'] = self.linha[00:21]
                 self.flag_mom_ream['valor'] = int(self.linha[21:25])
                 self.flag_mom_ream['comentarios'] = self.linha[25:]
+                self.flag_mom_ream['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_arq_ena['resumo'] = self.linha[00:21]
                 self.flag_arq_ena['valor'] = int(self.linha[21:25])
                 self.flag_arq_ena['comentarios'] = self.linha[25:]
+                self.flag_arq_ena['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_test_conv['resumo'] = self.linha[00:21]
                 self.flag_test_conv['valor'] = int(self.linha[21:25])
                 self.flag_test_conv['comentarios'] = self.linha[25:]
+                self.flag_test_conv['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_vmint_sazo['resumo'] = self.linha[00:21]
                 self.flag_vmint_sazo['valor'] = int(self.linha[21:25])
                 self.flag_vmint_sazo['comentarios'] = self.linha[25:]
+                self.flag_vmint_sazo['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_vmaxt_sazo['resumo'] = self.linha[00:21]
                 self.flag_vmaxt_sazo['valor'] = int(self.linha[21:25])
                 self.flag_vmaxt_sazo['comentarios'] = self.linha[25:]
+                self.flag_vmaxt_sazo['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_vminp_sazo['resumo'] = self.linha[00:21]
                 self.flag_vminp_sazo['valor'] = int(self.linha[21:25])
                 self.flag_vminp_sazo['comentarios'] = self.linha[25:]
+                self.flag_vminp_sazo['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_cfuga_sazo['resumo'] = self.linha[00:21]
                 self.flag_cfuga_sazo['valor'] = int(self.linha[21:25])
                 self.flag_cfuga_sazo['comentarios'] = self.linha[25:]
+                self.flag_cfuga_sazo['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_efei_estuf['resumo'] = self.linha[00:21]
                 self.flag_efei_estuf['valor'] = int(self.linha[21:25])
                 self.flag_efei_estuf['comentarios'] = self.linha[25:]
+                self.flag_efei_estuf['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_esto_eolic['resumo'] = self.linha[00:21]
                 self.flag_esto_eolic['valor'] = int(self.linha[21:25])
                 self.flag_esto_eolic['comentarios'] = self.linha[25:]
+                self.flag_esto_eolic['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_esto_solar['resumo'] = self.linha[00:21]
                 self.flag_esto_solar['valor'] = int(self.linha[21:25])
                 self.flag_esto_solar['comentarios'] = self.linha[25:]
+                self.flag_esto_solar['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_esto_sl_eo['resumo'] = self.linha[00:21]
                 self.flag_esto_sl_eo['valor'] = int(self.linha[21:25])
                 self.flag_esto_sl_eo['comentarios'] = self.linha[25:]
+                self.flag_esto_sl_eo['ordem'] = contador
                 contador += 1
                 self.next_line(f)
                 self.flag_rest_gasn['resumo'] = self.linha[00:21]
                 self.flag_rest_gasn['valor'] = int(self.linha[21:25])
                 self.flag_rest_gasn['comentarios'] = self.linha[25:]
+                self.flag_rest_gasn['ordem'] = contador
 
         except Exception as err:
             if isinstance(err, StopIteration):
@@ -531,7 +629,7 @@ class Dger(DgerTemplate):
             with open(file_out, 'w', encoding='utf8') as f:  # type: IO[str]
 
                 # Imprime dados
-                f.write(self.titu_caso['valor'] + "\n")
+                f.write(self.titu_caso['valor'] + ' - PySDDP - Deck Gerado pela Toolbox PySDDP/UFJF' + "\n")
 
                 a = self.tipo_exec['resumo'][00:21]
                 b = self.tipo_exec['valor']

@@ -67,36 +67,36 @@ class Eolica(EolicaTemplate):
                         continue
 
                     if linha[:11] == 'EOLICABARRA':
-                        self.barra['mneumo'].append(linha[0:12])
-                        self.barra['codigo'].append(linha[13:19])
-                        self.barra['barra'].append(linha[20:26])
+                        self.barra['mneumo'].append(linha[0:12].strip())
+                        self.barra['codigo'].append(linha[13:19].strip())
+                        self.barra['barra'].append(linha[20:26].strip())
                         continue
 
                     if linha[:10] == 'EOLICASUBM':
-                        self.submercado['mneumo'].append(linha[0:11])
-                        self.submercado['codigo'].append(linha[12:18])
-                        self.submercado['submercado'].append(linha[19:22])
+                        self.submercado['mneumo'].append(linha[0:11].strip())
+                        self.submercado['codigo'].append(linha[12:18].strip())
+                        self.submercado['submercado'].append(linha[19:22].strip())
                         continue
 
                     if linha[:14] == 'EOLICA-GERACAO':
-                        self.geracao['mneumo'].append(linha[0:15])
-                        self.geracao['codigo'].append(linha[16:22])
-                        self.geracao['DI'].append(linha[23:26])
-                        self.geracao['HI'].append(linha[27:30])
-                        self.geracao['FI'].append(linha[31:33])
-                        self.geracao['HF'].append(linha[34:37])
-                        self.geracao['DF'].append(linha[38:41])
-                        self.geracao['FF'].append(linha[42:44])
-                        self.geracao['geracao'].append(linha[45:56])
+                        self.geracao['mneumo'].append(linha[0:15].strip())
+                        self.geracao['codigo'].append(linha[16:22].strip())
+                        self.geracao['DI'].append(linha[23:26].strip())
+                        self.geracao['HI'].append(linha[27:30].strip())
+                        self.geracao['FI'].append(linha[31:33].strip())
+                        self.geracao['DF'].append(linha[34:37].strip())
+                        self.geracao['HF'].append(linha[38:41].strip())
+                        self.geracao['FF'].append(linha[42:44].strip())
+                        self.geracao['geracao'].append(linha[45:56].strip())
                         continue
 
                     if linha[:7] == 'EOLICA ':
-                        self.usina['mneumo'].append(linha[0:7])
-                        self.usina['codigo'].append(linha[8:14])
-                        self.usina['nome'].append(linha[15:56])
-                        self.usina['pmax'].append(linha[57:68])
-                        self.usina['fcap'].append(linha[69:73])
-                        self.usina['c'].append(linha[74])
+                        self.usina['mneumo'].append(linha[0:7].strip())
+                        self.usina['codigo'].append(linha[8:14].strip())
+                        self.usina['nome'].append(linha[15:56].strip())
+                        self.usina['pmax'].append(linha[57:68].strip())
+                        self.usina['fcap'].append(linha[69:73].strip())
+                        self.usina['c'].append(linha[74].strip())
                         continue
 
         except Exception as err:

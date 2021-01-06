@@ -89,7 +89,7 @@ class HidrTemplate(ArquivoEntrada):
                     "valor": list()
                }
         self._pol_cota_area = {
-                    'descricao': 'Polinomio Cata-Area',
+                    'descricao': 'Polinomio Cota-Area',
                     "valor": list()
                }
         self._coef_evap = {
@@ -193,7 +193,7 @@ class HidrTemplate(ArquivoEntrada):
                     "valor": list()
                }
         self._repres_conj = {
-                    'descricao': 'Representacao Conjunto de Maquina - Nao sei qual e esta informacao ?????',
+                    'descricao': 'Representacao Conjunto de Maquina - Checar esta informacao ?????',
                     "valor": list()
                }
         self._teifh = {
@@ -205,7 +205,7 @@ class HidrTemplate(ArquivoEntrada):
                     "valor": list()
                }
         self._tipo_perda = {
-                    'descricao': 'Tipo Perda Hidraulica',
+                    'descricao': 'Tipo Perda Hidraulica - (1) Percentual - (2) Metros',
                     "valor": list()
                }
         self._data = {

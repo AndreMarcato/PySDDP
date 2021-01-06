@@ -4,6 +4,7 @@ from typing import IO
 from PySDDP.newave.script.templates.confhd import ConfhdTemplate
 from matplotlib import pyplot as plt
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 
 class Confhd(ConfhdTemplate):
@@ -465,6 +466,116 @@ class Confhd(ConfhdTemplate):
         plt.show()
 
         return
+
+    # Plota Polinomio Cota-Volume
+    def plot_pcv(self, uhe):
+        if uhe["vol_min"] == 0:
+            return
+
+        a = uhe['pol_cota_vol'][0]
+        b = uhe['pol_cota_vol'][1]
+        c = uhe['pol_cota_vol'][2]
+        d = uhe['pol_cota_vol'][3]
+        e = uhe['pol_cota_vol'][4]
+
+        if (uhe["vol_min"] == uhe["vol_max"]):
+            volumes = np.linspace(uhe["vol_min"] - 1,uhe["vol_max"] + 1, 100)
+            cota = a + b*uhe["vol_min"] + c*uhe["vol_min"]**2 + d*uhe["vol_min"]**3 + e*uhe["vol_min"]**4
+            cota = cota*np.ones(100)
+        else:
+            volumes = np.linspace(uhe["vol_min"],uhe["vol_max"],100)
+            cota = a + b*volumes + c*volumes**2 + d*volumes**3 + e*volumes**4
+            cota.shape = volumes.shape
+
+        plt.plot(volumes, cota, 'b-', lw=3)
+
+        plt.xlabel('Volume do Reservatorio (hm^3)', fontsize=16)
+        titulo = 'Polinomio Cota-Volume da Usina ' + uhe['nome']
+        plt.title(titulo, fontsize=16)
+        plt.ylabel('Cota em Metros', fontsize=16)
+        plt.xlim(volumes[0], volumes[99])
+        if ( cota[0] == cota[99]):
+            plt.ylim(cota[0]-1, cota[99]+1)
+        else:
+            plt.ylim(cota[0], cota[99])
+        plt.show()
+
+    # Plota Polinomio Cota-Area
+    def plot_pca(self, uhe):
+        if uhe['vol_min'] == 0:
+            return
+
+        if (uhe['cota_min'] == uhe['cota_max']):
+            cotas = np.linspace(uhe['cota_min'] - 1,uhe['cota_max'] + 1, 100)
+        else:
+            cotas = np.linspace(uhe['cota_min'],uhe['cota_max'],100)
+        a = uhe['pol_cota_area'][0]
+        b = uhe['pol_cota_area'][1]
+        c = uhe['pol_cota_area'][2]
+        d = uhe['pol_cota_area'][3]
+        e = uhe['pol_cota_area'][4]
+        areas = a + b*cotas + c*cotas**2 + d*cotas**3 + e*cotas**4
+        areas.shape = cotas.shape
+        plt.plot(cotas, areas, 'b-', lw=3)
+
+        plt.xlabel('Cota do Reservatorio (em metros)', fontsize=16)
+        titulo = 'Polinomio Cota-Area da Usina ' + uhe['nome']
+        plt.title(titulo, fontsize=16)
+        plt.ylabel('Area Superficia em km^2', fontsize=16)
+        plt.xlim(cotas[0], cotas[99])
+        if ( areas[0] == areas[99]):
+            plt.ylim(areas[0]-1, areas[99]+1)
+        else:
+            plt.ylim(areas[0], areas[99])
+        plt.show()
+
+    # Plota Variação de Produtibilidade
+    def plot_var_prod(self, uhe):
+        if uhe['vol_min'] == 0:
+            return
+        a = uhe['pol_cota_vol'][0]
+        b = uhe['pol_cota_vol'][1]
+        c = uhe['pol_cota_vol'][2]
+        d = uhe['pol_cota_vol'][3]
+        e = uhe['pol_cota_vol'][4]
+
+        if (uhe["vol_min"] == uhe["vol_max"]):
+            volumes = np.linspace(uhe["vol_min"] - 1,uhe["vol_max"] + 1, 100)
+            cotamont = a + b*uhe["vol_min"] + c*uhe["vol_min"]**2 + d*uhe["vol_min"]**3 + e*uhe["vol_min"]**4
+            cotamont = cotamont*np.ones(100)
+        else:
+            volumes = np.linspace(uhe["vol_min"],uhe["vol_max"],100)
+            cotamont = a + b*volumes + c*volumes**2 + d*volumes**3 + e*volumes**4
+            cotamont.shape = volumes.shape
+
+        qdef = np.linspace(uhe['vaz_min'], 2*uhe['engolimento'], 100)
+
+        a = uhe['pol_vaz_niv_jus'][0]
+        b = uhe['pol_vaz_niv_jus'][1]
+        c = uhe['pol_vaz_niv_jus'][2]
+        d = uhe['pol_vaz_niv_jus'][3]
+        e = uhe['pol_vaz_niv_jus'][4]
+
+        cotajus = a + b*qdef + c*qdef**2 + d*qdef**3 + e*qdef**4
+        cotajus.shape = qdef.shape
+
+        xGrid, yGrid = np.meshgrid(cotamont, cotajus)
+
+        z = uhe['prod_esp'] * ( xGrid - yGrid )
+
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+
+        surf = ax.plot_surface(qdef, volumes,z, rcount=100, ccount = 100, cmap=plt.cm.coolwarm,
+                       linewidth=0, antialiased=False)
+
+        plt.xlabel('Vazão Defluente em m^3/s', fontsize=12)
+        titulo = 'Produtibilidade da Usina ' + uhe['nome']
+        plt.title(titulo, fontsize=16)
+        plt.ylabel('Volume Armazenado em hm^3', fontsize=12)
+        fig.colorbar(surf, shrink=0.5, aspect=5)
+
+        plt.show()
 
     # Calcula Vazao Incremental
     def QInc(self, usinas, iano, imes):

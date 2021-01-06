@@ -73,10 +73,13 @@ if __name__ == '__main__':
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
-    uhe = MedioPrazo.confhd.get('sto antonio')
+    uhe = MedioPrazo.confhd.get('furnas')
 
-    MedioPrazo.dger.escrever(os.path.join("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/Teste", 'TESTE.DAT'))
-    MedioPrazo.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/Teste2")
+    MedioPrazo.confhd.plot_pcv(uhe)
+    MedioPrazo.confhd.plot_pca(uhe)
+    MedioPrazo.confhd.plot_var_prod(uhe)
+    MedioPrazo.confhd.plot_vaz(uhe)
+
     #MedioPrazo.confhd.plot_vaz(uhe)
 
 # ver downloads no PyPi

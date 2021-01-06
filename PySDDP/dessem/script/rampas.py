@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from abc import ABC
 from typing import Optional, IO
-import re
-import numpy as np
+
 import os
 
 import pandas as pd
@@ -41,12 +39,6 @@ class Rampas(RampasTemplate):
         # Listas de Comentários:
         self._comentarios_ = list()
 
-        # Dicionário para armazenar nome e número da UTE:
-        self.ute = {
-            "Nome": list(),
-            "Num": list()
-        }
-
         # Dicionário para armazenar dados do bloco "RAMP":
         self.rampas['us'] = list()
         self.rampas['uni'] = list()
@@ -75,32 +67,20 @@ class Rampas(RampasTemplate):
                         break
 
                     else:
-
-                        if linha == '&' or linha == '&&' or linha == 'RAMP' or linha == self.bloco_rampas['descricao'] \
-                                or linha == self.bloco_rampas['cabecalho']:
+                        if linha[0] == '&' or linha[:4] == 'RAMP':
                             self._comentarios_.append(linha)
                             continue
 
                         else:
-                            if linha[0] == '&':
-                                self.ute['Nome'].append(linha)
-                                numute = re.findall(r'\b\d+\b', linha)
-                                numute = int(numute[0])
-                                self.ute['Num'].append(numute)
-                                continue
-
-                            else:
-                                us = int(linha[:3])
-                                if us == self.ute['Num'][-1]:
-                                    self.rampas['us'].append(self.linha[:3])
-                                    self.rampas['uni'].append(self.linha[4:7])
-                                    self.rampas['seg'].append(self.linha[8:11])
-                                    self.rampas['C'].append(self.linha[12:14])
-                                    self.rampas['T'].append(self.linha[15:18])
-                                    self.rampas['Potencia'].append(self.linha[19:30])
-                                    self.rampas['Tempo'].append(self.linha[31:36])
-                                    self.rampas['FlagMeiaHora'].append(self.linha[37:38])
-                                    continue
+                            self.rampas['us'].append(self.linha[:3])
+                            self.rampas['uni'].append(self.linha[4:7])
+                            self.rampas['seg'].append(self.linha[8:11])
+                            self.rampas['C'].append(self.linha[12:14])
+                            self.rampas['T'].append(self.linha[15:18])
+                            self.rampas['Potencia'].append(self.linha[19:30])
+                            self.rampas['Tempo'].append(self.linha[31:36])
+                            self.rampas['FlagMeiaHora'].append(self.linha[37])
+                            continue
 
         except Exception as err:
             if isinstance(err, StopIteration):
@@ -124,55 +104,34 @@ class Rampas(RampasTemplate):
         try:
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
 
-                cont = len(self.ute["Nome"])
-                numline = 0
-                lines = len(self.rampas_df['us'])
-
                 # Bloco RAMP
                 # Imprime Mneumônico
                 f.write('RAMP\n')
                 f.write('&&\n')
 
-                for icont in range(cont):
-                    # print(self.rampas_df)
-                    f.write(self.ute['Nome'][icont])
-                    f.write('\n')
+                usi, traj = None, None
 
-                    # Imprime Cabeçalho Completo
-                    linha = self.bloco_rampas['descricao']
-                    f.write(linha)
-                    f.write('\n')
-                    linha = self.bloco_rampas['cabecalho']
-                    f.write(linha)
-                    f.write('\n')
+                for idx, value in self.rampas_df.iterrows():
+                    linha = self.bloco_rampas['formato'].format(**value)
+                    if value['us'] == usi:
+                        if value['T'] == traj:
+                            f.write(linha)
+                        else:
+                            f.write('&\n')
+                            f.write(linha)
 
-                    try:
-                        while int(self.rampas_df['us'][numline]) == self.ute['Num'][icont]:
-                            numline += 1
-                    except:
-                        numline = lines
-
-                    rampas_df_new = self.rampas_df.head(numline)
-
-                    info_ad = list()
-                    info_ad.append('NotError')
-
-                    for idx, value in rampas_df_new.iterrows():
-                        numute = int(value['us'])
-                        info_ad.append(value['us'] + value['T'])
-                        if numute == self.ute['Num'][icont]:
-                            if (value['us'] + value['T']) == info_ad[-2]:
-                                linha = self.bloco_rampas['formato'].format(**value)
-                                f.write(linha)
-                            else:
-                                f.write('&\n')
-                                linha = self.bloco_rampas['formato'].format(**value)
-                                f.write(linha)
-                            self.rampas_df = self.rampas_df.drop(index=idx)
-
-                    if icont < cont - 1:
+                    else:
+                        # Imprime Cabeçalho Completo
                         f.write('&\n')
                         f.write('&\n')
+                        f.write(self.bloco_rampas['descricao'])
+                        f.write('\n')
+                        f.write(self.bloco_rampas['cabecalho'])
+                        f.write('\n')
+                        f.write(linha)
+
+                    usi = value['us']
+                    traj = value['T']
 
                 f.write('&\n')
                 f.write('FIM\n')

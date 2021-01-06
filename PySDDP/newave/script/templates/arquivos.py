@@ -65,16 +65,17 @@ class ArquivosTemplate(ArquivoEntrada):
         self.tecno = None
 
         self.arquivos_fixo = {
-            "dger": {
+            "hidr": {
                 'tipo': 'binario',
                 'funcao': 'entrada',
                 'descricao': 'CADASTRO DAS U.HIDRELETRICAS',
                 'valor': 'HIDR.DAT'
             },
-            "sistema": {
+            "vazoes": {
                 'tipo': 'binario',
                 'funcao': 'entrada',
                 'descricao': 'HISTRORICO DE VAZOES UHES   ',
+                'manual': '',
                 'valor': 'VAZOES.DAT'
             }
         }
@@ -84,6 +85,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS GERAIS                ',
+                'manual': 'Nome do arquivo de dados gerais.',
                 'valor': None,
                 'ordem': 1
             },
@@ -91,6 +93,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS DOS SUBSISTEMAS       ',
+                'manual': 'Nome do arquivo de dados dos subsistemas/submercados.',
                 'valor': None,
                 'ordem': 2
             },
@@ -98,6 +101,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'CONFIGURACAO HIDRAULICA     ',
+                'manual': 'Nome do arquivo de dados da configuração hidroelétrica.',
                 'valor': None,
                 'ordem': 3
             },
@@ -105,6 +109,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ALTERACAO DADOS USINAS HIDRO',
+                'manual': 'Nome do arquivo de dados de alteração da configuração de usinas hidroelétricas.',
                 'valor': None,
                 'ordem': 4
             },
@@ -112,6 +117,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'CONFIGURACAO TERMICA        ',
+                'manual': 'Nome do arquivo de dados da configuração termoelétrica.',
                 'valor': None,
                 'ordem': 5
             },
@@ -119,6 +125,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS DAS USINAS TERMICAS   ',
+                'manual': 'Nome do arquivo de dados das usinas termoelétricas.',
                 'valor': None,
                 'ordem': 6
             },
@@ -126,6 +133,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS DAS CLASSES TERMICAS  ',
+                'manual': 'Nome do arquivo de dados de classes térmicas.',
                 'valor': None,
                 'ordem': 7
             },
@@ -133,6 +141,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS DE EXPANSAO HIDRAULICA',
+                'manual': 'Nome do arquivo de dados que contém a expansão das usinas hidroelétricas.',
                 'valor': None,
                 'ordem': 8
             },
@@ -140,12 +149,14 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO DE EXPANSAO TERMICA ',
+                'manual': 'Nome do arquivo de dados que contém a expansão das usinas termoelétricas.',
                 'valor': None,
                 'ordem': 9
             },
             "patamar": {
                 'tipo': 'texto',
                 'funcao': 'entrada',
+                'manual': 'Nome do arquivo de dados que contém os patamares de mercado.',
                 'descricao': 'ARQUIVO DE PATAMARES MERCADO',
                 'valor': None,
                 'ordem': 10
@@ -154,6 +165,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'binario',
                 'funcao': 'saida',
                 'descricao': 'ARQUIVO DE CORTES DE BENDERS',
+                'manual': 'Nome do arquivo que contém a função de custo futuro - cortes de Benders.',
                 'valor': None,
                 'ordem': 11
             },
@@ -161,6 +173,8 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'binario',
                 'funcao': 'saida',
                 'descricao': 'ARQUIVO DE CABECALHO CORTES ',
+                'manual': 'Nome do arquivo que contém os apontadores de início da função de custo futuro de cada ' +
+                          'stágio.',
                 'valor': None,
                 'ordem': 12
             },
@@ -168,6 +182,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'saida',
                 'descricao': 'RELATORIO DE CONVERGENCIA   ',
+                'manual': 'Nome do arquivo que contém o relatório de acompanhamento do programa.',
                 'valor': None,
                 'ordem': 13
             },
@@ -175,6 +190,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'saida',
                 'descricao': 'RELATORIO DE E. SINTETICAS  ',
+                'manual': 'Nome do arquivo que contém o relatório de acompanhamento do modelo PAR(p).',
                 'valor': None,
                 'ordem': 14
             },
@@ -182,6 +198,8 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'binario',
                 'funcao': 'saida',
                 'descricao': 'RELATORIO DETALHADO FORWARD ',
+                'manual': 'Nome do arquivo que contém os dados para obtenção do relatório opcional detalhado de '+
+                          'acompanhamento da simulação forward.',
                 'valor': None,
                 'ordem': 15
             },
@@ -189,6 +207,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'binario',
                 'funcao': 'saida',
                 'descricao': 'ARQUIVO DE CABECALHO FORWARD',
+                'manual': 'Nome do arquivo que contém o cabeçalho do arquivo de acompanhamento da simulação forward.',
                 'valor': None,
                 'ordem': 16
             },
@@ -196,6 +215,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO DE S.HISTORICAS S.F.',
+                'manual': 'Nome do arquivo que contém os parâmetros necessários à simulação com a série histórica.',
                 'valor': None,
                 'ordem': 17
             },
@@ -203,6 +223,8 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': "ARQUIVO DE MANUT.PROG. UTE'S",
+                'manual': 'Nome do arquivo que contém informações sobre manutenções programadas em usinas térmicas, ' +
+                        'para o cálculo da indisponibilidade programada.',
                 'valor': None,
                 'ordem': 18
             },
@@ -210,6 +232,8 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'binario',
                 'funcao': 'saida',
                 'descricao': 'ARQUIVO P/DESPACHO HIDROTERM',
+                'manual': 'Nome do arquivo de saída que contém as configurações dos sistemas, das usinas térmicas ' +
+                          ' das hidroelétricas.',
                 'valor': None,
                 'ordem': 19
             },
@@ -217,6 +241,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/TEND. HIDROLOGICA ',
+                'manual': 'Nome do arquivo que contém a tendência hidrológica.',
                 'valor': None,
                 'ordem': 20
             },
@@ -224,6 +249,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/DADOS DE ITAIPU   ',
+                'manual': 'Nome do arquivo que contém os dados referentes à usina de Itaipu (não usado).',
                 'valor': None,
                 'ordem': 21
             },
@@ -231,6 +257,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/DEMAND S. BIDDING ',
+                'manual': 'Nome do arquivo que contém informações sobre o “bidding” de demanda (não implementado).',
                 'valor': None,
                 'ordem': 22
             },
@@ -238,6 +265,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/CARGAS ADICIONAIS ',
+                'manual': 'Nome do arquivo que contém dados de cargas adicionais.',
                 'valor': None,
                 'ordem': 23
             },
@@ -245,6 +273,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/FATORES DE PERDAS ',
+                'manual': 'Nome do arquivo que contém informações sobre perdas.',
                 'valor': None,
                 'ordem': 24
             },
@@ -252,6 +281,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C/PATAMARES GTMIN   ',
+                'manual': 'Nome do arquivo descrevendo geração térmica mínima por patamar.',
                 'valor': None,
                 'ordem': 25
             },
@@ -259,6 +289,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO ENSO 1              ',
+                'manual': 'Nome do arquivo com os índices mensais ENSO (não implementado).',
                 'valor': None,
                 'ordem': 26
             },
@@ -266,6 +297,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO ENSO 2              ',
+                'manual': 'Nome do arquivo com as fases ENSO p/ cada REE (não implementado).',
                 'valor': None,
                 'ordem': 27
             },
@@ -273,6 +305,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO DSVAGUA             ',
+                'manual': 'Nome do arquivo com outros usos da água (irrigação, por exemplo).',
                 'valor': None,
                 'ordem': 28
             },
@@ -280,6 +313,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO P/PENALID. POR DESV.',
+                'manual': 'Nome do arquivo com penalidades',
                 'valor': None,
                 'ordem': 29
             },
@@ -287,6 +321,8 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO C.GUIA / PENAL.VMINT',
+                'manual': 'Nome do arquivo com dados da curva de aversão ou com penalidades para o não atendimento ' +
+                          'ao volume mínimo operativo.',
                 'valor': None,
                 'ordem': 30
             },
@@ -294,6 +330,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO AGRUPAMENTO LIVRE   ',
+                'manual': 'Nome do arquivo com dados de agrupamentos de intercâmbio',
                 'valor': None,
                 'ordem': 31
             },
@@ -301,6 +338,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO DESP. ANTEC. GNL    ',
+                'manual': 'Nome do arquivo com dados de antecipação de despacho de usinas térmicas a gás natural liquefeito (GNL)',
                 'valor': None,
                 'ordem': 32
             },
@@ -308,6 +346,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO GER. HIDR. MIN      ',
+                'manual': 'Nome do arquivo com os dados de geração hidráulica mínima.',
                 'valor': None,
                 'ordem': 33
             },
@@ -315,6 +354,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO AVERSAO RISCO - SAR ',
+                'manual': 'Nome do arquivo de dados do Mecanismo de Aversão a Risco: SAR',
                 'valor': None,
                 'ordem': 34
             },
@@ -322,6 +362,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO AVERSAO RISCO - CVAR',
+                'manual': 'Nome do arquivo de dados do Mecanismo de Aversão a Risco: CVaR',
                 'valor': None,
                 'ordem': 35
             },
@@ -329,6 +370,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'DADOS DOS RESER.EQ.ENERGIA  ',
+                'manual': 'Nome do arquivo de dados dos REEs',
                 'valor': None,
                 'ordem': 36
             },
@@ -336,6 +378,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO RESTRICOES ELETRICAS',
+                'manual': 'Nome do arquivo contendo os dados das restrições elétricas internas aos REEs',
                 'valor': None,
                 'ordem': 37
             },
@@ -343,6 +386,7 @@ class ArquivosTemplate(ArquivoEntrada):
                 'tipo': 'texto',
                 'funcao': 'entrada',
                 'descricao': 'ARQUIVO DE TECNOLOGIAS      ',
+                'manual': 'Nome do arquivo contendo as tecnologias de geração de energia elétrica',
                 'valor': None,
                 'ordem': 38
             }

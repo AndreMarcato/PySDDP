@@ -78,6 +78,8 @@ class Arquivos(ArquivosTemplate):
 
         :param file_out: caminho completo para o arquivo
         """
+        if not os.path.isdir(os.path.split(file_out)[0]):
+            os.mkdir(os.path.split(file_out)[0])
 
         formato = "{descricao: <27}: {valor: <12}\n"
         try:

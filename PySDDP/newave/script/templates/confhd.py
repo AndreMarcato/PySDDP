@@ -147,7 +147,7 @@ class ConfhdTemplate(ArquivoEntrada):
                     "valor": list()
                }
         self._perda_hid = {
-                    'descricao': 'Perda Hidraulica',
+                    'descricao': 'Perda Hidraulica - (1) Percentual; (2) Metros',
                     "valor": list()
                }
         self._num_pol_vnj = {

@@ -28,91 +28,108 @@ class DgerTemplate(ArquivoEntrada):
         self.titu_caso = {
                     'descricao': 'Nome do caso',
                     'resumo': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.tipo_exec = {
                     'descricao': 'Tipo de execução: 1 = rodada completa ou 0 = só executa simulação final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.dura_peri = {
                     'descricao': 'Duração de cada estágio de operação, em meses (função desabilitada)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.num_anos = {
                     'descricao': 'Número de anos de planejamento',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.mesi_pre_est = {
                     'descricao': 'Mês inicial do período que antecede o período de planejamento.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.mesi_est = {
-                    'descricao': 'Mês inicial do período de planejamento. Se o período que antecede o período de'+
+                    'descricao': 'Mês inicial do período de planejamento. Se o período que antecede o período de' +
                                  'planejamento for diferente de zero, o Newave irá considerar esse valor unitário.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.ano_ini = {
                     'descricao': 'Ano inicial do período de planejamento.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.anos_pre = {
                     'descricao': 'Número de anos iniciais para fins de estabilização no cálculo da política',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.anos_pos = {
                     'descricao': 'Número de anos finais para fins de estabilização no cálculo da política',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.anos_pos_fin = {
                     'descricao': 'Número de anos finais para fins de estabilização na simulação final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.imp_dado = {
                     'descricao': 'Controle de impressão das características das usinas: 0 = não imprime 1 = imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.imp_merc = {
                     'descricao': 'Controle de impressão dos dados de mercado de energia: 0 = não imprime 1 = imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.imp_ener = {
                     'descricao': 'Controle de impressão as energias históricas afluentes: 0 = não imprime 1 = imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.imp_mode_est = {
-                    'descricao': 'Controle de impressão dos parâmetros do modelo estocástico: 0 = não imprime 1 = imprime',
+                    'descricao': 'Controle de impressão dos parâmetros do modelo estocástico: 0 = não imprime 1 = ' +
+                                 'imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.imp_ree = {
-                    'descricao': 'Controle de impressão dos parâmetros dos reservatórios equivalentes de energia: 0 = não imprime 1 = imprime',
+                    'descricao': 'Controle de impressão dos parâmetros dos reservatórios equivalentes de energia: ' +
+                                 '0 = não imprime 1 = imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.max_iter = {
@@ -125,36 +142,43 @@ class DgerTemplate(ArquivoEntrada):
                     'descricao': 'Número de simulações forward',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.nr_aber = {
                     'descricao': 'Número de aberturas para a simulação backward',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.nr_forw_fin = {
                     'descricao': 'Número de séries sintéticas - Simulação Final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.ord_max_parp = {
                     'descricao': 'Ordem máxima do modelo estocástico PAR(p)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.anoi_hist = {
                     'descricao': 'Ano inicial do arquivo de vazões históricas',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_tam_vaz = {
-                    'descricao': 'Tamanho do registro do arquivo de vazões históricas: 0 = 320 palavras 1 = 600 palavras',
+                    'descricao': 'Tamanho do registro do arquivo de vazões históricas: 0 = 320 palavras 1 = 600 ' +
+                                 'palavras',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
 
@@ -165,6 +189,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'informado por usina no arquivo de configuração hidroelétrica',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.vol_earm_inic = {
@@ -172,12 +197,14 @@ class DgerTemplate(ArquivoEntrada):
                                  'Somente será considerado  se o volume inicial for considerado por REE',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.int_conf = {
                     'descricao': 'Probabilidade associada ao intervalo de confiança para convergência do algoritmo (%)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.tx_desc = {
@@ -185,6 +212,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'período anual per é a duração em meses do período',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_sim_fin = {
@@ -192,46 +220,52 @@ class DgerTemplate(ArquivoEntrada):
                                  'séries sintéticas 2 = simulação com a série histórica 3 = consistência de dados',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_impr_sim_fin = {
-                    'descricao': 'Controle de impressão dos resultados da simulação final e do cálculo da política: '+
+                    'descricao': 'Controle de impressão dos resultados da simulação final e do cálculo da política: ' +
                                  '0 = não imprime; 1 = impressão para simulação final' +
                                  '2 = impressão para simulação final e cálculo da política',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_impr_risc_def = {
-                    'descricao': 'Controle de impressão dos riscos de déficit e valor esperado da ENS'  +
+                    'descricao': 'Controle de impressão dos riscos de déficit e valor esperado da ENS' +
                                  '0 = convergência final apenas 1 = todas as iterações',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.ser_grav_rel = {
                     'descricao': 'Este campo indica de quantas em quantas séries será gravado o relatório ' +
                                  'detalhado da simulação final.' +
                                  'Por exemplo, se este registro contém o valor 50 significa que do total de séries' +
-                                 'sintéticas simuladas haverá impressão detalhada para n séries, a saber, série 1, '+
+                                 'sintéticas simuladas haverá impressão detalhada para n séries, a saber, série 1, ' +
                                  'série 51, ..., série 951 etc. Este campo só será considerado se' +
                                  'a flag de impressão da simulação final estiver ativa.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.num_min_iter = {
                     'descricao': 'Este campo contém o número mínimo de iterações para a convergência da política.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.iter_inic_zinf = {
-                    'descricao': 'Este campo indica a iteração partir da qual será investigada a incerteza do'+
-                                 'parametro: valor esperado do custo total de operação obtido da função de custo'+
+                    'descricao': 'Este campo indica a iteração partir da qual será investigada a incerteza do' +
+                                 'parametro: valor esperado do custo total de operação obtido da função de custo' +
                                  'futuro do primeiro estágio - ZINF',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
 
@@ -241,13 +275,15 @@ class DgerTemplate(ArquivoEntrada):
                                  'simulação final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.nr_anos_mnut = {
-                    'descricao': 'Números de anos de informações de manutenção programada de usinas térmicas a' +
-                                  'serem considerados no arquivo de dados de manutenção térmica',
+                    'descricao': 'Números de anos de informações de manutenção programada de usinas térmicas a ' +
+                                 'serem considerados no arquivo de dados de manutenção térmica',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.tend_hidr_pol = {
@@ -257,6 +293,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '2 = será lido arquivo com a tendência hidrológica por posto de medição',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.tend_hidr_sim = {
@@ -266,6 +303,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '2 = será lido arquivo com a tendência hidrológica por posto de medição',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_itpu = {
@@ -273,6 +311,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 = não será considerado 1 = será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_bid_dem = {
@@ -280,6 +319,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 = não será considerado 1 = será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_tran_loss = {
@@ -287,6 +327,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 = será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_el_nino = {
@@ -294,18 +335,21 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 = não será considerado 1 = será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_enso = {
                     'descricao': 'Índice de identificação ENSO (função não implementada).',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_pat = {
                     'descricao': 'Flag para tipo de duração do patamar. 0 = sazonal. 1 = variável por ano.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
 
@@ -314,6 +358,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 = será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_dsv_ena = {
@@ -321,6 +366,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'armazenada: 0 = constante; 1 = variável com o armazenamento',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_curv_segu = {
@@ -328,6 +374,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'feito para as entradas de VMINT; 1 = curva de aversão a risco / VMINP',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_gera_cen = {
@@ -339,18 +386,21 @@ class DgerTemplate(ArquivoEntrada):
                                  'e forward.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.prof_risc_1 = {
                     'descricao': 'Profundidade para cálculo do risco de déficit (%) – primeiro valor',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.prof_risc_2 = {
                     'descricao': 'Profundidade para cálculo do risco de déficit (%) – segundo valor',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.func_part_quen = {
@@ -358,6 +408,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'simulação final. Se for zero, serão consideradas todas as iterações realizadas.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_agru_int = {
@@ -365,16 +416,18 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não será considerado 1 – será considerado',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_pen_int = {
                     'descricao': 'Flag para consideração de equalização de penalidades de intercâmbio ' +
                                  '(flag desabilitado) Os intercâmbios entre subsistemas / submercados reais são ' +
                                  'penalizados por P, os intercâmbios entre subsistemas / submercados reais e ' +
-                                 'fictícios são penalizados por P/2 e os intercâmbios entre subsistemas / submercados '+
-                                 'ficícios não penalizados.',
+                                 'fictícios são penalizados por P/2 e os intercâmbios entre subsistemas / submercados' +
+                                 ' ficícios não penalizados.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_sub_mot = {
@@ -385,6 +438,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'submotorizada e da regularização à montante da usina',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_ord_auto = {
@@ -392,6 +446,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'e classes térmicas: 0 – não considera. 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_carg_adic = {
@@ -399,6 +454,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.zsup_linf_perc = {
@@ -406,12 +462,14 @@ class DgerTemplate(ArquivoEntrada):
                                  'estatístico(%)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.delt_zinf = {
                     'descricao': 'Valor máximo percentual para delta de ZINF no critério de parada não estatístico (%)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.num_delt_zinf = {
@@ -419,6 +477,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'statístico',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_desp_gnl = {
@@ -426,14 +485,16 @@ class DgerTemplate(ArquivoEntrada):
                                  'liquefeito (GNL): 0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_modi_gnl = {
                     'descricao': 'Flag para modificação automática do montante de antecipação de despacho de uma ' +
-                                'usina GNL quando a capacidade de geração máxima desta usina for inferior a este ' +
-                                'valor: 0 – não considera 1 – considera',
+                                 'usina GNL quando a capacidade de geração máxima desta usina for inferior a este ' +
+                                 'valor: 0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_ghid_min = {
@@ -441,24 +502,28 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 - não considera 1 - considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.mini_sim_fin = {
                     'descricao': 'Mês de início para o cálculo da simulação final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.aini_sim_fin = {
                     'descricao': 'Ano de início para o cálculo da simulação final',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.vini_ree_sim_fin = {
                     'descricao': 'Volume armazenado inicial (%) por REE para cálculo da simulação final.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_ger_ext = {
@@ -466,6 +531,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_comu_2niv = {
@@ -473,6 +539,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_armz_loc = {
@@ -481,6 +548,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_mem_ena = {
@@ -489,6 +557,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_mem_fcf = {
@@ -497,6 +566,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_sar = {
@@ -505,6 +575,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_cvar = {
@@ -513,6 +584,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera, constante no tempo 2 – considera, variável no tempo',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_min_zsup = {
@@ -520,6 +592,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_req_vmin = {
@@ -527,6 +600,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_elet_ree = {
@@ -534,6 +608,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_sele_cort = {
@@ -541,6 +616,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_jane_cort = {
@@ -548,6 +624,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – considera janela fixa de 2*NREE',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_cons_ream = {
@@ -555,12 +632,14 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_ream_cena = {
                     'descricao': 'Tipo de Reamostragem de Cenários: 0 – Recombinação 1 – Plena',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_pass_ream = {
@@ -568,6 +647,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'de iterações',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_no_zero = {
@@ -575,6 +655,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_fcf_pdde = {
@@ -582,18 +663,21 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_imp_ena = {
                     'descricao': 'Flag para impressão dos cenários de ENA: 0 – não imprime; 1 – imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_imp_cor = {
                     'descricao': 'Flag para impressão dos cortes ativos: 0 – não imprime; 1 – imprime',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_proc_agre = {
@@ -601,26 +685,31 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – centróide',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_corr_espa = {
                     'descricao': 'Flag para escolha da matriz de correlação espacial: 0 – anual; 1 – mensal',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_conv_estat = {
                     'descricao': 'Desconsidera critério estatístico no processo de convergência: 0 – não 1 – sim',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_mom_ream = {
                     'descricao': 'Momento de realização da reamostragem' +
-                            '0 – Backward da iteração correspondente ao passo para a reamostragem de cenários +1; ' +
-                            '1 – Forward da iteração correspondente ao passo para a reamostragem de cenários',
+                                 '0 – Backward da iteração correspondente ao passo para a reamostragem de ' +
+                                 'cenários +1; ' +
+                                 '1 – Forward da iteração correspondente ao passo para a reamostragem de cenários',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_arq_ena = {
@@ -628,6 +717,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'execução do programa: 0 – apaga; 1 – mantém',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_test_conv = {
@@ -636,6 +726,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – teste começa na iteração mínima (inclusive)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_vmint_sazo = {
@@ -643,6 +734,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'estáticos (pré e pós): 0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_vmaxt_sazo = {
@@ -650,6 +742,7 @@ class DgerTemplate(ArquivoEntrada):
                                  'estáticos (pré e pós): 0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_vminp_sazo = {
@@ -658,6 +751,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera.',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_cfuga_sazo = {
@@ -666,6 +760,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não considera 1 – considera',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_efei_estuf = {
@@ -673,6 +768,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '0 – não representa 1 – representa',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_esto_eolic = {
@@ -681,6 +777,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '(funcionalidade não operacional nesta versão)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_esto_solar = {
@@ -689,6 +786,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '(funcionalidade não operacional nesta versão)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_esto_sl_eo = {
@@ -697,6 +795,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '1 – cenários (funcionalidade não operacional nesta versão)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
         self.flag_rest_gasn = {
@@ -705,6 +804,7 @@ class DgerTemplate(ArquivoEntrada):
                                  '(funcionalidade não operacional nesta versão)',
                     'resumo': None,
                     'comentarios': None,
+                    'ordem': None,
                     'valor': None
                  }
 
