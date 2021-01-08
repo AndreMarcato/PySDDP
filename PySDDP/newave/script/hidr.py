@@ -27,7 +27,7 @@ class Hidr(HidrTemplate):
         self.nome_arquivo = os.path.split(file_name)[1]
 
         tot_reg = os.stat(file_name).st_size/792
-        self.numero_postos = tot_reg
+        self.nr_usinas = int(tot_reg)
 
         # noinspection PyBroadException
         monitor: dict = dict()

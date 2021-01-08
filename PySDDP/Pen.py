@@ -31,7 +31,7 @@ class Newave(object):
         self.hidr.ler(os.path.join(self.path_, 'HIDR.DAT'))
         # Realiza a Leitura do VAZOES.DAT
         self.vazoes = Vazoes()
-        self.vazoes.ler(os.path.join(self.path_, 'VAZOES.DAT'), self.hidr.numero_postos)
+        self.vazoes.ler(os.path.join(self.path_, 'VAZOES.DAT'), self.hidr.nr_usinas)
         # Realiza a Leitura do CONFHD.DAT
         self.confhd = Confhd()
         self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes)

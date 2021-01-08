@@ -73,6 +73,8 @@ if __name__ == '__main__':
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
+    print(MedioPrazo.hidr.nr_usinas)
+
     uhe = MedioPrazo.confhd.get('furnas')
 
     MedioPrazo.confhd.plot_pcv(uhe)
