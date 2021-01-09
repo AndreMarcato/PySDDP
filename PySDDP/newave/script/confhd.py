@@ -68,7 +68,6 @@ class Confhd(ConfhdTemplate):
                         self._bdh['valor'].append(uhe['bdh'])
                         self._sist['valor'].append(uhe['sist'])
                         self._empr['valor'].append(uhe['empr'])
-                        self._jusante['valor'].append(uhe['jusante'])
                         self._desvio['valor'].append(uhe['desvio'])
                         self._vol_min['valor'].append(uhe['vol_min'])
                         self._vol_max['valor'].append(uhe['vol_max'])

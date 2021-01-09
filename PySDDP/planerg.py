@@ -75,7 +75,9 @@ if __name__ == '__main__':
 
     print(MedioPrazo.hidr.nr_usinas)
 
-    uhe = MedioPrazo.confhd.get('furnas')
+    uhe = MedioPrazo.confhd.get('itaipu')
+
+    print(uhe['jusante'])
 
     MedioPrazo.confhd.plot_pcv(uhe)
     MedioPrazo.confhd.plot_pca(uhe)
