@@ -73,16 +73,10 @@ if __name__ == '__main__':
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
 
-    print(MedioPrazo.hidr.nr_usinas)
+    uhe = MedioPrazo.confhd.get(287)
 
-    uhe = MedioPrazo.confhd.get('itaipu')
-
-    print(uhe['jusante'])
-
-    MedioPrazo.confhd.plot_pcv(uhe)
-    MedioPrazo.confhd.plot_pca(uhe)
-    MedioPrazo.confhd.plot_var_prod(uhe)
-    MedioPrazo.confhd.plot_vaz(uhe)
+    #MedioPrazo.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/Teste")
+    MedioPrazo.modif.escrever("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/NEWMODIF.DAT")
 
     #MedioPrazo.confhd.plot_vaz(uhe)
 

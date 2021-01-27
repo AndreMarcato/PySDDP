@@ -16,7 +16,7 @@ class Confhd(ConfhdTemplate):
         self.dir_base = None
         self._numero_registros_ = None
 
-    def ler(self, file_name: str, hidr, vazoes) -> None:
+    def ler(self, file_name: str, hidr, vazoes, dger, modif) -> None:
         """
         Implementa o método para leitura do arquivo HIDR.DAT que contem os dados cadastrais das usinas
          hidrelétricas que podem ser utilizadas para a execucao do NEWAVE
@@ -33,7 +33,7 @@ class Confhd(ConfhdTemplate):
         self._numero_registros_ = 0
         self.nuhe = 0
 
-        nanos = 5  # (TO DO: ALTERAR ISSO DEPOIS DE LER O DGER.DAT)
+        nanos = dger.num_anos['valor']
 
         try:
 
@@ -140,9 +140,16 @@ class Confhd(ConfhdTemplate):
                         self._vol_minp['valor'].append(self._vol_min['valor'][-1]*np.ones((nanos, 12), 'f'))
                         self._vaz_mint['valor'].append(self._vaz_min['valor'][-1]*np.ones((nanos, 12), 'f'))
                         self._cfugat['valor'].append(self._cfmed['valor'][-1]*np.ones((nanos, 12), 'f'))
+                        self._cmont['valor'].append(self._cota_max['valor'][-1]*np.ones((nanos, 12), 'f'))
+
+                        usinadf = modif.bloco_usina['df'][modif.bloco_usina['df']['codigo'] == self._codigo['valor'][-1]]
+
+                        # Incorpora Modificações do MODIF.DAT
+                        self._calc_vol_util()
+                        self._acerta_modif(usinadf, dger)
 
                         # Calcula Parametros
-                        self._calc_vol_util()
+                        self._calc_vol_util() # Precisa re-calcular por causa do MODIF.DAT
                         self._calc_pot_efetiva()
                         self._calc_vaz_efetiva()
                         self._calc_produtibs(nanos)
@@ -182,10 +189,10 @@ class Confhd(ConfhdTemplate):
 
     def escrever(self, file_out: str) -> None:
         """
-        Implementa o método para leitura do arquivo HIDR.DAT que contem os dados cadastrais das usinas
+        Implementa o método para escrita do arquivo HIDR.DAT que contem os dados cadastrais das usinas
          hidrelétricas que podem ser utilizadas para a execucao do NEWAVE
 
-        :param file_name: string com o caminho completo para o arquivo
+        :param file_out: string com o caminho completo para o arquivo
 
         """
 
@@ -230,6 +237,14 @@ class Confhd(ConfhdTemplate):
         print("OK! Escrita do", os.path.split(file_out)[1], "realizada com sucesso.")
 
     def get(self, entrada):
+        """
+        Busca uma usina hidreletrica do arquivo CONFHD e retorna um dicionario de dados contendo todas as
+        informacoes desta usina
+
+        :param entrada: string com o nome da usina ou inteiro com o numero de referencia da usina
+
+        """
+
         posicao = None
         if (type(entrada) == float) or (type(entrada) == int):
             for i, valor in enumerate(self._codigo["valor"]):
@@ -320,6 +335,7 @@ class Confhd(ConfhdTemplate):
             'vol_maxt': self._vol_maxt['valor'][posicao],
             'vol_minp': self._vol_minp['valor'][posicao],
             'vaz_mint': self._vaz_mint['valor'][posicao],
+            'cmont': self._cmont['valor'][posicao],
             'cfugat': self._cfugat['valor'][posicao],
             'vol_util': self._vol_util['valor'][posicao],
             'pot_efet': self._pot_efet['valor'][posicao],
@@ -342,6 +358,15 @@ class Confhd(ConfhdTemplate):
         return uhe
 
     def put(self, uhe):
+        """
+        Atualiza os dados da usina com do CONFHD de acordo com o dicionario de dados fornecido na entrada.
+        As chaves do dicionario de dados de entrada devem ser as mesmas do dicionario obtido atraves do
+        comando get.
+
+        :param uhe: dicionario de dados contendo informacoes da usina a ser atualizada.
+
+        """
+
         posicao = None
         for i, valor in enumerate(self._codigo["valor"]):
             if valor == uhe['codigo']:
@@ -442,12 +467,30 @@ class Confhd(ConfhdTemplate):
         return 'sucesso'
 
     def help(self, parametro):
+        """
+        Detalha o tipo de informacao de uma chave do dicionario de dados obtido pelo comando get.
+
+        :param parametro: string contendo a chave do dicionario de dados cuja o detalhamento eh desejado
+
+        """
+
 
         duvida = getattr(self, '_'+parametro)
 
         return duvida['descricao']
 
     def plot_vaz(self, uhe):
+        """
+        Plota as todas as series historicas anuais da usina cujo dicionario de dados eh fornecia na entrada.
+        Em ciano estao as diversas series anuais.
+        Em azul escuro esta a ultima serie anual.
+        Em vermelho continuo esta a media mensal.
+        Em vermelho pontilhado esta a media menos ou mais o desvio padrao.
+
+        :param uhe: Dicionario de dados contendo informacoes de uma usina hidreletrica
+
+        """
+
         vaz_nat = uhe['vazoes']
         x_axis = np.arange(1, 13)
         plt.plot(x_axis, vaz_nat.transpose(), 'c-')
@@ -468,6 +511,13 @@ class Confhd(ConfhdTemplate):
 
     # Plota Polinomio Cota-Volume
     def plot_pcv(self, uhe):
+        """
+        Plota polinimo Cota-Volume da usina hidreletrica especificada na entrada
+
+        :param uhe: Dicionario de dados contendo informacoes da usina hidreletrica
+
+        """
+
         if uhe["vol_min"] == 0:
             return
 
@@ -501,6 +551,13 @@ class Confhd(ConfhdTemplate):
 
     # Plota Polinomio Cota-Area
     def plot_pca(self, uhe):
+        """
+        Plota polinimo cota-area da usina hidreletrica especificada na entrada
+
+        :param uhe: Dicionario de dados contendo informacoes da usina hidreletrica
+
+        """
+
         if uhe['vol_min'] == 0:
             return
 
@@ -528,8 +585,43 @@ class Confhd(ConfhdTemplate):
             plt.ylim(areas[0], areas[99])
         plt.show()
 
+    # Plota Produtibilidades Constantes da Usina
+    def plota_produtibs(self, uhe, iano, imes):
+        """
+        Plota polinimo cota-area da usina hidreletrica especificada na entrada
+
+        :param uhe: Dicionario de dados contendo informacoes da usina hidreletrica
+
+        """
+
+        x_axis = np.arange(1,7)
+        y_axis = [ uhe['ro_equiv'][iano][imes], uhe['ro_equiv65'][iano][imes], uhe['ro_min'][iano][imes],
+                   uhe['ro_50'][iano][imes], uhe['ro_65'][iano][imes], uhe['ro_max'][iano][imes] ]
+        fig, ax = plt.subplots()
+        a, b, c, d, e, f = plt.bar(x_axis, y_axis)
+        a.set_facecolor('r')
+        b.set_facecolor('g')
+        c.set_facecolor('b')
+        d.set_facecolor('y')
+        e.set_facecolor('m')
+        f.set_facecolor('c')
+        ax.set_xticks(x_axis)
+        ax.set_xticklabels(['Equiv', 'Equiv65', 'Min', '50%', '65%', 'Max'])
+        titulo = 'Produtibilidades da Usina ' + uhe['nome'] + ' - Ano: ' + str(iano+1) + ' - Mês:' + str(imes+1)
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Tipo de Produtibilidade', fontsize=16)
+        plt.ylabel('Produtibilidade', fontsize=16)
+        plt.show()
+
     # Plota Variação de Produtibilidade
     def plot_var_prod(self, uhe):
+        """
+        Plota variacao da produtibilidade da usina hidreletrica especificada na entrada
+
+        :param uhe: Dicionario de dados contendo informacoes da usina hidreletrica
+
+        """
+
         if uhe['vol_min'] == 0:
             return
         a = uhe['pol_cota_vol'][0]
@@ -577,35 +669,34 @@ class Confhd(ConfhdTemplate):
         plt.show()
 
     # Calcula Vazao Incremental
-    def QInc(self, usinas, iano, imes):
+    def vaz_inc(self, uhe, iano, imes):
 
-        nanos_hist = len(self.Vazoes)
-
-        def Montante(usinas, usina, iano, imes):
-            for iusi in usinas:
-                if iusi.Jusante == usina.Codigo:
-                    if iusi.StatusVolMorto[iano][imes] == 2:
+        def Montante(uhe, iano, imes):
+            for iusi in self.lista_uhes():
+                usina = self.get(iusi)
+                if usina['jusante'] == uhe['codigo']:
+                    if usina['status_vol_morto'][iano][imes] == 2:
                         yield iusi
                     else:
-                        yield from Montante(usinas, iusi, iano, imes)
+                        yield from Montante(usina, iano, imes)
 
-        if self.StatusVolMorto[iano][imes] != 2:
-            print ('Erro: Tentativa de calculo de Incremental para usina (', self.Nome, ') fora de operacao no mes ', imes, ' e ano ', iano)
+        # Inicia a vazão incremental da uhe com a sua vazão natural, depois abate as naturais de montante
+
+        incremental = uhe['vazoes'][:,imes]
+
+        if uhe['status_vol_morto'][iano][imes] != 2:
+            print ('Erro: Tentativa de calculo de Incremental para usina (', uhe['nome'], ') fora de operacao no mes ', imes, ' e ano ', iano)
             return 0
         else:
-            Incremental = self.Vazoes[0:nanos_hist,imes]
-            for iusina in Montante(usinas, self, iano, imes):
-                Incremental = Incremental - iusina.Vazoes[0:nanos_hist,imes]
+            for iusina in Montante(uhe, iano, imes):
+                usina = self.get(iusina)
+                incremental = incremental - usina['vazoes'][:,imes]
 
-        if np.min(Incremental) < 0:
-            contador = 0
-            for i in range(nanos_hist):
-                if Incremental[i] < 0:
-                    Incremental[i] = 0
-                    contador = contador + 1
-            return Incremental
-        else:
-            return Incremental
+        # Caso Alguma Incremental seja Menor que zero, força para zero
+        codigos = np.where(incremental<0)
+        incremental[codigos] = 0
+
+        return incremental
 
     ##########################################################################################################
     # Calcula Parametros das Usinas
@@ -726,7 +817,6 @@ class Confhd(ConfhdTemplate):
                     engol = engol + self._maq_por_conj['valor'][-1][i]*self._vaz_efet_conj['valor'][-1][i]*((ql/self._alt_efet_conj['valor'][-1][i])**alpha)
         return engol
 
-
     def _calc_engol_maximo(self):    # Estima Engolimento Maximo da Usina
 
         a = self._pol_cota_vol['valor'][-1][0]
@@ -771,4 +861,140 @@ class Confhd(ConfhdTemplate):
 
         self._engolimento['valor'].append((engol50+engol65+engolEquiv+engolMax+engolMin)/5)
 
+        return
+
+    def lista_uhes(self):
+        """
+        Calcula um generator contendo todos os codigos de referencia das usinas pertencentes ao CONFHD.
+
+        """
+
+        for i in range(self.nuhe):
+            yield self._codigo["valor"][i]
+
+    def _acerta_modif(self, df, dger):
+        tamanho = df.shape
+        tamanho = tamanho[0]
+        for linha in range(tamanho):
+            registro = df.iloc[linha].values
+            #
+            # Palavras chaves tipo zero - somente atualiza valores
+            #
+            if registro[4].upper() == 'NUMCNJ':
+                self._num_conj_maq['valor'][-1] = registro[5]
+            if registro[4].upper() == 'PRODESP':
+                self._prod_esp['valor'][-1] = registro[5]
+            if registro[4].upper() == 'TEIF':
+                self._teifh['valor'][-1] = registro[5]
+            if registro[4].upper() == 'IP':
+                self._ip['valor'][-1] = registro[5]
+            if registro[4].upper() == 'PERDHID':
+                self._perda_hid['valor'][-1] = registro[5]
+            if registro[4].upper() == 'VAZMIN':
+                self._vaz_min['valor'][-1] = registro[5]
+            if registro[4].upper() == 'NUMBAS':
+                self._unid_base['valor'][-1] = registro[5]
+            #
+            # Palavras chaves tipo um - dois campos
+            #
+            if registro[4].upper() == 'NUMMAQ':
+                nr_conj = int(registro[6])
+                self._maq_por_conj['valor'][nr_conj-1] = int(registro[5])
+            if registro[4].upper() == 'POTEFE':
+                nr_conj = int(registro[6])
+                self._pef_por_conj['valor'][nr_conj-1] = registro[5]
+            if registro[4].upper() == 'COEFEVAP':
+                mes = int(registro[6])
+                self._coef_evap['valor'][mes-1] = registro[5]
+            if registro[4].upper() == 'VOLMIN':
+                if registro[6].find("%") == 1:
+                    self._vol_min['valor'][-1] = self._vol_min['valor'][-1] + \
+                                                 float(registro[5]) * self._vol_util['valor'][-1] / 100
+                if registro[6].find("h") == 1:
+                    self._vol_min['valor'][-1] = registro[5]
+            if registro[4].upper() == 'VOLMAX':
+                if registro[6].find("%") == 1:
+                    self._vol_max['valor'][-1] = self._vol_min['valor'][-1] + \
+                                                 float(registro[5]) * self._vol_util['valor'][-1] / 100
+                if registro[6].find("h") == 1:
+                    self._vol_max['valor'][-1] = registro[5]
+            #
+            # Palavras chaves tipo dois - coeficientes PCA e PCV
+            #
+            if registro[4].upper() == 'VOLCOTA':
+                self._pol_cota_vol['valor'][-1] = registro[5]
+            if registro[4].upper() == 'COTAREA':
+                self._pol_cota_area['valor'][-1] = registro[5]
+            #
+            # Palavras chaves tipo 3 - Data e valor
+            #
+            if registro[4].upper() == 'CFUGA':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        self._cfugat['valor'][-1][ano][mes] = registro[5]
+                        mes += 1
+                    mes = 0
+                    ano += 1
+            if registro[4].upper() == 'VAZMINT':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        self._vaz_mint['valor'][-1][ano][mes] = registro[5]
+                        mes += 1
+                    mes = 0
+                    ano += 1
+            if registro[4].upper() == 'CMONT':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        self._cmont['valor'][-1][ano][mes] = registro[5]
+                        mes += 1
+                    mes = 0
+                    ano += 1
+            #
+            # Palavras chaves tipo 4 - Data, valor e ('h' ou '%')
+            #
+            if registro[4].upper() == 'VMINP':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        if registro[6].find("h") == 1:
+                            self._vol_minp['valor'][-1][ano][mes] = registro[5]
+                        if registro[6].find("%") == 1:
+                            self._vol_minp['valor'][-1][ano][mes] = self._vol_min['valor'][-1] + \
+                                                                float(registro[5]) * self._vol_util['valor'][-1] / 100
+                        mes += 1
+                    mes = 0
+                    ano += 1
+            if registro[4].upper() == 'VMINT':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        if registro[6].find("h") == 1:
+                            self._vol_mint['valor'][-1][ano][mes] = registro[5]
+                        if registro[6].find("%") == 1:
+                            self._vol_mint['valor'][-1][ano][mes] = self._vol_min['valor'][-1] + \
+                                                                float(registro[5]) * self._vol_util['valor'][-1] / 100
+                        mes += 1
+                    mes = 0
+                    ano += 1
+            if registro[4].upper() == 'VMAXT':
+                ano = int(registro[0]) - dger.ano_ini['valor']
+                mes = int(registro[3]) - 1
+                while ano < dger.num_anos['valor']:
+                    while mes < 12:
+                        if registro[6].find("h") == 1:
+                            self._vol_maxt['valor'][-1][ano][mes] = registro[5]
+                        if registro[6].find("%") == 1:
+                            self._vol_maxt['valor'][-1][ano][mes] = self._vol_min['valor'][-1] + \
+                                                                float(registro[5]) * self._vol_util['valor'][-1] / 100
+                        mes += 1
+                    mes = 0
+                    ano += 1
         return

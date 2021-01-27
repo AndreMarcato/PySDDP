@@ -391,7 +391,11 @@ class ConfhdTemplate(ArquivoEntrada):
                           'valor': list()
                         }
         self._cfugat = {
-                        'descricao': 'Cota do Canal de Fuga (pode varia mes a mes)',
+                        'descricao': 'Cota do Canal de Fuga em metros(pode variar mes a mes)',
+                        'valor': list()
+                        }
+        self._cmont = {
+                        'descricao': 'Nível de Montante em metros (pode variar mes a mes)',
                         'valor': list()
                         }
 

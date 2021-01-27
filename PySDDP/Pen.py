@@ -5,6 +5,7 @@ from PySDDP.newave.script.hidr import Hidr
 from PySDDP.newave.script.vazoes import Vazoes
 from PySDDP.newave.script.confhd import Confhd
 from PySDDP.newave.script.dger import Dger
+from PySDDP.newave.script.modif import Modif
 
 
 class Newave(object):
@@ -32,9 +33,12 @@ class Newave(object):
         # Realiza a Leitura do VAZOES.DAT
         self.vazoes = Vazoes()
         self.vazoes.ler(os.path.join(self.path_, 'VAZOES.DAT'), self.hidr.nr_usinas)
+        # Realiza a Leitura do MODIF.DAT
+        self.modif = Modif()
+        self.modif.ler(os.path.join(self.path_, self.arquivos.modif))
         # Realiza a Leitura do CONFHD.DAT
         self.confhd = Confhd()
-        self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes)
+        self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes, self.dger, self.modif)
 
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
@@ -42,4 +46,5 @@ class Newave(object):
         self.dger.escrever(os.path.join(caminho, self.arquivos.dger))
         self.hidr.escrever(os.path.join(caminho, 'HIDR.DAT'))
         self.vazoes.escrever(os.path.join(caminho, 'VAZOES.DAT'))
+        self.modif.escrever(os.path.join(caminho, self.arquivos.modif))
         self.confhd.escrever(os.path.join(caminho, self.arquivos.confhd))
