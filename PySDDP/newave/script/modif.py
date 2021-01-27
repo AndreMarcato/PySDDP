@@ -134,7 +134,10 @@ class Modif(ModifTemplate):
 
         except Exception as err:
             if isinstance(err, StopIteration):
-                self.bloco_usina['df'] = pd.DataFrame(self.usina)
+                self.bloco_usina['df'] = pd.DataFrame(self.usina, columns = [ 'ano', 'codigo', 'comentario',
+                                                                                'mes', 'palavra_chave',
+                                                                                'valorA', 'valorB'] )
+
                 print('OK! Leitura do', self.nome_arquivo ,'realizada com sucesso. (', self.numero_modifs,
                       'Usinas Hidraulicas Modificadas )')
             else:
