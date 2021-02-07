@@ -220,14 +220,24 @@ class Modif(ModifTemplate):
                         if registro[4] in lista1:
                             if ( registro[4].upper() == 'NUMMAQ' or registro[4].upper() == 'COEFEVAP' ):
                                 formato = " {key: <8} {valor: >6d} {valorb: <3d}\n"
+                                row = dict(
+                                            key=registro[4],
+                                            valor=int(registro[5]),
+                                            valorb=int(registro[6])
+                                          )
                             elif ( registro[4].upper() == 'VOLMIN' or registro[4].upper() == 'VOLMAX' ):
                                 formato = " {key: <8} {valor: >10.3f} {valorb: <3}\n"
+                                row = dict(
+                                    key=registro[4],
+                                    valor=registro[5],
+                                    valorb=registro[6]
+                                )
                             else:
                                 formato = " {key: <8} {valor: >10.4f} {valorb: <2d}\n"
-                            row = dict(
-                                        key=registro[4],
-                                        valor=registro[5],
-                                        valorb=registro[6]
+                                row = dict(
+                                            key=registro[4],
+                                            valor=registro[5],
+                                            valorb=int(registro[6])
                                       )
                             f.write(formato.format(**row))
                         if registro[4] in lista2:

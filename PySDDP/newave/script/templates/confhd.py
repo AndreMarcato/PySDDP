@@ -2,7 +2,7 @@
 from abc import abstractmethod
 from typing import Optional
 
-from PySDDP.dessem.script.templates.arquivo_entrada import ArquivoEntrada
+from PySDDP.newave.script.templates.arquivo_entrada import ArquivoEntrada
 
 
 class ConfhdTemplate(ArquivoEntrada):

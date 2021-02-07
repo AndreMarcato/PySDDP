@@ -6,6 +6,9 @@ from PySDDP.newave.script.vazoes import Vazoes
 from PySDDP.newave.script.confhd import Confhd
 from PySDDP.newave.script.dger import Dger
 from PySDDP.newave.script.modif import Modif
+from PySDDP.newave.script.exph import Exph
+from PySDDP.newave.script.ree import Ree
+from PySDDP.newave.script.sistema import Sistema
 
 
 class Newave(object):
@@ -36,9 +39,19 @@ class Newave(object):
         # Realiza a Leitura do MODIF.DAT
         self.modif = Modif()
         self.modif.ler(os.path.join(self.path_, self.arquivos.modif))
+        # Realiza a Leitura do EXPH.DAT
+        self.exph = Exph()
+        self.exph.ler(os.path.join(self.path_, self.arquivos.exph))
         # Realiza a Leitura do CONFHD.DAT
         self.confhd = Confhd()
-        self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes, self.dger, self.modif)
+        self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes, self.dger,
+                        self.modif, self.exph)
+        # Realiza a Leitura do REE.DAT
+        self.ree = Ree()
+        self.ree.ler(os.path.join(self.path_, self.arquivos.ree), self.confhd)
+        # Realiza a Leitura do SISTEMA.DAT
+        self.sistema = Sistema()
+        self.sistema.ler(os.path.join(self.path_, self.arquivos.sistema), self.dger)
 
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
@@ -47,4 +60,7 @@ class Newave(object):
         self.hidr.escrever(os.path.join(caminho, 'HIDR.DAT'))
         self.vazoes.escrever(os.path.join(caminho, 'VAZOES.DAT'))
         self.modif.escrever(os.path.join(caminho, self.arquivos.modif))
+        self.exph.escrever(os.path.join(caminho, self.arquivos.exph))
         self.confhd.escrever(os.path.join(caminho, self.arquivos.confhd))
+        self.ree.escrever(os.path.join(caminho, self.arquivos.ree))
+        self.sistema.escrever((os.path.join(caminho, self.arquivos.sistema)),self.dger)

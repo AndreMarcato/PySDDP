@@ -977,64 +977,74 @@ class Dger(DgerTemplate):
                 c = self.flag_jane_cort['comentarios']
                 f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_cons_ream['resumo'][00:21]
-                b = self.flag_cons_ream['valor']
-                c = self.flag_ream_cena['valor']
-                d = self.flag_pass_ream['valor']
-                e = self.flag_cons_ream['comentarios']
-                f.write(a + f"{b:4d}" + " " + f"{c:4d}" + " " + f"{d:4d}" + e)
+                if self.flag_cons_ream['valor'] is not None:
+                    a = self.flag_cons_ream['resumo'][00:21]
+                    b = self.flag_cons_ream['valor']
+                    c = self.flag_ream_cena['valor']
+                    d = self.flag_pass_ream['valor']
+                    e = self.flag_cons_ream['comentarios']
+                    f.write(a + f"{b:4d}" + " " + f"{c:4d}" + " " + f"{d:4d}" + e)
 
 
+                if self.flag_no_zero['valor'] is not None:
+                    a = self.flag_no_zero['resumo'][00:21]
+                    b = self.flag_no_zero['valor']
+                    c = self.flag_no_zero['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_no_zero['resumo'][00:21]
-                b = self.flag_no_zero['valor']
-                c = self.flag_no_zero['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_fcf_pdde['valor'] is not None:
+                    a = self.flag_fcf_pdde['resumo'][00:21]
+                    b = self.flag_fcf_pdde['valor']
+                    c = self.flag_fcf_pdde['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_fcf_pdde['resumo'][00:21]
-                b = self.flag_fcf_pdde['valor']
-                c = self.flag_fcf_pdde['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_imp_ena['valor'] is not None:
+                    a = self.flag_imp_ena['resumo'][00:21]
+                    b = self.flag_imp_ena['valor']
+                    c = self.flag_imp_ena['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_imp_ena['resumo'][00:21]
-                b = self.flag_imp_ena['valor']
-                c = self.flag_imp_ena['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_imp_cor['valor'] is not None:
+                    a = self.flag_imp_cor['resumo'][00:21]
+                    b = self.flag_imp_cor['valor']
+                    c = self.flag_imp_cor['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_imp_cor['resumo'][00:21]
-                b = self.flag_imp_cor['valor']
-                c = self.flag_imp_cor['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_proc_agre['valor'] is not None:
+                    a = self.flag_proc_agre['resumo'][00:21]
+                    b = self.flag_proc_agre['valor']
+                    c = self.flag_proc_agre['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_proc_agre['resumo'][00:21]
-                b = self.flag_proc_agre['valor']
-                c = self.flag_proc_agre['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_corr_espa['valor'] is not None:
+                    a = self.flag_corr_espa['resumo'][00:21]
+                    b = self.flag_corr_espa['valor']
+                    c = self.flag_corr_espa['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_corr_espa['resumo'][00:21]
-                b = self.flag_corr_espa['valor']
-                c = self.flag_corr_espa['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_conv_estat['valor'] is not None:
+                    a = self.flag_conv_estat['resumo'][00:21]
+                    b = self.flag_conv_estat['valor']
+                    c = self.flag_conv_estat['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_conv_estat['resumo'][00:21]
-                b = self.flag_conv_estat['valor']
-                c = self.flag_conv_estat['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_mom_ream['valor'] is not None:
+                    a = self.flag_mom_ream['resumo'][00:21]
+                    b = self.flag_mom_ream['valor']
+                    c = self.flag_mom_ream['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_mom_ream['resumo'][00:21]
-                b = self.flag_mom_ream['valor']
-                c = self.flag_mom_ream['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_arq_ena['valor'] is not None:
+                    a = self.flag_arq_ena['resumo'][00:21]
+                    b = self.flag_arq_ena['valor']
+                    c = self.flag_arq_ena['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
-                a = self.flag_arq_ena['resumo'][00:21]
-                b = self.flag_arq_ena['valor']
-                c = self.flag_arq_ena['comentarios']
-                f.write(a + f"{b:4d}" + c)
-
-                a = self.flag_test_conv['resumo'][00:21]
-                b = self.flag_test_conv['valor']
-                c = self.flag_test_conv['comentarios']
-                f.write(a + f"{b:4d}" + c)
+                if self.flag_test_conv['valor'] is not None:
+                    a = self.flag_test_conv['resumo'][00:21]
+                    b = self.flag_test_conv['valor']
+                    c = self.flag_test_conv['comentarios']
+                    f.write(a + f"{b:4d}" + c)
 
                 if self.flag_vmint_sazo['valor'] is not None:
                     a = self.flag_vmint_sazo['resumo'][00:21]

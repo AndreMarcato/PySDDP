@@ -4,7 +4,7 @@ from typing import Optional
 from PySDDP.newave.script.templates.arquivo_entrada import ArquivoEntrada
 
 
-class ModifTemplate(ArquivoEntrada):
+class ExphTemplate(ArquivoEntrada):
     """
     Classe que contem as modificações de cadastro de todas as Usinas Hidrelétricas do newave.
     Esta classe tem como intuito fornecer duck typing para a classe Modif e ainda adicionar um nivel de especificacao
@@ -17,11 +17,10 @@ class ModifTemplate(ArquivoEntrada):
 
         self.dir_base = None
         self.nome_arquivo = None
-        self.numero_modifs = None
+        self.numero_exps = None
 
         self.bloco_usina = {
-            'df': None,
-            'formatoA': "{area:>3} {conjunto:>1}  {tipo:>1} {usina:>3} {nome_usina:<39}\n",
+            'df': None
             }
 
         @abstractmethod
