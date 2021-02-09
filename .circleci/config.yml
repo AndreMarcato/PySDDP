@@ -60,7 +60,7 @@ jobs:
           name: Smoke Test Install 
           command: |
             python --version
-            sudo pip3 install helloworld-eduardo
+            sudo pip3 install PySDDP
   integration:
     docker:
       - image: circleci/python:3.9
