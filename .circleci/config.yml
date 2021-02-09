@@ -2,10 +2,7 @@ version: 2.1
 workflows:
   build_and_deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              ignore: /.*/
+      - build
       - test-python-install:
           version: "3.9"
           requires:
