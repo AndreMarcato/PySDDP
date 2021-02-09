@@ -9,7 +9,7 @@ workflows:
             branches:
               ignore: /.*/
       - test-python-install:
-          version: "3.6"
+          version: "3.9"
           requires:
             - build
           filters:
