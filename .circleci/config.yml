@@ -4,27 +4,15 @@ workflows:
     jobs:
       - build:
           filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
             branches:
               ignore: /.*/
       - test-python-install:
           version: "3.9"
           requires:
             - build
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
       - deploy:
           requires:
             - build
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
 jobs:
   build:
     docker:
@@ -101,7 +89,6 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            python setup.py verify
       - run:
           name: init .pypirc
           command: |
