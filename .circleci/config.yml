@@ -9,22 +9,22 @@ workflows:
             branches:
               ignore: /.*/
       - test-python-install:
-                version: "3.9"
-                requires:
-                  - build
-                filters:
-                  tags:
-                    only: /[0-9]+(\.[0-9]+)*/
-                  branches:
-                    ignore: /.*/
+          version: "3.9"
+          requires:
+            - build
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
       - deploy:
-                requires:
-                  - build
-                filters:
-                  tags:
-                    only: /[0-9]+(\.[0-9]+)*/
-                  branches:
-                    ignore: /.*/
+          requires:
+            - build
+          filters:
+            tags:
+              only: /[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
 jobs:
   build:
     docker:
@@ -71,7 +71,7 @@ jobs:
       - store_artifacts:
           path: htmlcov/
       - run:
-          name: Smoke Test Install 
+          name: Smoke Test Install
           command: |
             python --version
             sudo pip3 install PySDDP
