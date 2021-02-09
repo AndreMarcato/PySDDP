@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.29"
+VERSION = "0.0.30"
 
 
 def readme():
