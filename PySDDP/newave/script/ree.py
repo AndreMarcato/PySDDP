@@ -2,6 +2,7 @@ import os
 from typing import IO
 import pandas as pd
 import numpy as np
+from matplotlib import pyplot as plt
 
 from PySDDP.newave.script.templates.ree import ReeTemplate
 
@@ -241,11 +242,29 @@ class Ree(ReeTemplate):
         if tamanho == 0:
             return None
 
-        self.bloco_ree['df'][self.bloco_ree['df']['codigo'] == ree['codigo']] = [ ree['codigo'],
-                                                                                  ree['nome'].ljust(10),
-                                                                                  ree['submercado'],
-                                                                                  ree['mes'],
-                                                                                  ree['ano']]
+        filtro = self.bloco_ree['df']['codigo'] == ree['codigo']
+
+        self.bloco_ree['df'].loc[filtro,'codigo'] = ree['codigo']
+        self.bloco_ree['df'].loc[filtro,'nome'] = ree['nome'].ljust(10)
+        self.bloco_ree['df'].loc[filtro,'submercado'] = ree['submercado']
+        self.bloco_ree['df'].loc[filtro,'mes'] = ree['mes']
+        self.bloco_ree['df'].loc[filtro,'ano'] = ree['ano']
+        self.bloco_ree['df'].loc[filtro,'earmax'] = [np.array(ree['earmax'])]
+        self.bloco_ree['df'].loc[filtro,'ena_bruta'] = [np.array(ree['ena_bruta'])]
+        self.bloco_ree['df'].loc[filtro,'ec'] = [np.array(ree['ec'])]
+        self.bloco_ree['df'].loc[filtro,'efio_bruta'] = [np.array(ree['efio_bruta'])]
+
+
+        #self.bloco_ree['df'].loc[filtro] = [ ree['codigo'],
+        #                                                                          ree['nome'].ljust(10),
+        #                                                                          ree['submercado'],
+        #                                                                          ree['mes'],
+        #                                                                          ree['ano'],
+        #                                                                          pd.Series(ree['earmax']),
+        #                                                                          pd.Series(ree['ena_bruta']),
+        #                                                                          pd.Series(ree['ec']),
+        #                                                                          pd.Series(ree['efio_bruta'])
+        #                                                                          ]
 
         return
 
@@ -285,3 +304,137 @@ class Ree(ReeTemplate):
                                 ena[iano][imes][ianoh] += confhd._ro_65['valor'][iusi][iano][imes] * confhd._vazoes['valor'][iusi][ianoh][imes]
         efio = ena - ec
         return [ena, ec, efio]
+
+
+    def plota_ena_bruta(self, ree):
+
+        num_anos = len(ree['ena_bruta'])
+        num_mes = len(ree['ena_bruta'][0])
+        num_series = len(ree['ena_bruta'][0][0])
+
+        x_axis = np.arange(1, num_anos*num_mes+1)
+
+        media = np.zeros(num_anos * num_mes)
+        for iserie in range(num_series - 1):
+            ena_bruta = np.zeros(60)
+            indice = 0
+            for iano in range(num_anos):
+                for imes in range(num_mes):
+                    ena_bruta[indice] = ree['ena_bruta'][iano][imes][iserie]
+                    indice += 1
+            media = media + ena_bruta
+
+            plt.plot(x_axis, ena_bruta, 'c-')
+
+        media = media / (num_series - 1)
+        plt.plot(x_axis, media, 'r-', lw=3)
+
+        desvio = np.zeros(num_anos * num_mes)
+        indice = 0
+        for iano in range(num_anos):
+            for imes in range(num_mes):
+                desvio[indice] = np.nanstd(ree['ena_bruta'][:][iano][imes])
+                indice += 1
+        plt.plot(x_axis, media + desvio, 'r-.', lw=2)
+        plt.plot(x_axis, media - desvio, 'r-.', lw=2)
+        titulo = 'Energia Natural Afluente Bruta do REE ' + ree['nome']
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Mes do Ano', fontsize=16)
+        plt.ylabel('MWMes', fontsize=16)
+        plt.show()
+
+    def plota_ec(self, ree):
+
+        num_anos = len(ree['ec'])
+        num_mes = len(ree['ec'][0])
+        num_series = len(ree['ec'][0][0])
+
+        x_axis = np.arange(1, num_anos*num_mes+1)
+
+        media = np.zeros(num_anos * num_mes)
+        for iserie in range(num_series - 1):
+            ec = np.zeros(60)
+            indice = 0
+            for iano in range(num_anos):
+                for imes in range(num_mes):
+                    ec[indice] = ree['ec'][iano][imes][iserie]
+                    indice += 1
+            media = media + ec
+
+            plt.plot(x_axis, ec, 'c-')
+
+        media = media / (num_series - 1)
+        plt.plot(x_axis, media, 'r-', lw=3)
+
+        desvio = np.zeros(num_anos * num_mes)
+        indice = 0
+        for iano in range(num_anos):
+            for imes in range(num_mes):
+                desvio[indice] = np.nanstd(ree['ec'][:][iano][imes])
+                indice += 1
+        plt.plot(x_axis, media + desvio, 'r-.', lw=2)
+        plt.plot(x_axis, media - desvio, 'r-.', lw=2)
+        titulo = 'Energia Controlavel do REE ' + ree['nome']
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Mes do Ano', fontsize=16)
+        plt.ylabel('MWMes', fontsize=16)
+        plt.show()
+
+    def plota_efio_bruta(self, ree):
+
+        num_anos = len(ree['efio_bruta'])
+        num_mes = len(ree['efio_bruta'][0])
+        num_series = len(ree['efio_bruta'][0][0])
+
+        x_axis = np.arange(1, num_anos*num_mes+1)
+
+        media = np.zeros(num_anos * num_mes)
+        for iserie in range(num_series - 1):
+            efio_bruta = np.zeros(60)
+            indice = 0
+            for iano in range(num_anos):
+                for imes in range(num_mes):
+                    efio_bruta[indice] = ree['efio_bruta'][iano][imes][iserie]
+                    indice += 1
+            media = media + efio_bruta
+
+            plt.plot(x_axis, efio_bruta, 'c-')
+
+        media = media / (num_series - 1)
+        plt.plot(x_axis, media, 'r-', lw=3)
+
+        desvio = np.zeros(num_anos * num_mes)
+        indice = 0
+        for iano in range(num_anos):
+            for imes in range(num_mes):
+                desvio[indice] = np.nanstd(ree['efio_bruta'][:][iano][imes])
+                indice += 1
+        plt.plot(x_axis, media + desvio, 'r-.', lw=2)
+        plt.plot(x_axis, media - desvio, 'r-.', lw=2)
+        titulo = "Energia Fio D'Agua Bruta do REE " + ree['nome']
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Mes do Ano', fontsize=16)
+        plt.ylabel('MWmes', fontsize=16)
+        plt.show()
+
+    def plota_earmax(self, ree):
+
+        num_anos = len(ree['earmax'])
+        num_mes = len(ree['ec'][0])
+
+        x_axis = np.arange(1, num_anos*num_mes+1)
+
+        earmax = np.zeros(60)
+        indice = 0
+        for iano in range(num_anos):
+            for imes in range(num_mes):
+                earmax[indice] = ree['earmax'][iano][imes]
+                indice += 1
+
+        plt.plot(x_axis, earmax, 'r-', lw=3)
+
+        titulo = 'EARMAX do REE ' + ree['nome']
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Mes do Ano', fontsize=16)
+        plt.ylabel('MWMes', fontsize=16)
+        plt.show()

@@ -72,12 +72,16 @@ if __name__ == '__main__':
 
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
     #MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
-    #MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
-    MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
+    MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
+    #MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
 
     #MedioPrazo.sistema.plota_mercado(sistema)
 
-    MedioPrazo.sistema.plota_sistema()
+    #MedioPrazo.sistema.plota_sistema()
+
+    sistema = MedioPrazo.sistema.get(1)
+    interc = MedioPrazo.sistema.get_interc(1,2)x
+    MedioPrazo.sistema.put_interc(interc)
 
     #MedioPrazo.escrever('/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/TESTEDOIDO')
 

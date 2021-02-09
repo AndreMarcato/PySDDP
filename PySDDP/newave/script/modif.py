@@ -282,7 +282,7 @@ class Modif(ModifTemplate):
                             break
                         registro = df.iloc[linha].values
 
-            print('OK! Escrita do', self.nome_arquivo ,'realizada com sucesso. (', conta_usi,
+            print('OK! Escrita do', os.path.split(file_out)[1] ,'realizada com sucesso. (', conta_usi,
                   'Usinas Hidraulicas Modificadas )')
 
         except Exception:
