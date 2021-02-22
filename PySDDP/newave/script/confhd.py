@@ -4,6 +4,7 @@ from typing import IO
 from PySDDP.newave.script.templates.confhd import ConfhdTemplate
 from matplotlib import pyplot as plt
 import numpy as np
+from random import randint
 from mpl_toolkits.mplot3d import Axes3D
 
 
@@ -1449,6 +1450,19 @@ class Confhd(ConfhdTemplate):
 
 
     def parp(self, uhe, ord_max):
+        """
+        Implementa o método para o calculo dos coeficentes do modelo PAR(p).
+
+        :param uhe: dicionario de dados com informacoes da usina hidreletrica,
+               ord_max: ord_max do modelo PAR(p)
+        :returns ordem: Ordem do modelo Ar para cada mes,
+                 coef_parp: Coeficientes do modelo AR para cada mes,
+                 fac: Funcao de Auto-Correlacao,
+                 facp: Funcao de Auto-Correlacao Parcial,
+                 residuos: Matriz de residuos
+
+        """
+
 
         vazoes = uhe['vazoes']
 
@@ -1533,11 +1547,35 @@ class Confhd(ConfhdTemplate):
             for iord in range ( len(phi) ):
                 coef_parp[imes][iord ] = phi[ iord ]
 
-        return ordem, coef_parp, fac, facp
+        # Calculo dos Residuos Normalizados
+        residuos = np.zeros( (nanos-1, 12) )
+        for iano in np.arange(1,nanos-1):
+            for imes in range(12):
+                residuos[iano][imes]= ( vazoes[iano][imes]-media[imes] ) / desvio[imes]
+                for ilag in range(ord_max):
+                    ano_ant = iano
+                    mes_ant = imes - ilag - 1
+                    if mes_ant < 0:
+                        ano_ant -= 1
+                        mes_ant += 12
+                    residuos[iano][imes] -= coef_parp[imes][ilag]*\
+                                            (vazoes[ano_ant][mes_ant]-media[mes_ant])/desvio[mes_ant]
+
+
+        return ordem, coef_parp, fac, facp, residuos
 
     def plota_parp(self, uhe, mes, ordmax):
+        """
+        Implementa o método para a impressao do grafico da fac e facp para a uhe cujo
+        dicionário de dados é fornecido.
 
-        ordem, coef_parp, fac, facp = self.parp(uhe, ordmax)
+        :param uhe: dicionario de dados com informacoes da usina hidreletrica,
+               mes: mes de 0 a 11 (jan a dez) a ser considerado,
+               ord_max: ordem maxima do modelo PAR(p)
+        """
+
+
+        ordem, coef_parp, fac, facp, residuos = self.parp(uhe, ordmax)
 
         vazoes = uhe['vazoes']
 
@@ -1603,3 +1641,70 @@ class Confhd(ConfhdTemplate):
         #ax1.ylabel('Autocorrelacao e Autocorrelacao Parcial')
 
         plt.show()
+
+    def gera_cen_sinteticos(self, uhe, ord_max, nr_cen):
+        """
+        Implementa o método para a geração de vazões natuarais sintéticas para a uhe cujo
+        dicionário de dados é fornecido.
+
+        :param uhe: dicionario de dados com informacoes da usina hidreletrica,
+               ord_max: ord_max do modelo PAR(p),
+               nr_cen: numero de series sinteticas geradas
+        :returns sintetica_adit: array(nseries, nestagios) contendo cenários gerados
+
+        """
+
+
+        ordem, coef_parp, fac, facp, residuos = self.parp(uhe, ord_max)
+
+        #
+        # Pega Parâmetros Básicos
+        #
+        nanos_estudo = len(uhe['status_vol_morto'])
+        nmeses_estudo = len(uhe['status_vol_morto'][0])
+        nestagios = nanos_estudo*nmeses_estudo
+        vazoes = uhe['vazoes']
+        nanos = len(vazoes) - 1
+        media = np.mean(vazoes[1:(nanos-1)], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)
+        desvio = np.std(vazoes[1:(nanos-1)], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)
+
+        # Gera series sinteticas
+        sintetica_adit = np.zeros((nr_cen,nestagios),'d')
+        for iser in range(nr_cen):
+            contador = -1
+            for iano in range(nanos_estudo):
+                for imes in range(nmeses_estudo):
+                    contador += 1
+                    serie = randint(1,nanos-1)
+                    valor = media[imes] + desvio[imes]*residuos[serie][imes]
+                    for ilag in range(ord_max):
+                        mes_ant = imes - ilag - 1
+                        ano_ant = iano
+                        if mes_ant < 0:
+                            mes_ant += 12
+                            ano_ant -= 1
+                        if ano_ant < 0:
+                            vazant = media[mes_ant]
+                        else:
+                            vazant = sintetica_adit[iser][contador-1-ilag]
+                        valor += desvio[imes]*coef_parp[imes][ilag]*(vazant-media[mes_ant])/desvio[mes_ant]
+                    sintetica_adit[iser][contador] = valor
+
+        x_axis = np.arange(1, nestagios+1)
+        plt.plot(x_axis, sintetica_adit.transpose(), 'c-')
+        plt.plot(x_axis, np.mean(sintetica_adit,0), 'r-', lw=3, label='Mean - Synthetic Series')
+        plt.plot(x_axis, np.mean(sintetica_adit,0) + np.nanstd(sintetica_adit, axis=0), 'r-.', lw=2, label='Std Synthetic Series')
+        plt.plot(x_axis, np.mean(sintetica_adit,0) - np.nanstd(sintetica_adit, axis=0), 'r-.', lw=2)
+        m = np.concatenate([ media, media, media, media, media])
+        d = np.concatenate([ desvio, desvio, desvio, desvio, desvio])
+        plt.plot(x_axis, m, 'mo', lw=3, label='Mean - Hystorical Series')
+        plt.plot(x_axis, m + d, 'bo', lw=2, label='Std - Hystorical Series')
+        plt.plot(x_axis, m - d, 'bo', lw=2)
+        titulo = uhe['nome'].strip() + "'s Synthetic Series of Natural \n" " Inflows - Aditive Noise "
+        plt.title(titulo, fontsize=16)
+        plt.xlabel('Month', fontsize=16)
+        plt.ylabel('Inflow (m^3/s', fontsize=16)
+        plt.legend(fontsize=12)
+        plt.show()
+
+        return sintetica_adit

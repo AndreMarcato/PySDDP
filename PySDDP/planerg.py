@@ -77,9 +77,11 @@ if __name__ == '__main__':
 
     uhe = MedioPrazo.confhd.get('itaipu')
 
-    MedioPrazo.confhd.plota_parp(uhe,1,11)
+    ordem, coef_parp, fac, facp, residuos = MedioPrazo.confhd.parp(uhe,11)
 
+    MedioPrazo.confhd.gera_cen_sinteticos(uhe, 11, 500)
 
+    print(residuos)
 
 # ver downloads no PyPi
 # https://pypistats.org/packages/pysddp
