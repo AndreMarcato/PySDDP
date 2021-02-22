@@ -2,33 +2,18 @@ version: 2.1
 workflows:
   build_and_deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
+      - build
       - test-python-install:
-          version: "3.6"
+          version: "3.9"
           requires:
-            - build
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
+            - deploy
       - deploy:
           requires:
             - build
-          filters:
-            tags:
-              only: /[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.9
     steps:
       - checkout
       - restore_cache:
@@ -38,6 +23,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             make dev
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
@@ -61,6 +47,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             make dev
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
@@ -69,19 +56,19 @@ jobs:
       - store_artifacts:
           path: htmlcov/
       - run:
-          name: Smoke Test Install 
+          name: Smoke Test Install
           command: |
             python --version
-            sudo pip3 install helloworld-eduardo
+            sudo pip3 install PySDDP
   integration:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.9
     steps:
       - run: echo "It works!"
       - run: echo $RUN_EXTRA_TESTS
   deploy:
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.9
     steps:
       - checkout
       - restore_cache:
@@ -91,17 +78,12 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             make dev
       - save_cache:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
           paths:
             - "venv"
-      - run:
-          name: verify git tag vs. version
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            python setup.py verify
       - run:
           name: init .pypirc
           command: |

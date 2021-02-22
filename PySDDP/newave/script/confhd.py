@@ -1446,3 +1446,160 @@ class Confhd(ConfhdTemplate):
         ax.xaxis.grid()
 
         plt.show()
+
+
+    def parp(self, uhe, ord_max):
+
+        vazoes = uhe['vazoes']
+
+        nanos = len(vazoes)   # A serie historica do ultimo ano geralmente nao vem completa (despreze-a)
+
+        media = np.mean(vazoes[1:(nanos-1)], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)
+        desvio = np.std(vazoes[1:(nanos-1)], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)
+
+        # Calcula vazao normalizada (nao precisa)
+        #vaznorm = np.zeros((nanos,12),'d')
+        #for iano in range(nanos):
+        #    for imes in range(12):
+        #        vaznorm[iano][imes] = (self.Vazoes[iano][imes] - media[imes])/desvio[imes]
+
+        # Calcula funcao de auto-correlacao (uma para cada mes)
+        fac = np.zeros( (12, ord_max+1), 'd')
+        for ilag in range(ord_max+1):
+            for imes in range(12):
+                for iano in np.arange(1,nanos-1):
+                     ano_ant = iano
+                     mes_ant = imes - ilag
+                     if mes_ant < 0:
+                         ano_ant -= 1
+                         mes_ant += 12
+                     fac[imes][ilag] += (vazoes[iano][imes] - media[imes]) * (vazoes[ano_ant][mes_ant] - media[mes_ant])
+                fac[imes][ilag] /= (nanos-2)
+                fac[imes][ilag] /= (desvio[imes]*desvio[mes_ant])
+
+        # Calcula funcao de auto-correlacao parcial (uma para cada mes)
+        facp = np.zeros((12, ord_max+1), 'd')
+        for ilag in np.arange(1,ord_max+1):
+            for imes in range(12):
+                A = np.eye(ilag)
+                B = np.zeros(ilag)
+                # Preenche matriz triangular superior
+                for ilin in range(len(A)):
+                    for icol in range( len(A) ):           # TODO: Aqui poderia ser np.arange(ilin+1,len(A)): Testar depois
+                        if icol > ilin:
+                            mes = imes - ilin - 1
+                            if mes < 0:
+                               mes = mes + 12
+                            A[ilin][icol] = fac[mes][icol-ilin]
+                    B[ilin] = fac[imes][ilin+1]
+                # Preenche matriz triangular inferior
+                for ilin in range(len(A)):
+                    for icol in range( len(A) ):          # TODO: Aqui poderia ser np.arange(0, ilin): Testar depois
+                        if icol < ilin:
+                            A[ilin][icol] = A[icol][ilin]
+                phi = np.linalg.solve(A,B)
+                facp[imes][ilag] = phi[ len(phi)-1 ]
+
+        # Identificacao da ordem
+        IC = 1.96/np.sqrt(nanos-2)
+        ordem = np.zeros(12, 'i')
+        for imes in range(12):
+            ordem[imes] = 0
+            for ilag in range(ord_max+1):
+                if facp[imes][ilag] > IC or facp[imes][ilag] < -IC:
+                    ordem[imes] = ilag
+
+        # Calculo dos coeficientes
+        coef_parp = np.zeros( (12,ord_max), 'd')
+        for imes in range(12):
+            ilag = ordem[imes]
+            A = np.eye(ilag)
+            B = np.zeros(ilag)
+            # Preenche matriz triangular superior
+            for ilin in range(len(A)):
+                for icol in range( len(A) ):             # TODO: Aqui poderia ser np.arange(ilin+1,len(A)): Testar depois
+                    if icol > ilin:
+                        mes = imes - ilin - 1
+                        if mes < 0:
+                           mes = mes + 12
+                        A[ilin][icol] = fac[mes][icol-ilin]
+                B[ilin] = fac[imes][ilin+1]
+            # Preenche matriz triangular inferior
+            for ilin in range(len(A)):
+                for icol in range( len(A) ):             # TODO: Aqui poderia ser np.arange(0, ilin): Testar depois
+                    if icol < ilin:
+                        A[ilin][icol] = A[icol][ilin]
+            phi = np.linalg.solve(A,B)
+            for iord in range ( len(phi) ):
+                coef_parp[imes][iord ] = phi[ iord ]
+
+        return ordem, coef_parp, fac, facp
+
+    def plota_parp(self, uhe, mes, ordmax):
+
+        ordem, coef_parp, fac, facp = self.parp(uhe, ordmax)
+
+        vazoes = uhe['vazoes']
+
+        nanos = len(vazoes) - 1
+
+        if mes == 0:
+            str_mes = 'January'
+        elif mes == 1:
+            str_mes = 'Fevereiro'
+        elif mes == 2:
+            str_mes = 'Marco'
+        elif mes == 3:
+            str_mes = 'Abril'
+        elif mes == 4:
+            str_mes = 'Maio'
+        elif mes == 5:
+            str_mes = 'Junho'
+        elif mes == 6:
+            str_mes = 'Julho'
+        elif mes == 7:
+            str_mes = 'Agosto'
+        elif mes == 8:
+            str_mes = 'Setembro'
+        elif mes == 9:
+            str_mes = 'Outubro'
+        elif mes == 10:
+            str_mes = 'Novembro'
+        else:
+            str_mes = 'Dezembro'
+
+        IC = 1.96/np.sqrt(nanos-1)
+
+        cores = []
+        limitesup = []
+        limiteinf = []
+        for elemento in facp[mes][1:ordmax+1]:
+            limitesup.append(IC)
+            limiteinf.append(-IC)
+            if elemento > IC or elemento < -IC:
+                cores.append('r')
+            else:
+                cores.append('b')
+
+        f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+        barWidth = 0.40
+
+        titulo = 'FAC e FACP of ' + str_mes + ' - UHE ' + uhe['nome']
+        f.canvas.set_window_title(titulo)
+
+        ax1.bar(np.arange(1,ordmax+1), fac[mes][1:ordmax+1], barWidth, align='center')
+        ax2.bar(np.arange(1,ordmax+1), facp[mes][1:ordmax+1], barWidth, align='center', color = cores)
+        ax2.plot(np.arange(1,ordmax+1), limitesup, 'm--', lw=1)
+        ax2.plot(np.arange(1,ordmax+1), limiteinf, 'm--', lw=1)
+
+        ax1.set_xticks(np.arange(1,ordmax+1))
+        ax2.set_xticks(np.arange(1,ordmax+1))
+        tituloFAC =  'FAC - Month: ' + str_mes + '\n of UHE ' + uhe['nome']
+        tituloFACP = 'FACP - Month ' + str_mes +  '\n of UHE ' + uhe['nome']
+        ax1.set_title(tituloFAC,  fontsize = 13)
+        ax2.set_title(tituloFACP, fontsize =13)
+        #ax1.xlabel('Lag')
+        #ax2.xlabel('Lag')
+        #ax1.ylabel('Autocorrelacao e Autocorrelacao Parcial')
+
+        plt.show()

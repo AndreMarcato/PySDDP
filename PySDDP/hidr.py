@@ -777,7 +777,7 @@ class hidr(object):
 
     def parp(self, ord_max):
 
-        nanos = len(self.Vazoes) - 1  # A serie historica do ultimo ano geralmente nao vem completa (despreze-a)
+        nanos = len(self.Vazoes)  # A serie historica do ultimo ano geralmente nao vem completa (despreze-a)
 
         media = np.mean(self.Vazoes[1:nanos], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)
         desvio = np.std(self.Vazoes[1:nanos], 0)    # A primeira serie historica eh utilizada como tendencia (despreze-a)

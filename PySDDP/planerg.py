@@ -75,17 +75,11 @@ if __name__ == '__main__':
     MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
     #MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
 
-    #MedioPrazo.sistema.plota_mercado(sistema)
+    uhe = MedioPrazo.confhd.get('itaipu')
 
-    #MedioPrazo.sistema.plota_sistema()
+    MedioPrazo.confhd.plota_parp(uhe,1,11)
 
-    sistema = MedioPrazo.sistema.get(1)
-    interc = MedioPrazo.sistema.get_interc(1,2)x
-    MedioPrazo.sistema.put_interc(interc)
 
-    #MedioPrazo.escrever('/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave/TESTEDOIDO')
-
-    #MedioPrazo.confhd.plot_vaz(uhe)
 
 # ver downloads no PyPi
 # https://pypistats.org/packages/pysddp
