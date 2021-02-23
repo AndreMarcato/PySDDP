@@ -1547,19 +1547,19 @@ class Confhd(ConfhdTemplate):
             for iord in range ( len(phi) ):
                 coef_parp[imes][iord ] = phi[ iord ]
 
-        # Calculo dos Residuos Normalizados
-        residuos = np.zeros( (nanos-1, 12) )
-        for iano in np.arange(1,nanos-1):
-            for imes in range(12):
-                residuos[iano][imes]= ( vazoes[iano][imes]-media[imes] ) / desvio[imes]
-                for ilag in range(ord_max):
-                    ano_ant = iano
-                    mes_ant = imes - ilag - 1
-                    if mes_ant < 0:
-                        ano_ant -= 1
-                        mes_ant += 12
-                    residuos[iano][imes] -= coef_parp[imes][ilag]*\
-                                            (vazoes[ano_ant][mes_ant]-media[mes_ant])/desvio[mes_ant]
+            # Calculo dos Residuos Normalizados
+            residuos = np.zeros( (nanos-1, 12) )
+            for iano in np.arange(1,nanos-1):
+                for imes in range(12):
+                    residuos[iano][imes]= ( vazoes[iano][imes]-media[imes] ) / desvio[imes]
+                    for ilag in range(ord_max):
+                        ano_ant = iano
+                        mes_ant = imes - ilag - 1
+                        if mes_ant < 0:
+                            ano_ant -= 1
+                            mes_ant += 12
+                        residuos[iano][imes] -= coef_parp[imes][ilag]*\
+                                                (vazoes[ano_ant][mes_ant]-media[mes_ant])/desvio[mes_ant]
 
 
         return ordem, coef_parp, fac, facp, residuos
@@ -1675,7 +1675,7 @@ class Confhd(ConfhdTemplate):
             for iano in range(nanos_estudo):
                 for imes in range(nmeses_estudo):
                     contador += 1
-                    serie = randint(1,nanos-1)
+                    serie = randint(1,nanos-2)
                     valor = media[imes] + desvio[imes]*residuos[serie][imes]
                     for ilag in range(ord_max):
                         mes_ant = imes - ilag - 1
