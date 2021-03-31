@@ -68,4 +68,4 @@ class Caso(CasoTemplate):
         except Exception:
             raise
 
-        print("OK! Escrita do CASO.DAT realizada com sucesso.")
+        print("OK! Escrita do", os.path.split(file_out)[1], "realizada com sucesso.")
