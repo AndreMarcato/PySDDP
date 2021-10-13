@@ -19,6 +19,7 @@ class IndeletTemplate(ArquivoEntrada):
         self.const = None
 
         self.comentarios = None
+
         self.bloco_base = {
             'df': None,
             'formato':

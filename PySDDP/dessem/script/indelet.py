@@ -5,6 +5,7 @@ from typing import IO
 import os
 
 COMENTARIO = '('
+FIM_BLOCO = ['9999', '99999', 'FIM']
 
 
 class Indelet(IndeletTemplate):
@@ -43,9 +44,10 @@ class Indelet(IndeletTemplate):
         try:
 
             with open(file_name, 'r', encoding='latin-1') as f:  # type: IO[str]
-                cont = 0
 
+                caso_base = True
                 continua = True
+
                 while continua:
                     self.next_line(f)
                     linha = self.linha
@@ -53,33 +55,42 @@ class Indelet(IndeletTemplate):
                         self.comentarios.append(linha)
                         continue
 
-                    if cont == 0:
-                        while linha[:4] != '9999':
-                            self.base['num'].append(linha[0:5])
-                            self.base['nome'].append(linha[5:17])
-                            self.base['local'].append(linha[19:59].strip())
+                    if caso_base:
+                        while linha.strip() not in FIM_BLOCO:
+
+                            if linha[0] != COMENTARIO:
+                                self.base['num'].append(linha[0:5])
+                                self.base['nome'].append(linha[5:17])
+                                self.base['local'].append(linha[19:59].strip())
+
+                            else:
+                                self.comentarios.append(linha)
 
                             self.next_line(f)
                             linha = self.linha
-                        cont += 1
+                        caso_base = False
                         continue
 
-                    if cont == 1:
-                        while linha[:4] != '9999':
-                            self.periodo['num'].append(linha[0:4])
-                            self.periodo['nome'].append(linha[4:18])
-                            self.periodo['ano'].append(linha[18:22])
-                            self.periodo['mes'].append(linha[22:24])
-                            self.periodo['dia'].append(linha[24:26])
-                            self.periodo['hora'].append(linha[27:29])
-                            self.periodo['minuto'].append(linha[30:32])
-                            self.periodo['duracao'].append(linha[32:37])
-                            self.periodo['num_caso'].append(linha[40:44])
-                            self.periodo['local'].append(linha[45:85].strip())
+                    if not caso_base:
+                        while linha.strip() not in FIM_BLOCO:
+
+                            if linha[0] != COMENTARIO:
+                                self.periodo['num'].append(linha[0:4])
+                                self.periodo['nome'].append(linha[4:18])
+                                self.periodo['ano'].append(linha[18:22])
+                                self.periodo['mes'].append(linha[22:24])
+                                self.periodo['dia'].append(linha[24:26])
+                                self.periodo['hora'].append(linha[27:29])
+                                self.periodo['minuto'].append(linha[30:32])
+                                self.periodo['duracao'].append(linha[32:37])
+                                self.periodo['num_caso'].append(linha[40:44])
+                                self.periodo['local'].append(linha[45:85].strip())
+
+                            else:
+                                self.comentarios.append(linha)
 
                             self.next_line(f)
                             linha = self.linha
-                        cont += 1
                         continue
 
         except Exception as err:
@@ -107,4 +118,3 @@ class Indelet(IndeletTemplate):
 
         except Exception:
             raise
-

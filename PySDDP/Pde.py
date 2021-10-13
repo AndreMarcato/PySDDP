@@ -25,6 +25,7 @@ from PySDDP.dessem.script.simul import Simul
 from PySDDP.dessem.script.solar import Solar     # Não está lendo o nome deste arquivo
 from PySDDP.dessem.script.tolperd import Tolperd
 from PySDDP.dessem.script.dadger import Dadger
+from PySDDP.dessem.script.dados_eletricos import DadosEletricos
 
 
 class Dessem(object):
@@ -183,13 +184,6 @@ class Dessem(object):
             nao_lidos.append(['bateria', err])
 
         try:
-            file_indelet = self.arquivos.indelet
-            self.indelet = Indelet()
-            self.indelet.ler(os.path.join(self.path_, file_indelet))
-        except Exception as err:
-            nao_lidos.append(['indelet', err])
-
-        try:
             file_rmpflx = self.arquivos.rmpflx
             self.rmpflx = Rmpflx()
             self.rmpflx.ler(os.path.join(self.path_, file_rmpflx))
@@ -216,6 +210,48 @@ class Dessem(object):
             self.solar.ler(os.path.join(self.path_, file_solar))
         except Exception as err:
             nao_lidos.append(['solar', err])
+
+
+        try:
+            file_desselet = self.arquivos.indelet
+            self.indelet = Indelet()
+            self.indelet.ler(os.path.join(self.path_, file_desselet))
+
+            # Dicionários para armazenar os arquivos:
+            self.arquivos_de_casos_bases = dict()
+            self.arquivos_de_modificacao_casos_bases = dict()
+
+            #
+            # LEITURA DOS ARQUIVOS DE CASOS BASES
+            #
+
+            # Foi utilizado o nome do arquivo e não o padrão (leve, média e pesada), pois foi verificado que em alguns
+            # decks estes nomes estavam distintos.
+            for idx, value in self.indelet.bloco_base['df'].iterrows():
+                chave = value['nome'].replace(' ', '')
+                self.arquivos_de_casos_bases[f"{chave}"] = DadosEletricos()
+                file_caso_base = value['local'].replace(' ', '')
+                try:
+                    self.arquivos_de_casos_bases[f"{chave}"].ler(os.path.join(self.path_, file_caso_base))
+                except Exception as err:
+                    nao_lidos.append([file_caso_base, err])
+
+            #
+            # LEITURA DOS ARQUIVOS DE MODIFICAÇÕES DOS CASOS BASES
+            #
+            for idx, value in self.indelet.bloco_periodo['df'].iterrows():
+                chave = value['nome'].replace(' ', '')
+                self.arquivos_de_modificacao_casos_bases[f"{chave}"] = DadosEletricos(caso_base=False)
+                file_modif_caso_base = value['local'].replace(' ', '')
+                try:
+                    self.arquivos_de_modificacao_casos_bases[f"{chave}"].ler(os.path.join(self.path_,
+                                                                                          file_modif_caso_base))
+                except Exception as err:
+                    nao_lidos.append([file_modif_caso_base, err])
+
+        except Exception as err:
+            nao_lidos.append(['indelet', err])
+
 
         if len(nao_lidos) > 0:
             print("Lista de Arquivos Não Lidos:")
