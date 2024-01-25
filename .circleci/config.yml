@@ -89,8 +89,8 @@ jobs:
           command: |
             echo -e "[PySDDP]" >> ~/.pypirc
             echo -e "repository: https://pypi.org/project/PySDDP/" >> ~/.pypirc
-            echo -e "username: __token__" >> ~/.pypirc
-            echo -e "password: pypi-AgEIcHlwaS5vcmcCJDUxOTBkNmE4LTkxYzEtNGIxYS05ODJhLThmMzExYzA1NjUwNwACDlsxLFsicHlzZGRwIl1dAAIsWzIsWyJlNmZkYWQwYS1lOWMzLTRiMjUtYjNkOS1kM2QzOWRlMzNmYTgiXV0AAAYgkaj6SCeU7koHJFMkgQ8VzxFbK4W3l6ciVsQriOsb-GA" >> ~/.pypirc
+            echo -e "username: andre.marcato" >> ~/.pypirc
+            echo -e "password: $PYPI_PASSWORD" >> ~/.pypirc
       - run:
           name: create packages
           command: |
