@@ -98,4 +98,4 @@ jobs:
           name: upload to pypi
           command: |
             . venv/bin/activate
-            twine upload --repository-url https://upload.pypi.org/legacy/ --username __token__ --password "pypi-AgEIcHlwaS5vcmcCJGVlM2JlZGYwLTg3ZmMtNGJkOC05M2ZkLWE0OTZjZDJhYjQ2ZgACKlszLCI2NzMxMjExYi1jZTlhLTQ1NmMtODgyMS0wODZjMmQxOWZmNjgiXQAABiBREm-YMA5ERO1spdMn_EY4tyugxtD4Pv91Y6lRj5b08w" dist/*
+            twine upload --repository pysddp --username __token__ --password "pypi-AgEIcHlwaS5vcmcCJDUxOTBkNmE4LTkxYzEtNGIxYS05ODJhLThmMzExYzA1NjUwNwACDlsxLFsicHlzZGRwIl1dAAIsWzIsWyJlNmZkYWQwYS1lOWMzLTRiMjUtYjNkOS1kM2QzOWRlMzNmYTgiXV0AAAYgkaj6SCeU7koHJFMkgQ8VzxFbK4W3l6ciVsQriOsb-GA" dist/*
