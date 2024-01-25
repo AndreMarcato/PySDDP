@@ -4,7 +4,7 @@ workflows:
     jobs:
       - build
       - test-python-install:
-          version: "3.11"
+          version: "3.9"
           requires:
             - deploy
       - deploy:
@@ -13,7 +13,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/python:3.11
+      - image: circleci/python:3.9
     steps:
       - checkout
       - restore_cache:
@@ -62,13 +62,13 @@ jobs:
             sudo pip3 install PySDDP
   integration:
     docker:
-      - image: circleci/python:3.11
+      - image: circleci/python:3.9
     steps:
       - run: echo "It works!"
       - run: echo $RUN_EXTRA_TESTS
   deploy:
     docker:
-      - image: circleci/python:3.11
+      - image: circleci/python:3.9
     steps:
       - checkout
       - restore_cache:
