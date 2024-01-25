@@ -71,11 +71,11 @@ if __name__ == '__main__':
     #print(res_plu[0])
 
     #CurtoPrazo = Dessem("/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_CCEE_082020_SEMREDE_RV0D01","dessem.arq")
-    #MedioPrazo = Newave("/Users/andremarcato/Dropbox/Projeto ReadDessem/Deck_Newave")
+    MedioPrazo = Newave("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave")
     #MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
     #MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
 
-    path = '/Users/andremarcato/Dropbox/Projeto ReadDessem/DS_ONS_012021_RV0D01'
+    path = '/Users/andre/Dropbox/Projeto ReadDessem/DS_ONS_012021_RV0D01'
     file = 'dessem.arq'
     CasoDS_ONS_012021_RV1D01 = Dessem(path, file)
 
