@@ -88,9 +88,9 @@ jobs:
           name: init .pypirc
           command: |
             echo -e "[PySDDP]" >> ~/.pypirc
-            echo -e "repository: https://pypi.org/project/PySDDP/" >> ~/.pypirc
-            echo -e "username: andre.marcato" >> ~/.pypirc
-            echo -e "password: $PYPI_PASSWORD" >> ~/.pypirc
+            echo -e "repository = https://upload.pypi.org/legacy/" >> ~/.pypirc
+            echo -e "username = andre.marcato" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
           name: create packages
           command: |
