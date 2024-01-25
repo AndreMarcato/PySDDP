@@ -87,7 +87,7 @@ jobs:
       - run:
           name: init .pypirc
           command: |
-            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "[pysddp]" >> ~/.pypirc
             echo -e "username = andre.marcato" >> ~/.pypirc
             echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
