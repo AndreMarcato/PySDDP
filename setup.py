@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.40"
+VERSION = "0.0.41"
 
 def readme():
     """print long description"""
@@ -52,7 +52,7 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3 :: Only",
     ],
     keywords='pysddp',
