@@ -7,6 +7,8 @@ import pandas as pd
 
 from PySDDP.dessem.script.templates.rampas import RampasTemplate
 
+FIM = "FIM"
+
 
 class Rampas(RampasTemplate):
     """
@@ -81,6 +83,13 @@ class Rampas(RampasTemplate):
                             self.rampas['Tempo'].append(self.linha[31:36])
                             self.rampas['FlagMeiaHora'].append(self.linha[37])
                             continue
+
+                if self.linha[:3].upper() == FIM:
+                    self.bloco_rampas['valor'] = self.rampas
+                    self.rampas_df = pd.DataFrame(self.rampas)
+                    print("OK! Leitura do", os.path.split(file_name)[1], "realizada com sucesso.")
+                else:
+                    raise
 
         except Exception as err:
             if isinstance(err, StopIteration):

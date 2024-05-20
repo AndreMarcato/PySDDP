@@ -113,9 +113,17 @@ class DadVaz(DadVazTemplate):
                     self.vazoes_diarias['mf'].append(self.linha[38:39])
                     self.vazoes_diarias['vazao'].append(self.linha[44:53])
 
+                if self.linha[:3].upper() == FIM_BLOCO:
+                    self.dados['vazoes_diarias']['valores'] = self.vazoes_diarias
+                    self.vazoes_diarias_df = pd.DataFrame(self.vazoes_diarias)
+                    print("OK! Leitura do", os.path.split(file_name)[1], "realizada com sucesso.")
+                else:
+                    raise
+
         except Exception as err:
             if isinstance(err, StopIteration):
                 # Verifica se atingiu o final do bloco
+
                 if self.linha[:3].upper() == FIM_BLOCO:
                     self.dados['vazoes_diarias']['valores'] = self.vazoes_diarias
                     self.vazoes_diarias_df = pd.DataFrame(self.vazoes_diarias)

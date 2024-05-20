@@ -97,7 +97,7 @@ class Hidr(HidrTemplate):
                     self._ip["valor"].append(struct.unpack('f', f.read(4))[0])
                     self._tipo_perda["valor"].append(struct.unpack('i', f.read(4))[0])
                     self._data["valor"].append(struct.unpack('8s', f.read(8))[0].decode())
-                    self._observ["valor"].append(struct.unpack('43s', f.read(43))[0].decode())
+                    self._observ["valor"].append(struct.unpack('43s', f.read(43))[0].decode('utf-8', errors='ignore'))
                     self._vol_ref["valor"].append(struct.unpack('f', f.read(4))[0])
                     self._tipo_reg["valor"].append(struct.unpack('c', f.read(1))[0].decode())
 
@@ -361,7 +361,7 @@ class Hidr(HidrTemplate):
         self._prod_esp['valor'][posicao] = uhe['prod_esp']
         self._perda_hid['valor'][posicao] = uhe['perda_hid']
         self._num_pol_vnj['valor'][posicao] = uhe['num_pol_vnj']
-        self._pol_vaz_niv_jus['valor'] = uhe['pol_vaz_niv_jus']
+        self._pol_vaz_niv_jus['valor'][posicao] = uhe['pol_vaz_niv_jus']
         self._pol_vaz_niv_jus['valor_2'][posicao] = uhe['pol_vaz_niv_jus_2']
         self._pol_vaz_niv_jus['valor_3'][posicao] = uhe['pol_vaz_niv_jus_3']
         self._pol_vaz_niv_jus['valor_4'][posicao] = uhe['pol_vaz_niv_jus_4']

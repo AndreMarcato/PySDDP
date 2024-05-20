@@ -8,6 +8,7 @@ from PySDDP.newave.script.dger import Dger
 from PySDDP.newave.script.modif import Modif
 from PySDDP.newave.script.exph import Exph
 from PySDDP.newave.script.ree import Ree
+from PySDDP.newave.script.term import Term
 from PySDDP.newave.script.sistema import Sistema
 
 
@@ -52,7 +53,8 @@ class Newave(object):
         # Realiza a Leitura do SISTEMA.DAT
         self.sistema = Sistema()
         self.sistema.ler(os.path.join(self.path_, self.arquivos.sistema), self.dger)
-
+        self.term = Term()
+        self.term.ler(os.path.join(self.path_, self.arquivos.term))
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
         self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))

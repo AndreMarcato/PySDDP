@@ -36,6 +36,7 @@ class Vazoes(VazoesTemplate):
                 # Calcular o numero de anos dividindo o tamanho da variavel data / nreg / nmeses
 
                 self.nr_postos = nr_postos
+                #nr_postos = 600
                 num_anos = int(vazoes.shape[0] / nr_postos / 12)
                 self.vaz_nat = vazoes.reshape(num_anos, 12, int(nr_postos))
 

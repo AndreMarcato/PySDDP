@@ -57,6 +57,8 @@ class ArquivosTemplate(ArquivoEntrada):
         self.solar = None
         self.bateria = None
         self.versdeco = None
+        self.ilibs = None
+        self.dessopc = None
 
         # O arquivo script.arq possuem tanto dados quanto nomes de arquivos,
         # então resolvi criar duas estruturas para armazenar estas informações
@@ -232,6 +234,16 @@ class ArquivosTemplate(ArquivoEntrada):
             "versdeco": {
                 'tipo': 1,
                 'descricao': 'NUMERO DA VERSAO DO DECOMP',
+                'valor': None
+            },
+            "ilibs": {
+                'tipo': 1,
+                'descricao': '',
+                'valor': None
+            },
+            "dessopc": {
+                'tipo': 1,
+                'descricao': '',
                 'valor': None
             }
         }
