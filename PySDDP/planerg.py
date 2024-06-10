@@ -71,7 +71,7 @@ if __name__ == '__main__':
     #print(res_plu[0])
 
     CurtoPrazo = Dessem("/Users/andre/Dropbox/Projeto ReadDessem/dessem_2024_maio","dessem.arq")
-    MedioPrazo = Newave("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave")
+    #MedioPrazo = Newave("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave")
     #MedioPrazo = Newave("C:/Users/andre/Downloads\DecksNewave")
     #MedioPrazo.term.escrever("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave/terme_teste.dat")
     #MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')

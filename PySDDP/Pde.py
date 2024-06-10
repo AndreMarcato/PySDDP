@@ -26,7 +26,9 @@ from PySDDP.dessem.script.solar import Solar     # Não está lendo o nome deste
 from PySDDP.dessem.script.tolperd import Tolperd
 from PySDDP.dessem.script.dadger import Dadger
 from PySDDP.dessem.script.dados_eletricos import DadosEletricos
-
+from dessem.script.dessopc import Dessopc
+from dessem.script.ilibs import ILibs
+from dessem.script.vazao_lateral import VazaoLateral
 
 class Dessem(object):
 
@@ -175,6 +177,37 @@ class Dessem(object):
             self.curvatviag.ler(os.path.join(self.path_, file_curvatviag))
         except Exception as err:
             nao_lidos.append(['curvtviag', err])
+
+        try:
+            file_dessopc = self.arquivos.dessopc
+            self.dessopc = Dessopc()
+            self.dessopc.ler(os.path.join(self.path_, file_dessopc))
+        except Exception as err:
+            nao_lidos.append(['dessopc', err])
+
+        try:
+            file_ilibs = self.arquivos.ilibs
+            self.ilibs = ILibs()
+            self.ilibs.ler(os.path.join(self.path_, file_ilibs))
+
+        except Exception as err:
+            nao_lidos.append(['ilibs', err])
+
+            # Leitura dos arquivos das funcionalidades libs:
+        for idx, value in self.ilibs.bloco_indice["df"].iterrows():
+
+            # Leitura do arquivo vazaolateral.csv:
+            if value["identificador"] == "HIDRELETRICA-CADASTRO-RESERVATORIO":
+
+                try:
+                    file_vazao_lateral = value["arquivo"]
+                    self.vazao_lateral = VazaoLateral()
+                    self.vazao_lateral.ler(os.path.join(self.path_, file_vazao_lateral))
+                except Exception as err:
+                    nao_lidos.append(['vazao_lateral', err])
+
+            else:
+                pass
 
         try:
             file_bateria = self.arquivos.bateria
