@@ -26,9 +26,9 @@ from PySDDP.dessem.script.solar import Solar     # Não está lendo o nome deste
 from PySDDP.dessem.script.tolperd import Tolperd
 from PySDDP.dessem.script.dadger import Dadger
 from PySDDP.dessem.script.dados_eletricos import DadosEletricos
-from dessem.script.dessopc import Dessopc
-from dessem.script.ilibs import ILibs
-from dessem.script.vazao_lateral import VazaoLateral
+from PySDDP.dessem.script.dessopc import Dessopc
+from PySDDP.dessem.script.ilibs import ILibs
+from PySDDP.dessem.script.vazao_lateral import VazaoLateral
 
 class Dessem(object):
 
