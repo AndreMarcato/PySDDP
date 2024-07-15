@@ -29,6 +29,7 @@ from PySDDP.dessem.script.dados_eletricos import DadosEletricos
 from PySDDP.dessem.script.dessopc import Dessopc
 from PySDDP.dessem.script.ilibs import ILibs
 from PySDDP.dessem.script.vazao_lateral import VazaoLateral
+from PySDDP.dessem.script.polinjus import PolinJus
 
 class Dessem(object):
 
@@ -193,7 +194,7 @@ class Dessem(object):
         except Exception as err:
             nao_lidos.append(['ilibs', err])
 
-            # Leitura dos arquivos das funcionalidades libs:
+        # Leitura dos arquivos das funcionalidades libs:
         for idx, value in self.ilibs.bloco_indice["df"].iterrows():
 
             # Leitura do arquivo vazaolateral.csv:
@@ -205,6 +206,16 @@ class Dessem(object):
                     self.vazao_lateral.ler(os.path.join(self.path_, file_vazao_lateral))
                 except Exception as err:
                     nao_lidos.append(['vazao_lateral', err])
+
+            # Leitura do arquivo polinjus.csv:
+            elif value["identificador"] == "HIDRELETRICA-CADASTRO-RESERVATORIO-CURVAJUSANTE":
+
+                try:
+                    file_polinjus = value["arquivo"]
+                    self.polinjus = PolinJus()
+                    self.polinjus.ler(os.path.join(self.path_, file_polinjus))
+                except Exception as err:
+                    nao_lidos.append(['polinjus', err])
 
             else:
                 pass
