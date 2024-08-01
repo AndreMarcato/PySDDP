@@ -6,7 +6,7 @@ import cvxopt
 import numpy as np
 from matplotlib import pyplot as plt
 from cvxopt.modeling import variable, solvers, op, matrix
-from PySDDP.pmo import pmo
+from PySDDP.pmo_old import pmo
 from PySDDP.dadosgerais import dadosgerais
 from PySDDP.fcf import fcf
 from itertools import product, tee

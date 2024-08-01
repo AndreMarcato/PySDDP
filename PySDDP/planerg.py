@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from PySDDP.PowerSystem import ImportaPmo, Classroom
 from PySDDP.Pde import Dessem
 from PySDDP.Pen import Newave
+from PySDDP.Pmo import Decomp
 
 if __name__ == '__main__':
     #sistema = ImportaPmo(os.path.join(os.getcwd(), 'pmo/'))
@@ -70,12 +71,14 @@ if __name__ == '__main__':
     #print(res_pddd[0])
     #print(res_plu[0])
 
-    CurtoPrazo = Dessem("/Users/andre/Dropbox/Projeto ReadDessem/dessem_2024_maio","dessem.arq")
+    #CurtoPrazo = Dessem("/Users/andre/Dropbox/Projeto ReadDessem/dessem_2024_maio","dessem.arq")
     #MedioPrazo = Newave("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave")
     #MedioPrazo = Newave("C:/Users/andre/Downloads\DecksNewave")
     #MedioPrazo.term.escrever("/Users/andre/Dropbox/Projeto ReadDessem/Deck_Newave/terme_teste.dat")
     #MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
     #MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
+
+    CurtoPrazo = Decomp("/Users/andre/Downloads/DEC_ONS_082024_RV0_VE")
 
     #path = '/Users/andre/Dropbox/Projeto ReadDessem/DS_ONS_012021_RV0D01'
     #file = 'dessem.arq'
