@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.63"
+VERSION = "0.0.64"
 
 def readme():
     """print long description"""
