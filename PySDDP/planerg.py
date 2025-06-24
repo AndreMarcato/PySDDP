@@ -78,7 +78,10 @@ if __name__ == '__main__':
     #MedioPrazo = Newave('/Users/andremarcato/Downloads/NewaveJan2021')
     #MedioPrazo = Newave('/Users/andremarcato/Desktop/VideoAulasPlanejamento/PySDDP/PySDDP/pmo')
 
-    CurtoPrazo = Decomp("/Users/andre/Downloads/DEC_ONS_082024_RV0_VE")
+    #CurtoPrazo = Decomp("/Users/andre/Downloads/DEC_ONS_082024_RV0_VE")
+
+    CurtoPrazo = Dessem("/Users/andre/Downloads/DESSEM_24_06_2025", "dessem.arq")
+
 
     #path = '/Users/andre/Dropbox/Projeto ReadDessem/DS_ONS_012021_RV0D01'
     #file = 'dessem.arq'

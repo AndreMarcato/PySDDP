@@ -50,6 +50,7 @@ class Operuh (OperuhTemplate):
         self.rest['mneumo'] = list()
         self.rest['ind'] = list()
         self.rest['tipo'] = list()
+        self.rest['tipo_intervalo'] = list()
         self.rest['flag_inclusao'] = list()
         self.rest['descricao'] = list()
         self.rest['vl'] = list()
@@ -115,13 +116,27 @@ class Operuh (OperuhTemplate):
 
 
                     # Leitura dos dados de acordo com o mneumo correspondente
+                    # ALMM Trecho Funcional até maio de 2025
+                    #if mneumo == 'operuh rest':
+                    #    self.rest['mneumo'].append(self.linha[:13])
+                    #    self.rest['ind'].append(self.linha[14:19])
+                    #    self.rest['tipo'].append(self.linha[21:22])
+                    #    self.rest['flag_inclusao'].append(self.linha[24:25])
+                    #    self.rest['descricao'].append(self.linha[27:39])
+                    #    self.rest['vl'].append(self.linha[40:50])
+
+                    #    self.dados['operuh rest']['valores'] = self.rest
+                    #    self.rest_df = pd.DataFrame(self.rest)
+
+                    ### ALMM a partir de maio de 2025
                     if mneumo == 'operuh rest':
-                        self.rest['mneumo'].append(self.linha[:13])
-                        self.rest['ind'].append(self.linha[14:19])
-                        self.rest['tipo'].append(self.linha[21:22])
-                        self.rest['flag_inclusao'].append(self.linha[24:25])
-                        self.rest['descricao'].append(self.linha[27:39])
-                        self.rest['vl'].append(self.linha[40:50])
+                        self.rest['mneumo'].append(self.linha[:13])  # Campo 1
+                        self.rest['ind'].append(self.linha[14:19])  # Campo 3
+                        self.rest['tipo'].append(self.linha[21:22])  # Campo 4
+                        self.rest['tipo_intervalo'].append(self.linha[23:24])  # Campo 5 (Novo)
+                        self.rest['flag_inclusao'].append(self.linha[24:25])  # Campo 6 (Nova posição)
+                        self.rest['descricao'].append(self.linha[27:39])  # Campo 7
+                        self.rest['vl'].append(self.linha[40:50])  # Campo 8
 
                         self.dados['operuh rest']['valores'] = self.rest
                         self.rest_df = pd.DataFrame(self.rest)

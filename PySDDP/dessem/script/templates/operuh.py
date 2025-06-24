@@ -36,7 +36,7 @@ class OperuhTemplate(ArquivoEntrada):
                 'descricao': 'Definir o numero e tipo (restricao de limite ou variacao) das restricoes operativas',
                 'cabecalho':"&PERUH REST   Ind    T     Descricao    VL Inicial \n"
                             "&XXXXX XXXXXX xxxxx  x     xxxxxxxxxxxx xxxxxxxxxx",
-                'formato':"{mneumo: <13} {ind:>5}  {tipo:1}     {descricao:>12} {vl: >8}\n",
+                'formato':"{mneumo: <13} {ind:>5}  {tipo:1}   {tipo_intervalo:1}  {descricao:>12} {vl: >8}\n",
                 'valor': None
 
             },
