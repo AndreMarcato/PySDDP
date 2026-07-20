@@ -85,18 +85,23 @@ jobs:
           paths:
             - "venv"
       - run:
-          name: init .pypirc
-          command: |
-            echo -e "[PySDDP]" >> ~/.pypirc
-            echo -e "repository = https://upload.pypi.org/legacy/" >> ~/.pypirc
-            echo -e "username = andre.marcato" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-      - run:
           name: create packages
           command: |
             make package
       - run:
+          name: validate packages
+          command: |
+            . venv/bin/activate
+            twine check dist/*
+      - run:
           name: upload to pypi
           command: |
             . venv/bin/activate
-            twine upload --repository-url https://upload.pypi.org/legacy/ --username "__token__" --password $PYPI_TOKEN dist/*
+            test -n "${PYPI_TOKEN:-}" || { echo "PYPI_TOKEN não definido"; exit 1; }
+            twine upload \
+              --verbose \
+              --non-interactive \
+              --repository-url https://upload.pypi.org/legacy/ \
+              --username "__token__" \
+              --password "$PYPI_TOKEN" \
+              dist/*
