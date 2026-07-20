@@ -17,16 +17,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install --upgrade pip
+            pip install --upgrade pip setuptools wheel
             make dev
       - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
           paths:
             - "venv"
       - store_artifacts:
@@ -41,16 +41,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install --upgrade pip
+            pip install --upgrade pip setuptools wheel
             make dev
       - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
           paths:
             - "venv"
       - store_artifacts:
@@ -72,16 +72,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
       - run:
           name: install python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install --upgrade pip
+            pip install --upgrade pip setuptools wheel
             make dev
       - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}
+          key: v2-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "Makefile" }}-{{ checksum "dev-requirements.txt" }}
           paths:
             - "venv"
       - run:
