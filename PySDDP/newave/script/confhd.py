@@ -107,6 +107,7 @@ class Confhd(ConfhdTemplate):
                         self._pol_vaz_niv_jus['valor_3'].append(uhe['pol_vaz_niv_jus_3'])
                         self._pol_vaz_niv_jus['valor_4'].append(uhe['pol_vaz_niv_jus_4'])
                         self._pol_vaz_niv_jus['valor_5'].append(uhe['pol_vaz_niv_jus_5'])
+                        self._pol_vaz_niv_jus['valor_6'].append(uhe['pol_vaz_niv_jus_6'])
                         self._cota_ref_nivel_jus['valor'].append(uhe['cota_ref_nivel_jus'])
                         self._cfmed['valor'].append(uhe['cfmed'])
                         self._inf_canal_fuga['valor'].append(uhe['inf_canal_fuga'])
@@ -366,6 +367,7 @@ class Confhd(ConfhdTemplate):
             'pol_vaz_niv_jus_3': self._pol_vaz_niv_jus['valor_3'][posicao],
             'pol_vaz_niv_jus_4': self._pol_vaz_niv_jus['valor_4'][posicao],
             'pol_vaz_niv_jus_5': self._pol_vaz_niv_jus['valor_5'][posicao],
+            'pol_vaz_niv_jus_6': self._pol_vaz_niv_jus['valor_6'][posicao],
             'cota_ref_nivel_jus': self._cota_ref_nivel_jus['valor'][posicao],
             'cfmed': self._cfmed['valor'][posicao],
             'inf_canal_fuga': self._inf_canal_fuga['valor'][posicao],
@@ -478,11 +480,12 @@ class Confhd(ConfhdTemplate):
         self._prod_esp['valor'][posicao] = uhe['prod_esp']
         self._perda_hid['valor'][posicao] = uhe['perda_hid']
         self._num_pol_vnj['valor'][posicao] = uhe['num_pol_vnj']
-        self._pol_vaz_niv_jus['valor'] = uhe['pol_vaz_niv_jus']
+        self._pol_vaz_niv_jus['valor'][posicao] = uhe['pol_vaz_niv_jus']
         self._pol_vaz_niv_jus['valor_2'][posicao] = uhe['pol_vaz_niv_jus_2']
         self._pol_vaz_niv_jus['valor_3'][posicao] = uhe['pol_vaz_niv_jus_3']
         self._pol_vaz_niv_jus['valor_4'][posicao] = uhe['pol_vaz_niv_jus_4']
         self._pol_vaz_niv_jus['valor_5'][posicao] = uhe['pol_vaz_niv_jus_5']
+        self._pol_vaz_niv_jus['valor_6'][posicao] = uhe['pol_vaz_niv_jus_6']
         self._cota_ref_nivel_jus['valor'][posicao] = uhe['cota_ref_nivel_jus']
         self._cfmed['valor'][posicao] = uhe['cfmed']
         self._inf_canal_fuga['valor'][posicao] = uhe['inf_canal_fuga']

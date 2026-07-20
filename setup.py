@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.70"
+VERSION = "0.0.71"
 
 def readme():
     """print long description"""
@@ -66,6 +66,7 @@ setup(
         'verify': VerifyVersionCommand,
     }
 )
+
 
 
 
