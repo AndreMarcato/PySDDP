@@ -158,7 +158,8 @@ class HidrTemplate(ArquivoEntrada):
                     "valor_2": list(),
                     "valor_3": list(),
                     "valor_4": list(),
-                    "valor_5": list()
+                    "valor_5": list(),
+                    "valor_6": list()
                }
         self._cota_ref_nivel_jus = {
                     'descricao': 'Cota Referencia Nivel de Jusante',

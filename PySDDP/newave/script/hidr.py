@@ -79,11 +79,12 @@ class Hidr(HidrTemplate):
                     self._prod_esp["valor"].append(struct.unpack('f', f.read(4))[0])
                     self._perda_hid["valor"].append(struct.unpack('f', f.read(4))[0])
                     self._num_pol_vnj["valor"].append(struct.unpack('i', f.read(4))[0])
-                    self._pol_vaz_niv_jus["valor"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
-                    self._pol_vaz_niv_jus["valor_2"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
-                    self._pol_vaz_niv_jus["valor_3"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
-                    self._pol_vaz_niv_jus["valor_4"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
-                    self._pol_vaz_niv_jus["valor_5"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
+                    self._pol_vaz_niv_jus["valor"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
+                    self._pol_vaz_niv_jus["valor_2"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
+                    self._pol_vaz_niv_jus["valor_3"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
+                    self._pol_vaz_niv_jus["valor_4"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
+                    self._pol_vaz_niv_jus["valor_5"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
+                    self._pol_vaz_niv_jus["valor_6"].append(list(struct.unpack('5f', bytearray(f.read(20)))))
                     self._cota_ref_nivel_jus["valor"].append(list(struct.unpack('6f', bytearray(f.read(24)))))
                     self._cfmed["valor"].append(struct.unpack('f', f.read(4))[0])
                     self._inf_canal_fuga["valor"].append(struct.unpack('i', f.read(4))[0])
@@ -195,16 +196,18 @@ class Hidr(HidrTemplate):
                     f.write(struct.pack('f', self._prod_esp["valor"][i]))
                     f.write(struct.pack('f', self._perda_hid["valor"][i]))
                     f.write(struct.pack('i', self._num_pol_vnj["valor"][i]))
-                    for j in range(6):
+                    for j in range(5):
                         f.write(struct.pack('f', self._pol_vaz_niv_jus["valor"][i][j]))
-                    for j in range(6):
+                    for j in range(5):
                         f.write(struct.pack('f', self._pol_vaz_niv_jus["valor_2"][i][j]))
-                    for j in range(6):
+                    for j in range(5):
                         f.write(struct.pack('f', self._pol_vaz_niv_jus["valor_3"][i][j]))
-                    for j in range(6):
+                    for j in range(5):
                         f.write(struct.pack('f', self._pol_vaz_niv_jus["valor_4"][i][j]))
-                    for j in range(6):
+                    for j in range(5):
                         f.write(struct.pack('f', self._pol_vaz_niv_jus["valor_5"][i][j]))
+                    for j in range(5):
+                        f.write(struct.pack('f', self._pol_vaz_niv_jus["valor_6"][i][j]))
                     for j in range(6):
                         f.write(struct.pack('f', self._cota_ref_nivel_jus["valor"][i][j]))
                     f.write(struct.pack('f', self._cfmed["valor"][i]))
@@ -292,6 +295,7 @@ class Hidr(HidrTemplate):
             'pol_vaz_niv_jus_3': self._pol_vaz_niv_jus['valor_3'][posicao],
             'pol_vaz_niv_jus_4': self._pol_vaz_niv_jus['valor_4'][posicao],
             'pol_vaz_niv_jus_5': self._pol_vaz_niv_jus['valor_5'][posicao],
+            'pol_vaz_niv_jus_6': self._pol_vaz_niv_jus['valor_6'][posicao],
             'cota_ref_nivel_jus': self._cota_ref_nivel_jus['valor'][posicao],
             'cfmed': self._cfmed['valor'][posicao],
             'inf_canal_fuga': self._inf_canal_fuga['valor'][posicao],
@@ -366,6 +370,7 @@ class Hidr(HidrTemplate):
         self._pol_vaz_niv_jus['valor_3'][posicao] = uhe['pol_vaz_niv_jus_3']
         self._pol_vaz_niv_jus['valor_4'][posicao] = uhe['pol_vaz_niv_jus_4']
         self._pol_vaz_niv_jus['valor_5'][posicao] = uhe['pol_vaz_niv_jus_5']
+        self._pol_vaz_niv_jus['valor_6'][posicao] = uhe['pol_vaz_niv_jus_6']
         self._cota_ref_nivel_jus['valor'][posicao] = uhe['cota_ref_nivel_jus']
         self._cfmed['valor'][posicao] = uhe['cfmed']
         self._inf_canal_fuga['valor'][posicao] = uhe['inf_canal_fuga']
