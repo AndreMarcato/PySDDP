@@ -12,7 +12,7 @@ from setuptools.command.install import install
 from setuptools import find_packages
 
 # current version
-VERSION = "0.0.69"
+VERSION = "0.0.70"
 
 def readme():
     """print long description"""
@@ -35,7 +35,7 @@ class VerifyVersionCommand(install):
 
 
 setup(
-    name="PySDDP",
+    name="pysddp",
     version=VERSION,
     description="PySDDP package",
     long_description=readme(),
@@ -66,6 +66,7 @@ setup(
         'verify': VerifyVersionCommand,
     }
 )
+
 
 
 
