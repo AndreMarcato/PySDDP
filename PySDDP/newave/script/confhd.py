@@ -1,4 +1,6 @@
 import os
+import logging
+import math
 from typing import IO
 
 from PySDDP.newave.script.templates.confhd import ConfhdTemplate
@@ -6,6 +8,9 @@ from matplotlib import pyplot as plt
 import numpy as np
 from random import randint
 from mpl_toolkits.mplot3d import Axes3D
+
+
+logger = logging.getLogger(__name__)
 
 
 class Confhd(ConfhdTemplate):
@@ -822,20 +827,165 @@ class Confhd(ConfhdTemplate):
     #             break
 
 
-    def _calc_engol(self, ql):
-        engol = 0.
-        for i in range(5):   # Varre Conjuntos de Maquinas
-            if self._maq_por_conj['valor'][-1][i] > 0:
-                if ql < self._alt_efet_conj['valor'][-1][i]:
-                    if self._tipo_turb == 1 or self._tipo_turb == 3:
-                        alpha = 0.5
-                    else:
-                        alpha = 0.2
-                else:
-                    alpha = -1
-                if self._alt_efet_conj['valor'][-1][i] != 0:
-                    engol = engol + self._maq_por_conj['valor'][-1][i]*self._vaz_efet_conj['valor'][-1][i]*((ql/self._alt_efet_conj['valor'][-1][i])**alpha)
-        return engol
+    @staticmethod
+    def _turbine_exponent(tipo_turbina):
+        """Retorna o expoente da curva de engolimento para o tipo de turbina."""
+        if tipo_turbina in (1, 3):  # Francis e Pelton
+            return 0.5
+        if tipo_turbina == 2:       # Kaplan
+            return 0.2
+        return None
+
+    @staticmethod
+    def _calcula_queda_liquida(queda_bruta, tipo_perda, perda_hid):
+        """Converte queda bruta em liquida conforme o cadastro do HIDR.DAT."""
+        try:
+            queda_bruta = float(queda_bruta)
+            perda_hid = float(perda_hid)
+        except (TypeError, ValueError):
+            return None
+
+        if not math.isfinite(queda_bruta) or not math.isfinite(perda_hid):
+            return None
+
+        if tipo_perda == 1:      # Perda percentual
+            queda_liquida = queda_bruta * (1.0 - perda_hid / 100.0)
+        elif tipo_perda == 2:    # Perda absoluta, em metros
+            queda_liquida = queda_bruta - perda_hid
+        else:
+            logger.debug("Tipo de perda hidraulica invalido: %r", tipo_perda)
+            return None
+
+        if not math.isfinite(queda_liquida) or queda_liquida <= 0.0:
+            return None
+        return queda_liquida
+
+    @staticmethod
+    def _calcula_engolimento_turbina(
+            vazao_nominal, queda_liquida, altura_referencia, expoente):
+        """Calcula o limite de vazao por maquina imposto pela turbina."""
+        try:
+            vazao_nominal = float(vazao_nominal)
+            queda_liquida = float(queda_liquida)
+            altura_referencia = float(altura_referencia)
+            expoente = float(expoente)
+        except (TypeError, ValueError):
+            return None
+
+        valores = (
+            vazao_nominal, queda_liquida, altura_referencia, expoente
+        )
+        if (
+                not all(math.isfinite(valor) for valor in valores)
+                or vazao_nominal <= 0.0
+                or queda_liquida <= 0.0
+                or altura_referencia <= 0.0):
+            return None
+
+        resultado = vazao_nominal * (
+            queda_liquida / altura_referencia
+        ) ** expoente
+        return resultado if math.isfinite(resultado) else None
+
+    @staticmethod
+    def _calcula_engolimento_gerador(
+            potencia_nominal, prod_esp, queda_liquida):
+        """Calcula o limite de vazao por maquina imposto pelo gerador."""
+        try:
+            potencia_nominal = float(potencia_nominal)
+            prod_esp = float(prod_esp)
+            queda_liquida = float(queda_liquida)
+        except (TypeError, ValueError):
+            return None
+
+        valores = (potencia_nominal, prod_esp, queda_liquida)
+        if (
+                not all(math.isfinite(valor) for valor in valores)
+                or potencia_nominal <= 0.0
+                or prod_esp <= 0.0
+                or queda_liquida <= 0.0):
+            return None
+
+        resultado = potencia_nominal / (prod_esp * queda_liquida)
+        return resultado if math.isfinite(resultado) else None
+
+    @classmethod
+    def _calcula_engolimento_conjunto(
+            cls, numero_maquinas, vazao_nominal, altura_referencia,
+            potencia_nominal, prod_esp, queda_liquida, expoente):
+        """Soma as maquinas usando o menor limite entre turbina e gerador."""
+        try:
+            numero_maquinas = float(numero_maquinas)
+        except (TypeError, ValueError):
+            return None
+        if (
+                not math.isfinite(numero_maquinas)
+                or numero_maquinas <= 0.0):
+            return None
+
+        engol_turbina = cls._calcula_engolimento_turbina(
+            vazao_nominal, queda_liquida, altura_referencia, expoente
+        )
+        engol_gerador = cls._calcula_engolimento_gerador(
+            potencia_nominal, prod_esp, queda_liquida
+        )
+        if engol_turbina is None or engol_gerador is None:
+            return None
+
+        resultado = numero_maquinas * min(engol_turbina, engol_gerador)
+        return resultado if math.isfinite(resultado) else None
+
+    def _calc_engol(self, queda_bruta):
+        # O campo interno e publico chama-se perda_hid; ql usa a perda cadastrada.
+        queda_liquida = self._calcula_queda_liquida(
+            queda_bruta,
+            self._tipo_perda['valor'][-1],
+            self._perda_hid['valor'][-1]
+        )
+        if queda_liquida is None:
+            return None
+
+        # Usa o valor da usina atual, e nao o dicionario que armazena a serie.
+        expoente = self._turbine_exponent(
+            self._tipo_turb['valor'][-1]
+        )
+        if expoente is None:
+            logger.debug(
+                "Tipo de turbina invalido: %r",
+                self._tipo_turb['valor'][-1]
+            )
+            return None
+
+        try:
+            numero_conjuntos = max(
+                0, min(int(self._num_conj_maq['valor'][-1]), 5)
+            )
+            vetores = (
+                self._maq_por_conj['valor'][-1],
+                self._vaz_efet_conj['valor'][-1],
+                self._alt_efet_conj['valor'][-1],
+                self._pef_por_conj['valor'][-1]
+            )
+            numero_conjuntos = min(
+                numero_conjuntos, *(len(vetor) for vetor in vetores)
+            )
+        except (TypeError, ValueError):
+            return 0.0
+
+        engolimento = 0.0
+        for i in range(numero_conjuntos):
+            engolimento_conjunto = self._calcula_engolimento_conjunto(
+                self._maq_por_conj['valor'][-1][i],
+                self._vaz_efet_conj['valor'][-1][i],
+                self._alt_efet_conj['valor'][-1][i],
+                self._pef_por_conj['valor'][-1][i],
+                self._prod_esp['valor'][-1],
+                queda_liquida,
+                expoente
+            )
+            if engolimento_conjunto is not None:
+                engolimento += engolimento_conjunto
+        return engolimento
 
     def _calc_engol_maximo(self):    # Estima Engolimento Maximo da Usina
 
@@ -845,31 +995,30 @@ class Confhd(ConfhdTemplate):
         d = self._pol_cota_vol['valor'][-1][3]
         e = self._pol_cota_vol['valor'][-1][4]
 
-        # Calcula Engolimento a 65% do Volume Util
+        # Mantem as cinco condicoes historicas: 50%, 65%, equivalente,
+        # volume maximo e volume minimo.
+        # A jusante continua aproximada por cfmed: nao ha rotina iterativa
+        # consolidada nesta classe para acoplar vazao e nivel de jusante.
         volume = self._vol_min['valor'][-1] + 0.65*self._vol_util['valor'][-1]
         cota = a + b*volume + c*volume**2 + d*volume**3 + e*volume**4
         queda65 = cota - self._cfmed['valor'][-1]
         engol65 = self._calc_engol(queda65)
 
-        # Calcula Engolimento a 50% do Volume Util
         volume = self._vol_min['valor'][-1] + 0.50*self._vol_util['valor'][-1]
         cota = a + b*volume + c*volume**2 + d*volume**3 + e*volume**4
         queda50 = cota - self._cfmed['valor'][-1]
         engol50 = self._calc_engol(queda50)
 
-        # Calcula Engolimento Associada ao Volume Maximo
         volume = self._vol_max['valor'][-1]
         cota = a + b*volume + c*volume**2 + d*volume**3 + e*volume**4
         quedaMax = cota - self._cfmed['valor'][-1]
         engolMax = self._calc_engol(quedaMax)
 
-        # Calcula Engolimento Associada ao Volume Minimo
         volume = self._vol_min['valor'][-1]
         cota = a + b*volume + c*volume**2 + d*volume**3 + e*volume**4
         quedaMin = cota - self._cfmed['valor'][-1]
         engolMin = self._calc_engol(quedaMin)
 
-        # Calcula Engolimento Associado a Altura Equivalente
         if ( self._vol_util['valor'][-1] > 0):
             cota = 0
             for i in range(5):
@@ -879,7 +1028,17 @@ class Confhd(ConfhdTemplate):
         quedaEquiv = cota - self._cfmed['valor'][-1]
         engolEquiv = self._calc_engol(quedaEquiv)
 
-        self._engolimento['valor'].append((engol50+engol65+engolEquiv+engolMax+engolMin)/5)
+        # engolimento permanece a media das condicoes validas, em m3/s.
+        valores_validos = [
+            valor for valor in (
+                engol50, engol65, engolEquiv, engolMax, engolMin
+            )
+            if valor is not None and math.isfinite(valor)
+        ]
+        self._engolimento['valor'].append(
+            sum(valores_validos) / len(valores_validos)
+            if valores_validos else 0.0
+        )
 
         return
 
