@@ -28,6 +28,12 @@ resultado_plu = q.pl_unico(0, imprime=False)
 
 resultado_pddd = q.pddd(0, imprime=False)
 
+DOCUMENTATION
+###################
+
+O contrato completo de leitura, edição e persistência do CONFHD está
+documentado em ``docs/confhd.rst``.
+
 DEPLOY SCRIPT
 ###################
 

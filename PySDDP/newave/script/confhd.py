@@ -1,6 +1,8 @@
 import os
 import logging
 import math
+from copy import deepcopy
+from numbers import Integral, Real
 from typing import IO
 
 from PySDDP.newave.script.templates.confhd import ConfhdTemplate
@@ -14,6 +16,119 @@ logger = logging.getLogger(__name__)
 
 
 class Confhd(ConfhdTemplate):
+    # Mapa único das chaves públicas de get()/put() para as estruturas
+    # internas. Os dados de CONFHD, HIDR, MODIF e EXPH e os valores
+    # calculados continuam expostos por compatibilidade com a API histórica.
+    _FIELD_MAP = {
+        'codigo': ('_codigo', 'valor'),
+        'nome': ('_nome', 'valor'),
+        'posto': ('_posto', 'valor'),
+        'ree': ('_ree', 'valor'),
+        'vol_ini': ('_vol_ini', 'valor'),
+        'status': ('_status', 'valor'),
+        'modif': ('_modif', 'valor'),
+        'ano_i': ('_ano_i', 'valor'),
+        'ano_f': ('_ano_f', 'valor'),
+        'bdh': ('_bdh', 'valor'),
+        'sist': ('_sist', 'valor'),
+        'empr': ('_empr', 'valor'),
+        'jusante': ('_jusante', 'valor'),
+        'desvio': ('_desvio', 'valor'),
+        'vol_min': ('_vol_min', 'valor'),
+        'vol_max': ('_vol_max', 'valor'),
+        'vol_vert': ('_vol_vert', 'valor'),
+        'vol_min_desv': ('_vol_min_desv', 'valor'),
+        'cota_min': ('_cota_min', 'valor'),
+        'cota_max': ('_cota_max', 'valor'),
+        'pol_cota_vol': ('_pol_cota_vol', 'valor'),
+        'pol_cota_area': ('_pol_cota_area', 'valor'),
+        'coef_evap': ('_coef_evap', 'valor'),
+        'num_conj_maq': ('_num_conj_maq', 'valor'),
+        'maq_por_conj': ('_maq_por_conj', 'valor'),
+        'pef_por_conj': ('_pef_por_conj', 'valor'),
+        'cf_hbqt': ('_cf_hbqt', 'valor'),
+        'cf_hbqt_2': ('_cf_hbqt', 'valor_2'),
+        'cf_hbqt_3': ('_cf_hbqt', 'valor_3'),
+        'cf_hbqt_4': ('_cf_hbqt', 'valor_4'),
+        'cf_hbqt_5': ('_cf_hbqt', 'valor_5'),
+        'cf_hbqg': ('_cf_hbqg', 'valor'),
+        'cf_hbqg_2': ('_cf_hbqg', 'valor_2'),
+        'cf_hbqg_3': ('_cf_hbqg', 'valor_3'),
+        'cf_hbqg_4': ('_cf_hbqg', 'valor_4'),
+        'cf_hbqg_5': ('_cf_hbqg', 'valor_5'),
+        'cf_hbpt': ('_cf_hbpt', 'valor'),
+        'cf_hbpt_2': ('_cf_hbpt', 'valor_2'),
+        'cf_hbpt_3': ('_cf_hbpt', 'valor_3'),
+        'cf_hbpt_4': ('_cf_hbpt', 'valor_4'),
+        'cf_hbpt_5': ('_cf_hbpt', 'valor_5'),
+        'alt_efet_conj': ('_alt_efet_conj', 'valor'),
+        'vaz_efet_conj': ('_vaz_efet_conj', 'valor'),
+        'prod_esp': ('_prod_esp', 'valor'),
+        'perda_hid': ('_perda_hid', 'valor'),
+        'num_pol_vnj': ('_num_pol_vnj', 'valor'),
+        'pol_vaz_niv_jus': ('_pol_vaz_niv_jus', 'valor'),
+        'pol_vaz_niv_jus_2': ('_pol_vaz_niv_jus', 'valor_2'),
+        'pol_vaz_niv_jus_3': ('_pol_vaz_niv_jus', 'valor_3'),
+        'pol_vaz_niv_jus_4': ('_pol_vaz_niv_jus', 'valor_4'),
+        'pol_vaz_niv_jus_5': ('_pol_vaz_niv_jus', 'valor_5'),
+        'pol_vaz_niv_jus_6': ('_pol_vaz_niv_jus', 'valor_6'),
+        'cota_ref_nivel_jus': ('_cota_ref_nivel_jus', 'valor'),
+        'cfmed': ('_cfmed', 'valor'),
+        'inf_canal_fuga': ('_inf_canal_fuga', 'valor'),
+        'fator_carga_max': ('_fator_carga_max', 'valor'),
+        'fator_carga_min': ('_fator_carga_min', 'valor'),
+        'vaz_min': ('_vaz_min', 'valor'),
+        'unid_base': ('_unid_base', 'valor'),
+        'tipo_turb': ('_tipo_turb', 'valor'),
+        'repres_conj': ('_repres_conj', 'valor'),
+        'teifh': ('_teifh', 'valor'),
+        'ip': ('_ip', 'valor'),
+        'tipo_perda': ('_tipo_perda', 'valor'),
+        'data': ('_data', 'valor'),
+        'observ': ('_observ', 'valor'),
+        'vol_ref': ('_vol_ref', 'valor'),
+        'tipo_reg': ('_tipo_reg', 'valor'),
+        'vazoes': ('_vazoes', 'valor'),
+        'vol_mint': ('_vol_mint', 'valor'),
+        'vol_maxt': ('_vol_maxt', 'valor'),
+        'vol_minp': ('_vol_minp', 'valor'),
+        'vaz_mint': ('_vaz_mint', 'valor'),
+        'cmont': ('_cmont', 'valor'),
+        'cfugat': ('_cfugat', 'valor'),
+        'vol_util': ('_vol_util', 'valor'),
+        'pot_efet': ('_pot_efet', 'valor'),
+        'vaz_efet': ('_vaz_efet', 'valor'),
+        'status_vol_morto': ('_status_vol_morto', 'valor'),
+        'status_motoriz': ('_status_motoriz', 'valor'),
+        'vol_morto_tempo': ('_vol_morto_tempo', 'valor'),
+        'engol_tempo': ('_engol_tempo', 'valor'),
+        'potencia_tempo': ('_potencia_tempo', 'valor'),
+        'unidades_tempo': ('_unidades_tempo', 'valor'),
+        'ro_65': ('_ro_65', 'valor'),
+        'ro_50': ('_ro_50', 'valor'),
+        'ro_equiv': ('_ro_equiv', 'valor'),
+        'ro_equiv65': ('_ro_equiv65', 'valor'),
+        'ro_min': ('_ro_min', 'valor'),
+        'ro_max': ('_ro_max', 'valor'),
+        'engolimento': ('_engolimento', 'valor'),
+        'ro_acum_a_ree': ('_ro_acum_a_ree', 'valor'),
+        'ro_acum_b_ree': ('_ro_acum_b_ree', 'valor'),
+        'ro_acum_c_ree': ('_ro_acum_c_ree', 'valor'),
+        'ro_acum_a_sist': ('_ro_acum_a_sist', 'valor'),
+        'ro_acum_b_sist': ('_ro_acum_b_sist', 'valor'),
+        'ro_acum_c_sist': ('_ro_acum_c_sist', 'valor'),
+        'ro_acum': ('_ro_acum', 'valor'),
+        'ro_acum_65': ('_ro_acum_65', 'valor'),
+        'ro_acum_max': ('_ro_acum_max', 'valor'),
+        'ro_acum_med': ('_ro_acum_med', 'valor'),
+        'ro_acum_min': ('_ro_acum_min', 'valor'),
+    }
+    _CONFHD_FIELDS = (
+        'codigo', 'nome', 'posto', 'jusante', 'ree', 'vol_ini',
+        'status', 'modif', 'ano_i', 'ano_f',
+    )
+    _STATUS_VALUES = frozenset(('EX', 'EE', 'NE', 'NC'))
+
     def __init__(self):
         super().__init__()
 
@@ -22,10 +137,129 @@ class Confhd(ConfhdTemplate):
         self.dir_base = None
         self._numero_registros_ = None
 
+    @staticmethod
+    def _as_int(field, value, minimum, maximum):
+        """Converte escalares inteiros Python/NumPy sem truncamento."""
+        if isinstance(value, np.generic):
+            value = value.item()
+        if isinstance(value, bool):
+            raise TypeError(f"{field} deve ser inteiro")
+        if isinstance(value, Integral):
+            result = int(value)
+        elif isinstance(value, Real):
+            numeric = float(value)
+            if not math.isfinite(numeric) or not numeric.is_integer():
+                raise ValueError(f"{field} deve ser um inteiro exato")
+            result = int(numeric)
+        else:
+            raise TypeError(f"{field} deve ser inteiro")
+        if result < minimum or result > maximum:
+            raise ValueError(
+                f"{field} deve estar entre {minimum} e {maximum}"
+            )
+        return result
+
+    @staticmethod
+    def _as_float(field, value, minimum, maximum, decimals=None):
+        """Converte escalares reais Python/NumPy e verifica finitude."""
+        if isinstance(value, np.generic):
+            value = value.item()
+        if isinstance(value, bool) or not isinstance(value, Real):
+            raise TypeError(f"{field} deve ser numerico")
+        result = float(value)
+        if not math.isfinite(result):
+            raise ValueError(f"{field} deve ser finito")
+        if result < minimum or result > maximum:
+            raise ValueError(
+                f"{field} deve estar entre {minimum} e {maximum}"
+            )
+        if decimals is not None:
+            result = float(f"{result:.{decimals}f}")
+        return result
+
+    def _position_for_code(self, codigo):
+        """Retorna a posição de um código existente sem indexar fora do mapa."""
+        if codigo < 0 or codigo >= len(self._mapa):
+            return None
+        posicao = int(self._mapa[codigo])
+        if posicao < 0:
+            return None
+        return posicao
+
+    def _normalize_confhd_fields(self, values):
+        """Valida e normaliza os dez campos físicos de um registro CONFHD."""
+        nome = values['nome']
+        if not isinstance(nome, str):
+            raise TypeError("nome deve ser string")
+        try:
+            nome.encode('latin-1')
+        except UnicodeEncodeError as err:
+            raise ValueError("nome deve ser representavel em latin-1") from err
+        if len(nome) > 12:
+            raise ValueError("nome deve possuir no maximo 12 caracteres")
+
+        status = values['status']
+        if not isinstance(status, str):
+            raise TypeError("status deve ser string")
+        status = status.strip().upper()
+        if status not in self._STATUS_VALUES:
+            permitidos = ", ".join(sorted(self._STATUS_VALUES))
+            raise ValueError(f"status deve ser um de: {permitidos}")
+
+        posto_maximo = int(np.shape(self._copiavazoes)[2])
+        normalized = {
+            'codigo': self._as_int('codigo', values['codigo'], 1, 9999),
+            'nome': nome.ljust(12),
+            'posto': self._as_int(
+                'posto', values['posto'], 1, min(9999, posto_maximo)
+            ),
+            'jusante': self._as_int(
+                'jusante', values['jusante'], 0, 9999
+            ),
+            'ree': self._as_int('ree', values['ree'], 0, 9999),
+            'vol_ini': self._as_float(
+                'vol_ini', values['vol_ini'], 0.0, 100.0, decimals=2
+            ),
+            'status': status,
+            'modif': self._as_int('modif', values['modif'], 0, 9999),
+            'ano_i': self._as_int('ano_i', values['ano_i'], 0, 9999),
+            'ano_f': self._as_int('ano_f', values['ano_f'], 0, 9999),
+        }
+        if normalized['ano_i'] > normalized['ano_f']:
+            raise ValueError("ano_i nao pode ser posterior a ano_f")
+        return normalized
+
+    def _normalize_vazoes(self, values):
+        """Valida a série (anos, 12) e converte-a sem perda para int32."""
+        try:
+            vazoes = np.asarray(values)
+        except (TypeError, ValueError) as err:
+            raise TypeError("vazoes deve ser uma matriz numerica") from err
+
+        expected_shape = tuple(np.shape(self._copiavazoes)[:2])
+        if vazoes.shape != expected_shape:
+            raise ValueError(
+                f"vazoes deve possuir dimensao {expected_shape}, "
+                f"recebida {vazoes.shape}"
+            )
+        is_integer = np.issubdtype(vazoes.dtype, np.integer)
+        is_floating = np.issubdtype(vazoes.dtype, np.floating)
+        if not (is_integer or is_floating):
+            raise TypeError("vazoes deve conter valores numericos")
+        if not np.all(np.isfinite(vazoes)):
+            raise ValueError("vazoes deve conter apenas valores finitos")
+        if not np.all(vazoes == np.trunc(vazoes)):
+            raise ValueError("vazoes deve conter apenas valores inteiros")
+
+        limits = np.iinfo(np.int32)
+        if np.any(vazoes < limits.min) or np.any(vazoes > limits.max):
+            raise ValueError("vazoes excede os limites de int32")
+        return vazoes.astype(np.int32, copy=True)
+
     def ler(self, file_name: str, hidr, vazoes, dger, modif, exph) -> None:
         """
-        Implementa o método para leitura do arquivo HIDR.DAT que contem os dados cadastrais das usinas
-         hidrelétricas que podem ser utilizadas para a execucao do NEWAVE
+        Lê o CONFHD.DAT e incorpora os dados cadastrais, temporais e de
+        vazões necessários à configuração hidrelétrica do NEWAVE.
 
         :param file_name: string com o caminho completo para o arquivo,
                hidr: classe contendo o cadastro de todas as usinas hidreletrica,
@@ -241,8 +475,7 @@ class Confhd(ConfhdTemplate):
 
     def escrever(self, file_out: str) -> None:
         """
-        Implementa o método para escrita do arquivo HIDR.DAT que contem os dados cadastrais das usinas
-         hidrelétricas que podem ser utilizadas para a execucao do NEWAVE
+        Escreve todos os registros físicos do CONFHD.DAT.
 
         :param file_out: string com o caminho completo para o arquivo
 
@@ -253,42 +486,43 @@ class Confhd(ConfhdTemplate):
 
         self._numero_registros_ = 0
 
-        formato = "{codigo: >5} {nome: <12} {posto: >4} {jusante: >5} {ree: >4} {vol_ini: >6} {status: >4} {modif: >6} {ano_i: >8} {ano_f: >8}\n"
+        formato = (
+            "{codigo: >5d} {nome: <12} {posto: >4d} {jusante: >5d} "
+            "{ree: >4d} {vol_ini: >6.2f} {status: >4} {modif: >6d} "
+            "{ano_i: >8d} {ano_f: >8d}\n"
+        )
 
-        if not os.path.isdir(os.path.split(file_out)[0]):
-            os.mkdir(os.path.split(file_out)[0])
+        diretorio = os.path.split(file_out)[0]
+        if diretorio:
+            os.makedirs(diretorio, exist_ok=True)
 
-        try:
+        registros = []
+        for iusi in range(len(self._codigo['valor'])):
+            linha = {
+                field: getattr(self, self._FIELD_MAP[field][0])[
+                    self._FIELD_MAP[field][1]
+                ][iusi]
+                for field in self._CONFHD_FIELDS
+            }
+            registros.append(self._normalize_confhd_fields(linha))
 
-            with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
+        with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
+            f.write(
+                " NUM  NOME         POSTO JUS   REE V.INIC U.EXIS MODIF "
+                "INIC.HIST FIM HIST\n"
+            )
+            f.write(
+                " XXXX XXXXXXXXXXXX XXXX  XXXX XXXX XXX.XX XXXX   XXXX"
+                "     XXXX     XXXX\n"
+            )
 
-                # Imprime Cabeçalho
-
-                f.write(" NUM  NOME         POSTO JUS   REE V.INIC U.EXIS MODIF INIC.HIST FIM HIST\n")
-                f.write(" XXXX XXXXXXXXXXXX XXXX  XXXX XXXX XXX.XX XXXX   XXXX     XXXX     XXXX  \n")
-
-                for iusi in range(self.nuhe):
-                    linha = dict(
-                        codigo=self._codigo['valor'][iusi],
-                        nome=self._nome['valor'][iusi],
-                        posto=self._posto['valor'][iusi],
-                        jusante=self._jusante['valor'][iusi],
-                        ree=self._ree['valor'][iusi],
-                        vol_ini=self._vol_ini['valor'][iusi],
-                        status=self._status['valor'][iusi],
-                        modif=self._modif['valor'][iusi],
-                        ano_i=self._ano_i['valor'][iusi],
-                        ano_f=self._ano_f['valor'][iusi]
-                    )
-                    f.write(formato.format(**linha))
-                    self._numero_registros_ += 1
-
-        except Exception as err:
-            raise
+            for linha in registros:
+                f.write(formato.format(**linha))
+                self._numero_registros_ += 1
 
         print("OK! Escrita do", os.path.split(file_out)[1], "realizada com sucesso.")
 
-    def get(self, entrada):
+    def _get(self, entrada, copy_values):
         """
         Busca uma usina hidreletrica do arquivo CONFHD e retorna um dicionario de dados contendo todas as
         informacoes desta usina
@@ -297,21 +531,24 @@ class Confhd(ConfhdTemplate):
 
         """
 
-        if (type(entrada) == float) or (type(entrada) == int):
-            #for i, valor in enumerate(self._codigo["valor"]):
-            #    if valor == int(entrada):
-            #        posicao = i
-            #        break
+        if isinstance(entrada, np.generic):
+            entrada = entrada.item()
 
-            if type(entrada) == float:
-                entrada = int(entrada)
-
-            posicao = int(self._mapa[entrada])
-
-            if posicao == -1:
+        if isinstance(entrada, bool):
+            raise TypeError("entrada deve ser codigo numerico ou nome")
+        if isinstance(entrada, Integral):
+            codigo = int(entrada)
+            posicao = self._position_for_code(codigo)
+            if posicao is None:
                 return None
-
-        if type(entrada) == str:
+        elif isinstance(entrada, Real):
+            numeric = float(entrada)
+            if not math.isfinite(numeric) or not numeric.is_integer():
+                raise ValueError("codigo numerico deve ser um inteiro exato")
+            posicao = self._position_for_code(int(numeric))
+            if posicao is None:
+                return None
+        elif isinstance(entrada, str):
             posicao = None
             for i, valor in enumerate(self._nome["valor"]):
                 if (valor.upper()).strip() == (entrada.upper()).strip():
@@ -319,221 +556,107 @@ class Confhd(ConfhdTemplate):
                     break
             if posicao is None:
                 return None
+        else:
+            raise TypeError("entrada deve ser codigo numerico ou nome")
 
         uhe = {
-            'codigo': self._codigo['valor'][posicao],
-            'nome': self._nome['valor'][posicao],
-            'posto': self._posto['valor'][posicao],
-            'ree': self._ree["valor"][posicao],
-            'vol_ini': self._vol_ini["valor"][posicao],
-            'status': self._status["valor"][posicao],
-            'modif': self._modif["valor"][posicao],
-            'ano_i': self._ano_i["valor"][posicao],
-            'ano_f': self._ano_f["valor"][posicao],
-            'bdh': self._bdh['valor'][posicao],
-            'sist': self._sist['valor'][posicao],
-            'empr': self._empr['valor'][posicao],
-            'jusante': self._jusante['valor'][posicao],
-            'desvio': self._desvio['valor'][posicao],
-            'vol_min': self._vol_min['valor'][posicao],
-            'vol_max': self._vol_max['valor'][posicao],
-            'vol_vert': self._vol_vert['valor'][posicao],
-            'vol_min_desv': self._vol_min_desv['valor'][posicao],
-            'cota_min': self._cota_min['valor'][posicao],
-            'cota_max': self._cota_max['valor'][posicao],
-            'pol_cota_vol': self._pol_cota_vol['valor'][posicao],
-            'pol_cota_area': self._pol_cota_area['valor'][posicao],
-            'coef_evap': self._coef_evap['valor'][posicao],
-            'num_conj_maq': self._num_conj_maq['valor'][posicao],
-            'maq_por_conj': self._maq_por_conj['valor'][posicao],
-            'pef_por_conj': self._pef_por_conj['valor'][posicao],
-            'cf_hbqt': self._cf_hbqt['valor'][posicao],
-            'cf_hbqt_2': self._cf_hbqt['valor_2'][posicao],
-            'cf_hbqt_3': self._cf_hbqt['valor_3'][posicao],
-            'cf_hbqt_4': self._cf_hbqt['valor_4'][posicao],
-            'cf_hbqt_5': self._cf_hbqt['valor_5'][posicao],
-            'cf_hbqg': self._cf_hbqg['valor'][posicao],
-            'cf_hbqg_2': self._cf_hbqg['valor_2'][posicao],
-            'cf_hbqg_3': self._cf_hbqg['valor_3'][posicao],
-            'cf_hbqg_4': self._cf_hbqg['valor_4'][posicao],
-            'cf_hbqg_5': self._cf_hbqg['valor_5'][posicao],
-            'cf_hbpt': self._cf_hbpt['valor'][posicao],
-            'cf_hbpt_2': self._cf_hbpt['valor_2'][posicao],
-            'cf_hbpt_3': self._cf_hbpt['valor_3'][posicao],
-            'cf_hbpt_4': self._cf_hbpt['valor_4'][posicao],
-            'cf_hbpt_5': self._cf_hbpt['valor_5'][posicao],
-            'alt_efet_conj': self._alt_efet_conj['valor'][posicao],
-            'vaz_efet_conj': self._vaz_efet_conj['valor'][posicao],
-            'prod_esp': self._prod_esp['valor'][posicao],
-            'perda_hid': self._perda_hid['valor'][posicao],
-            'num_pol_vnj': self._num_pol_vnj['valor'][posicao],
-            'pol_vaz_niv_jus': self._pol_vaz_niv_jus['valor'][posicao],
-            'pol_vaz_niv_jus_2': self._pol_vaz_niv_jus['valor_2'][posicao],
-            'pol_vaz_niv_jus_3': self._pol_vaz_niv_jus['valor_3'][posicao],
-            'pol_vaz_niv_jus_4': self._pol_vaz_niv_jus['valor_4'][posicao],
-            'pol_vaz_niv_jus_5': self._pol_vaz_niv_jus['valor_5'][posicao],
-            'pol_vaz_niv_jus_6': self._pol_vaz_niv_jus['valor_6'][posicao],
-            'cota_ref_nivel_jus': self._cota_ref_nivel_jus['valor'][posicao],
-            'cfmed': self._cfmed['valor'][posicao],
-            'inf_canal_fuga': self._inf_canal_fuga['valor'][posicao],
-            'fator_carga_max': self._fator_carga_max['valor'][posicao],
-            'fator_carga_min': self._fator_carga_min['valor'][posicao],
-            'vaz_min': self._vaz_min['valor'][posicao],
-            'unid_base': self._unid_base['valor'][posicao],
-            'tipo_turb': self._tipo_turb['valor'][posicao],
-            'repres_conj': self._repres_conj['valor'][posicao],
-            'teifh': self._teifh['valor'][posicao],
-            'ip': self._ip['valor'][posicao],
-            'tipo_perda': self._tipo_perda['valor'][posicao],
-            'data': self._data['valor'][posicao],
-            'observ': self._observ['valor'][posicao],
-            'vol_ref': self._vol_ref['valor'][posicao],
-            'tipo_reg': self._tipo_reg['valor'][posicao],
-            'vazoes': self._vazoes['valor'][posicao],
-            'vol_mint': self._vol_mint['valor'][posicao],
-            'vol_maxt': self._vol_maxt['valor'][posicao],
-            'vol_minp': self._vol_minp['valor'][posicao],
-            'vaz_mint': self._vaz_mint['valor'][posicao],
-            'cmont': self._cmont['valor'][posicao],
-            'cfugat': self._cfugat['valor'][posicao],
-            'vol_util': self._vol_util['valor'][posicao],
-            'pot_efet': self._pot_efet['valor'][posicao],
-            'vaz_efet': self._vaz_efet['valor'][posicao],
-            'status_vol_morto': self._status_vol_morto['valor'][posicao],
-            'status_motoriz': self._status_motoriz['valor'][posicao],
-            'vol_morto_tempo': self._vol_morto_tempo['valor'][posicao],
-            'engol_tempo': self._engol_tempo['valor'][posicao],
-            'potencia_tempo': self._potencia_tempo['valor'][posicao],
-            'unidades_tempo': self._unidades_tempo['valor'][posicao],
-            'ro_65': self._ro_65['valor'][posicao],
-            'ro_50': self._ro_50['valor'][posicao],
-            'ro_equiv': self._ro_equiv['valor'][posicao],
-            'ro_equiv65': self._ro_equiv65['valor'][posicao],
-            'ro_min': self._ro_min['valor'][posicao],
-            'ro_max': self._ro_max['valor'][posicao],
-            'engolimento': self._engolimento['valor'][posicao],
-            'ro_acum_a_ree': self._ro_acum_a_ree['valor'][posicao],
-            'ro_acum_b_ree': self._ro_acum_b_ree['valor'][posicao],
-            'ro_acum_c_ree': self._ro_acum_c_ree['valor'][posicao],
-            'ro_acum_a_sist': self._ro_acum_a_sist['valor'][posicao],
-            'ro_acum_b_sist': self._ro_acum_b_sist['valor'][posicao],
-            'ro_acum_c_sist': self._ro_acum_c_sist['valor'][posicao],
-            'ro_acum': self._ro_acum['valor'][posicao],
-            'ro_acum_65': self._ro_acum_65['valor'][posicao],
-            'ro_acum_max': self._ro_acum_max['valor'][posicao],
-            'ro_acum_med': self._ro_acum_med['valor'][posicao],
-            'ro_acum_min': self._ro_acum_min['valor'][posicao]
+            field: getattr(self, attr_name)[value_name][posicao]
+            for field, (attr_name, value_name) in self._FIELD_MAP.items()
         }
 
+        if copy_values:
+            # O metadado permite que put() detecte uma tentativa de trocar a
+            # identidade mesmo depois de deepcopy(), sem alterar codigo.
+            uhe['codigo_original'] = uhe['codigo']
+            return deepcopy(uhe)
         return uhe
+
+    def get(self, entrada):
+        """
+        Retorna o dicionário completo e independente de uma UHE.
+
+        ``entrada`` aceita o código (inteiro ou real integral) ou o nome. Os
+        arrays retornados são cópias: alterações só atingem o objeto após
+        :meth:`put`. A chave ``codigo_original`` preserva a identidade através
+        de ``deepcopy`` e não deve ser modificada.
+        """
+        return self._get(entrada, copy_values=True)
 
     def put(self, uhe):
         """
-        Atualiza os dados da usina com do CONFHD de acordo com o dicionario de dados fornecido na entrada.
-        As chaves do dicionario de dados de entrada devem ser as mesmas do dicionario obtido atraves do
-        comando get.
+        Atualiza uma UHE a partir do dicionário completo retornado por get().
 
-        :param uhe: dicionario de dados contendo informacoes da usina a ser atualizada.
+        ``codigo`` identifica o registro e não é editável. Todas as demais
+        chaves públicas são reincorporadas às estruturas internas. Os dez
+        campos físicos do CONFHD são validados contra suas larguras; ``vazoes``
+        atualiza a coluna do posto na matriz compartilhada com Vazoes.
 
+        :param uhe: dicionário completo retornado por :meth:`get`
+        :returns: ``"sucesso"`` para compatibilidade com a API existente
+        :raises TypeError: para dicionário ou tipos incompatíveis
+        :raises KeyError: para chaves ausentes ou desconhecidas
+        :raises ValueError: para identidade ou valores inválidos
         """
+        if not isinstance(uhe, dict):
+            raise TypeError("uhe deve ser um dicionario completo")
 
-        posicao = None
-        for i, valor in enumerate(self._codigo["valor"]):
-            if valor == uhe['codigo']:
-                posicao = i
-                break
+        required = set(self._FIELD_MAP)
+        received = set(uhe)
+        missing = sorted(required - received)
+        if missing:
+            raise KeyError(
+                "chaves obrigatorias ausentes: " + ", ".join(missing)
+            )
+        allowed = required | {'codigo_original'}
+        unknown = sorted(received - allowed)
+        if unknown:
+            raise KeyError(
+                "chaves desconhecidas: " + ", ".join(unknown)
+            )
+
+        normalized = self._normalize_confhd_fields(uhe)
+        codigo = normalized['codigo']
+        codigo_original = self._as_int(
+            'codigo_original',
+            uhe.get('codigo_original', codigo),
+            1,
+            9999,
+        )
+        if codigo != codigo_original:
+            raise ValueError(
+                "codigo identifica a UHE e nao pode ser alterado"
+            )
+        posicao = self._position_for_code(codigo_original)
         if posicao is None:
-            return None
+            raise ValueError(
+                f"codigo {codigo_original} nao corresponde a uma UHE existente"
+            )
 
-        self._codigo['valor'][posicao] = uhe['codigo']
-        self._nome['valor'][posicao] = uhe['nome']
-        self._posto['valor'][posicao] = uhe['posto']
-        self._bdh['valor'][posicao] = uhe['bdh']
-        self._sist['valor'][posicao] = uhe['sist']
-        self._empr['valor'][posicao] = uhe['empr']
-        self._jusante['valor'][posicao] = uhe['jusante']
-        self._desvio['valor'][posicao] = uhe['desvio']
-        self._vol_min['valor'][posicao] = uhe['vol_min']
-        self._vol_max['valor'][posicao] = uhe['vol_max']
-        self._vol_vert['valor'][posicao] = uhe['vol_vert']
-        self._vol_min_desv['valor'][posicao] = uhe['vol_min_desv']
-        self._cota_min['valor'][posicao] = uhe['cota_min']
-        self._cota_max['valor'][posicao] = uhe['cota_max']
-        self._pol_cota_vol['valor'][posicao] = uhe['pol_cota_vol']
-        self._pol_cota_area['valor'][posicao] = uhe['pol_cota_area']
-        self._coef_evap['valor'][posicao] = uhe['coef_evap']
-        self._num_conj_maq['valor'][posicao] = uhe['num_conj_maq']
-        self._maq_por_conj['valor'][posicao] = uhe['maq_por_conj']
-        self._pef_por_conj['valor'][posicao] = uhe['pef_por_conj']
-        self._cf_hbqt['valor'][posicao] = uhe['cf_hbqt']
-        self._cf_hbqt['valor_2'][posicao] = uhe['cf_hbqt_2']
-        self._cf_hbqt['valor_3'][posicao] = uhe['cf_hbqt_3']
-        self._cf_hbqt['valor_4'][posicao] = uhe['cf_hbqt_4']
-        self._cf_hbqt['valor_5'][posicao] = uhe['cf_hbqt_5']
-        self._cf_hbqg['valor'][posicao] = uhe['cf_hbqg']
-        self._cf_hbqg['valor_2'][posicao] = uhe['cf_hbqg_2']
-        self._cf_hbqg['valor_3'][posicao] = uhe['cf_hbqg_3']
-        self._cf_hbqg['valor_4'][posicao] = uhe['cf_hbqg_4']
-        self._cf_hbqg['valor_5'][posicao] = uhe['cf_hbqg_5']
-        self._cf_hbpt['valor'][posicao] = uhe['cf_hbpt']
-        self._cf_hbpt['valor_2'][posicao] = uhe['cf_hbpt_2']
-        self._cf_hbpt['valor_3'][posicao] = uhe['cf_hbpt_3']
-        self._cf_hbpt['valor_4'][posicao] = uhe['cf_hbpt_4']
-        self._cf_hbpt['valor_5'][posicao] = uhe['cf_hbpt_5']
-        self._alt_efet_conj['valor'][posicao] = uhe['alt_efet_conj']
-        self._vaz_efet_conj['valor'][posicao] = uhe['vaz_efet_conj']
-        self._prod_esp['valor'][posicao] = uhe['prod_esp']
-        self._perda_hid['valor'][posicao] = uhe['perda_hid']
-        self._num_pol_vnj['valor'][posicao] = uhe['num_pol_vnj']
-        self._pol_vaz_niv_jus['valor'][posicao] = uhe['pol_vaz_niv_jus']
-        self._pol_vaz_niv_jus['valor_2'][posicao] = uhe['pol_vaz_niv_jus_2']
-        self._pol_vaz_niv_jus['valor_3'][posicao] = uhe['pol_vaz_niv_jus_3']
-        self._pol_vaz_niv_jus['valor_4'][posicao] = uhe['pol_vaz_niv_jus_4']
-        self._pol_vaz_niv_jus['valor_5'][posicao] = uhe['pol_vaz_niv_jus_5']
-        self._pol_vaz_niv_jus['valor_6'][posicao] = uhe['pol_vaz_niv_jus_6']
-        self._cota_ref_nivel_jus['valor'][posicao] = uhe['cota_ref_nivel_jus']
-        self._cfmed['valor'][posicao] = uhe['cfmed']
-        self._inf_canal_fuga['valor'][posicao] = uhe['inf_canal_fuga']
-        self._fator_carga_max['valor'][posicao] = uhe['fator_carga_max']
-        self._fator_carga_min['valor'][posicao] = uhe['fator_carga_min']
-        self._vaz_min['valor'][posicao] = uhe['vaz_min']
-        self._unid_base['valor'][posicao] = uhe['unid_base']
-        self._tipo_turb['valor'][posicao] = uhe['tipo_turb']
-        self._repres_conj['valor'][posicao] = uhe['repres_conj']
-        self._teifh['valor'][posicao] = uhe['teifh']
-        self._ip['valor'][posicao] = uhe['ip']
-        self._tipo_perda['valor'][posicao] = uhe['tipo_perda']
-        self._data['valor'][posicao] = uhe['data']
-        self._observ['valor'][posicao] = uhe['observ']
-        self._vol_ref['valor'][posicao] = uhe['vol_ref']
-        self._tipo_reg['valor'][posicao] = uhe['tipo_reg']
-        self._vazoes['valor'][posicao] = uhe['vazoes']
-        self._vol_mint['valor'][posicao] = uhe['vol_mint']
-        self._vol_maxt['valor'][posicao] = uhe['vol_maxt']
-        self._vol_minp['valor'][posicao] = uhe['vol_minp']
-        self._vaz_mint['valor'][posicao] = uhe['vaz_mint']
-        self._cfugat['valor'][posicao] = uhe['cfugat']
-        self._vol_util['valor'][posicao] = uhe['vol_util']
-        self._pot_efet['valor'][posicao] = uhe['pot_efet']
-        self._vaz_efet['valor'][posicao] = uhe['vaz_efet']
-        self._status_vol_morto['valor'][posicao] = uhe['status_vol_morto']
-        self._status_motoriz['valor'][posicao] = uhe['status_motoriz']
-        self._vol_morto_tempo['valor'][posicao] = uhe['vol_morto_tempo']
-        self._engol_tempo['valor'][posicao] = uhe['engol_tempo']
-        self._potencia_tempo['valor'][posicao] = uhe['potencia_tempo']
-        self._unidades_tempo['valor'][posicao] = uhe['unidades_tempo']
-        self._ro_65['valor'][posicao] = uhe['ro_65']
-        self._ro_50['valor'][posicao] = uhe['ro_50']
-        self._ro_equiv['valor'][posicao] = uhe['ro_equiv']
-        self._ro_equiv65['valor'][posicao] = uhe['ro_equiv65']
-        self._ro_min['valor'][posicao] = uhe['ro_min']
-        self._ro_max['valor'][posicao] = uhe['ro_max']
-        self._engolimento['valor'][posicao] = uhe['engolimento']
+        vazoes = self._normalize_vazoes(uhe['vazoes'])
+        updates = {
+            field: deepcopy(value)
+            for field, value in uhe.items()
+            if field in self._FIELD_MAP
+            and field not in ('codigo', 'vazoes')
+        }
+        updates.update(normalized)
+        updates.pop('codigo')
 
-        print(np.shape(self._copiavazoes))
-        for iano in range(np.shape(self._copiavazoes)[0]):
-            for imes in range(12):
-                self._copiavazoes[iano][imes][self._posto['valor'][posicao]-1] = self._vazoes['valor'][posicao][iano][imes]
+        # Prepara todas as cópias antes de modificar o objeto, evitando uma
+        # atualização parcial em caso de entrada não copiável.
+        for field, value in updates.items():
+            attr_name, value_name = self._FIELD_MAP[field]
+            getattr(self, attr_name)[value_name][posicao] = value
+
+        posto = normalized['posto']
+        self._copiavazoes[:, :, posto - 1] = vazoes
+
+        # Cada série permanece uma visão da coluna de seu posto. Assim, UHEs
+        # que compartilham posto observam a mesma série, como exige o formato.
+        for iusi, posto_uhe in enumerate(self._posto['valor']):
+            self._vazoes['valor'][iusi] = (
+                self._copiavazoes[:, :, int(posto_uhe) - 1]
+            )
 
         return 'sucesso'
 
@@ -545,6 +668,11 @@ class Confhd(ConfhdTemplate):
 
         """
 
+        if parametro == 'codigo_original':
+            return (
+                'Identidade original da UHE; metadado somente leitura usado '
+                'por put para impedir alteracao de codigo'
+            )
 
         duvida = getattr(self, '_'+parametro)
 
@@ -556,7 +684,7 @@ class Confhd(ConfhdTemplate):
 
         def Montante(uhe, iano, imes):
             for iusi in self.lista_uhes():
-                usina = self.get(iusi)
+                usina = self._get(iusi, copy_values=False)
                 if usina['jusante'] == uhe['codigo']:
                     if usina['status_vol_morto'][iano][imes] == 2:
                         yield iusi
@@ -572,7 +700,7 @@ class Confhd(ConfhdTemplate):
             return 0
         else:
             for iusina in Montante(uhe, iano, imes):
-                usina = self.get(iusina)
+                usina = self._get(iusina, copy_values=False)
                 incremental = incremental - usina['vazoes'][:,imes]
 
         # Caso Alguma Incremental seja Menor que zero, força para zero
@@ -583,7 +711,7 @@ class Confhd(ConfhdTemplate):
 
     def vaz_inc_entre_res(self, codigo, ianoconf, imesconf):
 
-        uhe = self.get(codigo)
+        uhe = self._get(codigo, copy_values=False)
 
         nanos_hist = len(uhe['vazoes'])
 
@@ -724,11 +852,13 @@ class Confhd(ConfhdTemplate):
     def _prod_acum(self):
 
         def cascata(confhd, codigo, iano,imes):
-            current = confhd.get(codigo)
+            current = confhd._get(codigo, copy_values=False)
             if current['status_vol_morto'][iano][imes] == 2:
                 yield current['codigo']
             while current['jusante'] != 0:
-                current = confhd.get(current['jusante'])
+                current = confhd._get(
+                    current['jusante'], copy_values=False
+                )
                 if current['status_vol_morto'][iano][imes] == 2:
                     yield current['codigo']
 
@@ -752,7 +882,7 @@ class Confhd(ConfhdTemplate):
                     FioSist = True
 
                     for iusina in cascata(self, codigo, iano, imes):
-                        uhe = self.get(iusina)
+                        uhe = self._get(iusina, copy_values=False)
                         produtib    = uhe['ro_equiv'][iano][imes]
                         produtib65  = uhe['ro_equiv65'][iano][imes]
                         produtibMax = uhe['ro_max'][iano][imes]
@@ -800,7 +930,7 @@ class Confhd(ConfhdTemplate):
         if uhe['jusante'] == 0:
             return 0
 
-        uhe_nova = self.get(uhe['jusante'])
+        uhe_nova = self._get(uhe['jusante'], copy_values=False)
 
         if uhe_nova['vol_util'] != 0:
             return 0.

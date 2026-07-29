@@ -272,7 +272,7 @@ class Ree(ReeTemplate):
         nanos = len(confhd._status_vol_morto['valor'][0])
         earmax = np.zeros((nanos, 12), 'f')
         for iusi in confhd.lista_uhes():
-            uhe = confhd.get(iusi)
+            uhe = confhd._get(iusi, copy_values=False)
             if uhe['vol_util'] > 0 and uhe['ree'] == codigo_ree:
                 for iano in range(nanos):
                     for imes in range(12):

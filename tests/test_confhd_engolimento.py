@@ -240,13 +240,21 @@ class TestRegressaoEngolimento(unittest.TestCase):
 
         uhe = self.confhd.get(codigo)
 
-        self.assertIs(
+        self.assertIsNot(
             uhe["ro_acum_med"],
             self.confhd._ro_acum_med["valor"][posicao]
         )
-        self.assertIs(
+        self.assertIsNot(
             uhe["ro_acum_min"],
             self.confhd._ro_acum_min["valor"][posicao]
+        )
+        self.assertTrue(
+            (uhe["ro_acum_med"]
+             == self.confhd._ro_acum_med["valor"][posicao]).all()
+        )
+        self.assertTrue(
+            (uhe["ro_acum_min"]
+             == self.confhd._ro_acum_min["valor"][posicao]).all()
         )
 
 
