@@ -234,6 +234,21 @@ class TestRegressaoEngolimento(unittest.TestCase):
                 self.assertAlmostEqual(resultado, esperado, places=6)
                 self.assertGreater(resultado / vazao_nominal, 0.0)
 
+    def test_get_expoe_produtibilidades_acumuladas_media_e_minima(self):
+        codigo = next(iter(self.RESULTADOS_ESPERADOS))
+        posicao = self.confhd._mapa[codigo]
+
+        uhe = self.confhd.get(codigo)
+
+        self.assertIs(
+            uhe["ro_acum_med"],
+            self.confhd._ro_acum_med["valor"][posicao]
+        )
+        self.assertIs(
+            uhe["ro_acum_min"],
+            self.confhd._ro_acum_min["valor"][posicao]
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

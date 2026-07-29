@@ -422,7 +422,7 @@ class Confhd(ConfhdTemplate):
             'ro_acum_65': self._ro_acum_65['valor'][posicao],
             'ro_acum_max': self._ro_acum_max['valor'][posicao],
             'ro_acum_med': self._ro_acum_med['valor'][posicao],
-            'ro_acum_med': self._ro_acum_min['valor'][posicao]
+            'ro_acum_min': self._ro_acum_min['valor'][posicao]
         }
 
         return uhe
