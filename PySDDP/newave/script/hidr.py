@@ -134,7 +134,7 @@ class Hidr(HidrTemplate):
         try:
             with open(file_out, 'wb') as f:  # type: IO[bytes]
 
-                for i in range(self._numero_registros_-1):
+                for i in range(self._numero_registros_):
                     f.write(struct.pack('12s', bytes(self._nome["valor"][i],'utf-8')))
                     f.write(struct.pack('i', self._posto["valor"][i]))
                     f.write(struct.pack('8s', bytes(self._bdh["valor"][i],'utf-8')))

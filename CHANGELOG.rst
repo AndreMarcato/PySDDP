@@ -1,8 +1,17 @@
 Changelog
 #########
 
-0.0.74 (não publicado)
-=======================
+0.0.75
+======
+
+* Corrige o truncamento da última UHE em ``Hidr.escrever()``.
+* Preserva todos os registros e o layout binário de ``HIDR.DAT`` em
+  round-trips, inclusive para arquivos com uma ou duas UHEs.
+* Adiciona testes de regressão de round-trip, ``put()`` e integração com um
+  deck NEWAVE completo e ``VAZOES.DAT``.
+
+0.0.74
+======
 
 * Corrige a simetria entre ``Confhd.get()`` e ``Confhd.put()``.
 * Persiste ``ree``, ``vol_ini``, ``status``, ``modif``, ``ano_i`` e
