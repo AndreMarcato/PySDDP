@@ -7,6 +7,8 @@ from PySDDP.newave.script.confhd import Confhd
 from PySDDP.newave.script.dger import Dger
 from PySDDP.newave.script.modif import Modif
 from PySDDP.newave.script.exph import Exph
+from PySDDP.newave.script.conft import Conft
+from PySDDP.newave.script.clast import Clast
 from PySDDP.newave.script.ree import Ree
 from PySDDP.newave.script.term import Term
 from PySDDP.newave.script.sistema import Sistema
@@ -47,6 +49,12 @@ class Newave(object):
         self.confhd = Confhd()
         self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes, self.dger,
                         self.modif, self.exph)
+        # Realiza a Leitura do CONFT.DAT
+        self.conft = Conft()
+        self.conft.ler(os.path.join(self.path_, self.arquivos.conft))
+        # Realiza a Leitura do CLAST.DAT
+        self.clast = Clast()
+        self.clast.ler(os.path.join(self.path_, self.arquivos.clast), self.dger)
         # Realiza a Leitura do REE.DAT
         self.ree = Ree()
         self.ree.ler(os.path.join(self.path_, self.arquivos.ree), self.confhd)
@@ -64,5 +72,7 @@ class Newave(object):
         self.modif.escrever(os.path.join(caminho, self.arquivos.modif))
         self.exph.escrever(os.path.join(caminho, self.arquivos.exph))
         self.confhd.escrever(os.path.join(caminho, self.arquivos.confhd))
+        self.conft.escrever(os.path.join(caminho, self.arquivos.conft))
+        self.clast.escrever(os.path.join(caminho, self.arquivos.clast))
         self.ree.escrever(os.path.join(caminho, self.arquivos.ree))
         self.sistema.escrever((os.path.join(caminho, self.arquivos.sistema)),self.dger)
