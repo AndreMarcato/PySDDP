@@ -51,9 +51,19 @@ class Newave(object):
         self.confhd = Confhd()
         self.confhd.ler(os.path.join(self.path_, self.arquivos.confhd), self.hidr, self.vazoes, self.dger,
                         self.modif, self.exph)
+        # Realiza a Leitura do TERM.DAT
+        self.term = Term()
+        self.term.ler(os.path.join(self.path_, self.arquivos.term))
+        # Realiza a Leitura do EXPT.DAT
+        self.expt = Expt()
+        self.expt.ler(os.path.join(self.path_, self.arquivos.expt))
+        # Realiza a Leitura do MANUTT.DAT
+        self.manutt = Manutt()
+        self.manutt.ler(os.path.join(self.path_, self.arquivos.manutt))
         # Realiza a Leitura do CONFT.DAT
         self.conft = Conft()
-        self.conft.ler(os.path.join(self.path_, self.arquivos.conft))
+        self.conft.ler(os.path.join(self.path_, self.arquivos.conft), self.dger, self.term, self.expt,
+                        self.manutt)
         # Realiza a Leitura do CLAST.DAT
         self.clast = Clast()
         self.clast.ler(os.path.join(self.path_, self.arquivos.clast), self.dger)
@@ -63,14 +73,6 @@ class Newave(object):
         # Realiza a Leitura do SISTEMA.DAT
         self.sistema = Sistema()
         self.sistema.ler(os.path.join(self.path_, self.arquivos.sistema), self.dger)
-        self.term = Term()
-        self.term.ler(os.path.join(self.path_, self.arquivos.term))
-        # Realiza a Leitura do MANUTT.DAT
-        self.manutt = Manutt()
-        self.manutt.ler(os.path.join(self.path_, self.arquivos.manutt))
-        # Realiza a Leitura do EXPT.DAT
-        self.expt = Expt()
-        self.expt.ler(os.path.join(self.path_, self.arquivos.expt))
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
         self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))

@@ -1,6 +1,8 @@
 import os
 import math
+import calendar
 from copy import deepcopy
+from datetime import date, timedelta
 from numbers import Integral, Real
 from typing import IO
 
@@ -23,6 +25,20 @@ class Conft(ConftTemplate):
         colunas 36-39 (I4)  codigo_classe_termica
         colunas 41-43 (I3)  codigo_tecnologia (opcional)
         colunas 45-48 (I4)  codigo_classe_gas (opcional)
+
+    Alem dos sete campos fisicos, cada usina expoe cinco matrizes de
+    evolucao temporal (nanos x 12) - gtmin_tempo, pot_tempo, fcmax_tempo,
+    ip_tempo e teif_tempo - a exemplo de Confhd.engol_tempo: iniciadas com
+    o cadastro da classe Term (TERM.DAT) e atualizadas ano/mes a ano/mes
+    pelas modificacoes GTMIN/POTEF/FCMAX/IPTER/TEIFT da classe Expt
+    (EXPT.DAT). Ver _acerta_expt.
+
+    Em seguida, pot_tempo tambem e abatida pelas manutencoes programadas
+    da classe Manutt (MANUTT.DAT): cada evento de manutencao retira
+    ``potencia`` MW da usina durante ``duracao`` dias corridos a partir de
+    dia_inicio/mes_inicio/ano_inicio; o abatimento em cada mes e
+    proporcional aos dias de sobreposicao entre a manutencao e o mes
+    (dias_sobrepostos / dias_do_mes) * potencia. Ver _acerta_manutt.
     """
 
     _FIELD_MAP = {
@@ -33,9 +49,27 @@ class Conft(ConftTemplate):
         'codigo_classe_termica': ('_codigo_classe_termica', 'valor'),
         'codigo_tecnologia': ('_codigo_tecnologia', 'valor'),
         'codigo_classe_gas': ('_codigo_classe_gas', 'valor'),
+        'gtmin_tempo': ('_gtmin_tempo', 'valor'),
+        'pot_tempo': ('_pot_tempo', 'valor'),
+        'fcmax_tempo': ('_fcmax_tempo', 'valor'),
+        'ip_tempo': ('_ip_tempo', 'valor'),
+        'teif_tempo': ('_teif_tempo', 'valor'),
     }
-    _CONFT_FIELDS = tuple(_FIELD_MAP)
+    _CONFT_FIELDS = (
+        'codigo_usina', 'nome_usina', 'codigo_submercado', 'status',
+        'codigo_classe_termica', 'codigo_tecnologia', 'codigo_classe_gas',
+    )
     _STATUS_VALUES = frozenset(('EX', 'EE', 'NE', 'NC'))
+
+    # Mapeia o tipo_modificacao do EXPT.DAT para o atributo _xxx_tempo
+    # correspondente
+    _TIPO_PARA_CAMPO = {
+        'GTMIN': '_gtmin_tempo',
+        'POTEF': '_pot_tempo',
+        'FCMAX': '_fcmax_tempo',
+        'IPTER': '_ip_tempo',
+        'TEIFT': '_teif_tempo',
+    }
 
     def __init__(self):
         super().__init__()
@@ -125,11 +159,24 @@ class Conft(ConftTemplate):
         }
         return normalized
 
-    def ler(self, file_name: str) -> None:
+    def ler(self, file_name: str, dger, term, expt, manutt) -> None:
         """
-        Le o CONFT.DAT e preenche o cadastro de usinas termicas.
+        Le o CONFT.DAT e preenche o cadastro de usinas termicas, incluindo
+        a evolucao temporal (nanos x 12) de gtmin_tempo, pot_tempo,
+        fcmax_tempo, ip_tempo e teif_tempo, iniciada com o cadastro da
+        classe Term, atualizada pelas modificacoes da classe Expt e, no
+        caso de pot_tempo, tambem abatida pelas manutencoes programadas da
+        classe Manutt.
 
         :param file_name: string com o caminho completo para o arquivo
+        :param dger: classe Dger, usada para o numero de anos/ano inicial/
+               mes inicial do horizonte de planejamento
+        :param term: classe Term, usada como cadastro base de gtmin, potef,
+               fcmax, teif e ip de cada usina termica
+        :param expt: classe Expt, usada para as modificacoes temporais de
+               gtmin, potef, fcmax, ipter e teift de cada usina termica
+        :param manutt: classe Manutt, usada para abater de pot_tempo a
+               potencia retirada de operacao pelas manutencoes programadas
 
         """
 
@@ -137,10 +184,28 @@ class Conft(ConftTemplate):
         self.nome_arquivo = os.path.split(file_name)[1]
         self._numero_registros_ = 0
         self.numero_usinas = 0
+        self.nanos = dger.num_anos['valor']
         self._mapa = dict()
 
         for attr_name, value_name in set(self._FIELD_MAP.values()):
             getattr(self, attr_name)[value_name] = list()
+
+        # codigo_usina (Term) -> posicao nas listas internas de Term
+        mapa_term = {codigo: i for i, codigo in enumerate(term._codigo['valor'])}
+
+        # codigo_usina (Expt) -> lista de indices (na ordem do arquivo) das
+        # modificacoes temporais dessa usina
+        expt_por_codigo = {}
+        for indice in range(expt.numero_expansoes):
+            codigo_expt = expt._codigo_usina['valor'][indice]
+            expt_por_codigo.setdefault(codigo_expt, []).append(indice)
+
+        # codigo_usina (Manutt) -> lista de indices (na ordem do arquivo)
+        # dos eventos de manutencao programada dessa usina
+        manutt_por_codigo = {}
+        for indice in range(manutt.numero_manutencoes):
+            codigo_manutt = manutt._codigo_usina['valor'][indice]
+            manutt_por_codigo.setdefault(codigo_manutt, []).append(indice)
 
         try:
 
@@ -176,6 +241,11 @@ class Conft(ConftTemplate):
                         self._read_int(linha[44:48])
                     )
 
+                    # Evolucao temporal (cadastro Term + modificacoes Expt)
+                    self._acerta_expt(dger, term, expt, mapa_term, expt_por_codigo)
+                    # Abate de pot_tempo pelas manutencoes programadas (Manutt)
+                    self._acerta_manutt(dger, manutt, manutt_por_codigo)
+
                     self._mapa[self._codigo_usina['valor'][-1]] = self.numero_usinas
                     self.numero_usinas += 1
 
@@ -184,6 +254,152 @@ class Conft(ConftTemplate):
                 print("OK! Leitura do", os.path.split(file_name)[1], "realizada com sucesso.")
             else:
                 raise
+
+    def _acerta_expt(self, dger, term, expt, mapa_term, expt_por_codigo):
+        """
+        Monta, para a usina que acabou de ser lida (ultima posicao das
+        listas internas), as cinco matrizes de evolucao temporal (nanos x
+        12) gtmin_tempo/pot_tempo/fcmax_tempo/ip_tempo/teif_tempo.
+
+        Cada matriz e iniciada com o cadastro correspondente da classe
+        Term (gtmin e mensal apenas no primeiro ano de estudo, com um
+        unico valor "D+ anos" para os anos seguintes; os demais campos sao
+        um unico valor cadastral repetido em todo o horizonte), com os
+        meses do primeiro ano anteriores ao mes inicial de estudo
+        (dger.mesi_est) zerados. Em seguida, as modificacoes temporais da
+        usina em Expt (GTMIN/POTEF/FCMAX/IPTER/TEIFT) sao aplicadas, na
+        ordem em que aparecem no EXPT.DAT, sobre a janela
+        [mes_inicio/ano_inicio, mes_fim/ano_fim] de cada modificacao (ou
+        ate o fim do horizonte, quando mes_fim/ano_fim estao em branco) -
+        a exemplo de Confhd._acerta_exph/Confhd._acerta_modif.
+        """
+        codigo = self._codigo_usina['valor'][-1]
+        nanos = self.nanos
+        termo = mapa_term.get(codigo)
+        mesi_est = dger.mesi_est['valor']
+
+        campos_escalares = {
+            '_pot_tempo': '_pot',
+            '_fcmax_tempo': '_fcmax',
+            '_ip_tempo': '_ip',
+            '_teif_tempo': '_teif',
+        }
+
+        for attr_name in self._TIPO_PARA_CAMPO.values():
+            if attr_name == '_gtmin_tempo':
+                if termo is not None:
+                    gtmin = term._gtmin['valor'][termo]
+                    matriz = np.empty((nanos, 12), 'f')
+                    matriz[0, :] = gtmin[0:12]
+                    if nanos > 1:
+                        matriz[1:, :] = gtmin[12]
+                else:
+                    matriz = np.zeros((nanos, 12), 'f')
+            else:
+                if termo is not None:
+                    valor_base = getattr(term, campos_escalares[attr_name])['valor'][termo]
+                    matriz = valor_base * np.ones((nanos, 12), 'f')
+                else:
+                    matriz = np.zeros((nanos, 12), 'f')
+
+            # Zera os meses do primeiro ano anteriores ao mes inicial de estudo
+            if mesi_est and mesi_est > 1:
+                matriz[0, :mesi_est - 1] = 0.0
+
+            getattr(self, attr_name)['valor'].append(matriz)
+
+        for indice in expt_por_codigo.get(codigo, []):
+            registro = expt.get(indice)
+            attr_name = self._TIPO_PARA_CAMPO.get(registro['tipo_modificacao'])
+            if attr_name is None:
+                continue
+            matriz = getattr(self, attr_name)['valor'][-1]
+            self._aplica_janela_expt(matriz, registro, dger)
+
+    @staticmethod
+    def _aplica_janela_expt(matriz, registro, dger):
+        """
+        Escreve ``registro['novo_valor']`` em ``matriz`` (nanos x 12) na
+        janela [mes_inicio/ano_inicio, mes_fim/ano_fim]. Quando
+        mes_fim/ano_fim estao em branco, a modificacao vale ate o fim do
+        horizonte de planejamento. Janelas parcialmente fora do horizonte
+        sao recortadas; janelas totalmente fora do horizonte sao ignoradas.
+        """
+        nanos = matriz.shape[0]
+        ano_ini_estudo = dger.ano_ini['valor']
+
+        iano_ini = registro['ano_inicio'] - ano_ini_estudo
+        mes_ini = registro['mes_inicio']
+
+        if registro['ano_fim'] is not None:
+            iano_fim = registro['ano_fim'] - ano_ini_estudo
+            mes_fim = registro['mes_fim']
+        else:
+            iano_fim = nanos - 1
+            mes_fim = 12
+
+        if iano_fim < 0 or iano_ini > nanos - 1:
+            return
+
+        if iano_ini < 0:
+            iano_ini, mes_ini = 0, 1
+        if iano_fim > nanos - 1:
+            iano_fim, mes_fim = nanos - 1, 12
+
+        for iano in range(iano_ini, iano_fim + 1):
+            m_ini = mes_ini if iano == iano_ini else 1
+            m_fim = mes_fim if iano == iano_fim else 12
+            matriz[iano, m_ini - 1:m_fim] = registro['novo_valor']
+
+    def _acerta_manutt(self, dger, manutt, manutt_por_codigo):
+        """
+        Abate de pot_tempo (ultima usina lida) a potencia retirada de
+        operacao por cada evento de manutencao programada da usina em
+        Manutt, aplicada por cima do que ja estiver em pot_tempo (cadastro
+        de Term e eventuais modificacoes POTEF de Expt).
+        """
+        codigo = self._codigo_usina['valor'][-1]
+        matriz = self._pot_tempo['valor'][-1]
+        ano_ini_estudo = dger.ano_ini['valor']
+        nanos = matriz.shape[0]
+
+        for indice in manutt_por_codigo.get(codigo, []):
+            registro = manutt.get(indice)
+            self._abate_manutt(matriz, registro, ano_ini_estudo, nanos)
+
+    @staticmethod
+    def _abate_manutt(matriz, registro, ano_ini_estudo, nanos):
+        """
+        Subtrai ``registro['potencia']`` de ``matriz`` (pot_tempo, nanos x
+        12) em cada mes tocado pela manutencao, proporcionalmente aos dias
+        de sobreposicao entre a manutencao e o mes: (dias_sobrepostos /
+        dias_do_mes) * potencia. A manutencao comeca em
+        dia_inicio/mes_inicio/ano_inicio e dura ``duracao`` dias corridos
+        (o ultimo dia da manutencao e dia_inicio + duracao - 1). Meses
+        fora do horizonte de planejamento sao ignorados.
+        """
+        inicio = date(registro['ano_inicio'], registro['mes_inicio'], registro['dia_inicio'])
+        fim = inicio + timedelta(days=registro['duracao'] - 1)
+
+        ano, mes = inicio.year, inicio.month
+        while (ano, mes) <= (fim.year, fim.month):
+            iano = ano - ano_ini_estudo
+            if 0 <= iano < nanos:
+                dias_no_mes = calendar.monthrange(ano, mes)[1]
+                primeiro_dia_mes = date(ano, mes, 1)
+                ultimo_dia_mes = date(ano, mes, dias_no_mes)
+
+                inicio_sobreposto = max(inicio, primeiro_dia_mes)
+                fim_sobreposto = min(fim, ultimo_dia_mes)
+                dias_sobrepostos = (fim_sobreposto - inicio_sobreposto).days + 1
+
+                fracao = dias_sobrepostos / dias_no_mes
+                matriz[iano, mes - 1] -= fracao * registro['potencia']
+
+            if mes == 12:
+                ano, mes = ano + 1, 1
+            else:
+                mes += 1
 
     def escrever(self, file_out: str) -> None:
         """
