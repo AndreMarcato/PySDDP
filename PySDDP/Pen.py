@@ -12,6 +12,8 @@ from PySDDP.newave.script.clast import Clast
 from PySDDP.newave.script.ree import Ree
 from PySDDP.newave.script.term import Term
 from PySDDP.newave.script.sistema import Sistema
+from PySDDP.newave.script.manutt import Manutt
+from PySDDP.newave.script.expt import Expt
 
 
 class Newave(object):
@@ -63,6 +65,12 @@ class Newave(object):
         self.sistema.ler(os.path.join(self.path_, self.arquivos.sistema), self.dger)
         self.term = Term()
         self.term.ler(os.path.join(self.path_, self.arquivos.term))
+        # Realiza a Leitura do MANUTT.DAT
+        self.manutt = Manutt()
+        self.manutt.ler(os.path.join(self.path_, self.arquivos.manutt))
+        # Realiza a Leitura do EXPT.DAT
+        self.expt = Expt()
+        self.expt.ler(os.path.join(self.path_, self.arquivos.expt))
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
         self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))
@@ -76,3 +84,5 @@ class Newave(object):
         self.clast.escrever(os.path.join(caminho, self.arquivos.clast))
         self.ree.escrever(os.path.join(caminho, self.arquivos.ree))
         self.sistema.escrever((os.path.join(caminho, self.arquivos.sistema)),self.dger)
+        self.manutt.escrever(os.path.join(caminho, self.arquivos.manutt))
+        self.expt.escrever(os.path.join(caminho, self.arquivos.expt))
