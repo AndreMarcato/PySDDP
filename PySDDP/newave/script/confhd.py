@@ -8,6 +8,7 @@ from typing import IO
 from PySDDP.newave.script.templates.confhd import ConfhdTemplate
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 from random import randint
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -1332,7 +1333,7 @@ class Confhd(ConfhdTemplate):
             #
             # Trata Enchimento de Volume Morto
             #
-            if not np.isnan(registro[2]):
+            if not pd.isna(registro[2]):
                 dur_vm = int(registro[4])
                 mesinicial = int(registro[2])
                 anoinicial = int(registro[3])
@@ -1356,7 +1357,7 @@ class Confhd(ConfhdTemplate):
         for linha in range(tamanho):
             registro = df.iloc[linha].values
 
-            if not np.isnan(registro[6]):
+            if not pd.isna(registro[6]):
 
                 #
                 # Preenche evolução temporal do (1) Número de Unidades; (2) Engolimento; (3) Potência

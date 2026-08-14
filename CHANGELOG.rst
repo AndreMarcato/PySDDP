@@ -1,6 +1,16 @@
 Changelog
 #########
 
+0.0.80
+======
+
+* Corrige a escrita e o processamento do ``EXPH`` quando colunas opcionais
+  estao integralmente vazias.
+* Evita ``TypeError`` causado por ``np.isnan`` em colunas pandas com
+  ``dtype=object`` e valores ``None``/``pd.NA``.
+* Mantem o recalculo de ``vol_morto_tempo``, ``potencia_tempo``,
+  ``unidades_tempo`` e ``engol_tempo`` compativel com a versao 0.0.79.
+
 0.0.75
 ======
 

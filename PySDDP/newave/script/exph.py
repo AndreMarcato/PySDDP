@@ -72,7 +72,7 @@ class Exph(ExphTemplate):
     @classmethod
     def _as_optional_int(cls, field, value, minimum, maximum):
         """Como _as_int, mas preserva None para campos opcionais em branco."""
-        if value is None:
+        if pd.isna(value):
             return None
         return cls._as_int(field, value, minimum, maximum)
 
@@ -97,14 +97,14 @@ class Exph(ExphTemplate):
     @classmethod
     def _as_optional_float(cls, field, value, minimum, maximum, decimals=None):
         """Como _as_float, mas preserva None para campos opcionais em branco."""
-        if value is None:
+        if pd.isna(value):
             return None
         return cls._as_float(field, value, minimum, maximum, decimals=decimals)
 
     @staticmethod
     def _as_optional_str(field, value):
         """Valida um campo textual opcional (None ou string)."""
-        if value is None:
+        if pd.isna(value):
             return None
         if not isinstance(value, str):
             raise TypeError(f"{field} deve ser string")
@@ -122,8 +122,8 @@ class Exph(ExphTemplate):
         if len(nome.rstrip()) > 12:
             raise ValueError("nome deve possuir no maximo 12 caracteres")
 
-        preenchidos_enchimento = [values[campo] is not None for campo in self._GRUPO_ENCHIMENTO]
-        preenchidos_turbinamento = [values[campo] is not None for campo in self._GRUPO_TURBINAMENTO]
+        preenchidos_enchimento = [not pd.isna(values[campo]) for campo in self._GRUPO_ENCHIMENTO]
+        preenchidos_turbinamento = [not pd.isna(values[campo]) for campo in self._GRUPO_TURBINAMENTO]
 
         if any(preenchidos_enchimento) and not all(preenchidos_enchimento):
             raise ValueError(
@@ -311,7 +311,7 @@ class Exph(ExphTemplate):
                     reg = 0
 
 
-                    if not np.isnan(registro[2]):
+                    if not pd.isna(registro[2]):
                         formato = "{codigo: >4} {nome: <12} {mesi_evm: >2}/{anoi_evm: <4}      {dura_evm: >2}     {perc_evm: >4.1f}\n"
                         row = dict(
                             codigo=int(registro[0]),
