@@ -1248,14 +1248,18 @@ class Confhd(ConfhdTemplate):
                     mes = 0
                     ano += 1
             if registro[4].upper() == 'VAZMINT':
-                ano = int(registro[0]) - dger.ano_ini['valor']
-                mes = int(registro[3]) - 1
-                while ano < dger.num_anos['valor']:
-                    while mes < 12:
-                        self._vaz_mint['valor'][-1][ano][mes] = registro[5]
-                        mes += 1
-                    mes = 0
-                    ano += 1
+                # PRE/POS sao marcadores sem ano calendario no MODIF. Eles devem ser preservados pelo parser e
+                # writer, mas nao possuem uma posicao na serie anual mantida por CONFHD.
+                marcador = isinstance(registro[0], str) and registro[0].upper() in ('PRE', 'POS')
+                if not marcador:
+                    ano = int(registro[0]) - dger.ano_ini['valor']
+                    mes = int(registro[3]) - 1
+                    while ano < dger.num_anos['valor']:
+                        while mes < 12:
+                            self._vaz_mint['valor'][-1][ano][mes] = registro[5]
+                            mes += 1
+                        mes = 0
+                        ano += 1
             if registro[4].upper() == 'CMONT':
                 ano = int(registro[0]) - dger.ano_ini['valor']
                 mes = int(registro[3]) - 1

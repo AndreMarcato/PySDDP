@@ -30,9 +30,16 @@ class ModifTemplate(ArquivoEntrada):
         e ``mes``/``ano`` valem 0.
 
         Tipo 3 (CFUGA, VAZMINT, CMONT) - ``valorA`` (escalar) com vigencia em ``mes``/``ano``; ``valorB`` e None.
+        Em VAZMINT, ``ano`` tambem pode ser 'PRE' ou 'POS'.
 
         Tipo 4 (VMINP, VMINT, VMAXT) - ``valorA`` (escalar) com vigencia em ``mes``/``ano`` e ``valorB`` com a
         unidade ('h' ou '%').
+
+        Tipo 5 (TURBMAXT, TURBMINT, VAZMAXT) - ``valorA`` e uma lista nao vazia de vazoes por patamar, com
+        vigencia em ``mes``/``ano``; ``valorB`` e None.
+
+        Tipo 6 (CDESVIO) - ``valorA`` e o codigo da UHE a jusante e ``valorB`` e a vazao maxima opcional;
+        ``mes``/``ano`` valem 0.
     """
     def __init__(self):
 
@@ -58,17 +65,18 @@ class ModifTemplate(ArquivoEntrada):
         self._palavra_chave = {
                     'descricao': 'Palavra-chave que identifica o tipo de modificacao cadastral (NUMCNJ, PRODESP, '
                                   'TEIF, IP, PERDHIDR, VAZMIN, NUMBAS, NUMMAQ, POTEFE, COEFEVAP, VOLMIN, VOLMAX, '
-                                  'COTAREA, VOLCOTA, CFUGA, VAZMINT, CMONT, VMINP, VMINT ou VMAXT)',
+                                  'COTAREA, VOLCOTA, CFUGA, VAZMINT, CMONT, VMINP, VMINT, VMAXT, TURBMAXT, '
+                                  'TURBMINT, VAZMAXT ou CDESVIO)',
                     'valor': list()
                }
         self._valorA = {
-                    'descricao': 'Primeiro valor da modificacao: escalar, exceto para COTAREA/VOLCOTA, em que e '
-                                  'uma lista com os 5 coeficientes do polinomio',
+                    'descricao': 'Primeiro valor da modificacao: escalar, exceto para COTAREA/VOLCOTA e para '
+                                  'TURBMAXT/TURBMINT/VAZMAXT, em que e uma lista de valores',
                     'valor': list()
                }
         self._valorB = {
                     'descricao': 'Segundo valor da modificacao, quando aplicavel (numero do conjunto/mes ou '
-                                  "unidade 'h'/'%'); None quando nao aplicavel a palavra-chave",
+                                  "unidade 'h'/'%' ou vazao maxima opcional de CDESVIO); None quando ausente",
                     'valor': list()
                }
         self._mes = {
@@ -77,8 +85,8 @@ class ModifTemplate(ArquivoEntrada):
                     'valor': list()
                }
         self._ano = {
-                    'descricao': 'Ano de vigencia da modificacao (0 quando a palavra-chave nao possui vigencia '
-                                  'temporal)',
+                    'descricao': "Ano de vigencia da modificacao, ou 'PRE'/'POS' em VAZMINT (0 quando a "
+                                  'palavra-chave nao possui vigencia temporal)',
                     'valor': list()
                }
 

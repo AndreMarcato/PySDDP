@@ -1,6 +1,14 @@
 Changelog
 #########
 
+0.0.81
+======
+
+* Completa o suporte do ``MODIF.DAT`` para ``TURBMAXT``, ``TURBMINT``,
+  ``VAZMAXT`` e ``CDESVIO``.
+* Adiciona suporte a ``PRE``/``POS`` em ``VAZMINT``.
+* Mantem compatibilidade com os registros ``MODIF`` ja suportados.
+
 0.0.80
 ======
 

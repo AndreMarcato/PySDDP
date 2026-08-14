@@ -41,8 +41,13 @@ class Modif(ModifTemplate):
     _PALAVRAS_LISTA3 = ('CFUGA', 'VAZMINT', 'CMONT')
     # Palavras-chave com vigencia (mes/ano) e valorB obrigatorio
     _PALAVRAS_LISTA4 = ('VMINP', 'VMINT', 'VMAXT')
+    # Palavras-chave com vigencia (mes/ano) e um ou mais valores por patamar em valorA
+    _PALAVRAS_LISTA5 = ('TURBMAXT', 'TURBMINT', 'VAZMAXT')
+    # Codigo da UHE a jusante em valorA e vazao maxima opcional em valorB
+    _PALAVRAS_LISTA6 = ('CDESVIO',)
     _PALAVRAS_VALIDAS = frozenset(
-        _PALAVRAS_LISTA0 + _PALAVRAS_LISTA1 + _PALAVRAS_LISTA2 + _PALAVRAS_LISTA3 + _PALAVRAS_LISTA4
+        _PALAVRAS_LISTA0 + _PALAVRAS_LISTA1 + _PALAVRAS_LISTA2 + _PALAVRAS_LISTA3 +
+        _PALAVRAS_LISTA4 + _PALAVRAS_LISTA5 + _PALAVRAS_LISTA6
     )
 
     def __init__(self):
@@ -112,22 +117,26 @@ class Modif(ModifTemplate):
             raise ValueError("comentario deve ser representavel em latin-1") from err
 
         valorA = values['valorA']
-        if palavra_norm in self._PALAVRAS_LISTA2:
+        if palavra_norm in self._PALAVRAS_LISTA2 or palavra_norm in self._PALAVRAS_LISTA5:
             try:
                 valorA = [float(v) for v in valorA]
             except TypeError as err:
                 raise TypeError(
-                    "valorA deve ser uma sequencia de 5 coeficientes numericos para "
+                    "valorA deve ser uma sequencia de valores numericos para "
                     f"a palavra-chave {palavra_norm}"
                 ) from err
             except ValueError as err:
                 raise ValueError(
                     "valorA deve conter apenas coeficientes numericos"
                 ) from err
-            if len(valorA) != 5:
+            if palavra_norm in self._PALAVRAS_LISTA2 and len(valorA) != 5:
                 raise ValueError("valorA deve possuir exatamente 5 coeficientes")
+            if palavra_norm in self._PALAVRAS_LISTA5 and not valorA:
+                raise ValueError("valorA deve possuir ao menos um valor por patamar")
             if not all(math.isfinite(v) for v in valorA):
                 raise ValueError("valorA deve conter apenas valores finitos")
+        elif palavra_norm in self._PALAVRAS_LISTA6:
+            valorA = self._as_int('valorA', valorA, 0, 9999)
         else:
             valorA = self._as_float('valorA', valorA, -1e9, 1e9)
 
@@ -136,15 +145,22 @@ class Modif(ModifTemplate):
             if valorB is None:
                 raise ValueError(f"valorB e obrigatorio para a palavra-chave {palavra_norm}")
             valorB = str(valorB)
+        elif palavra_norm in self._PALAVRAS_LISTA6:
+            if valorB is not None:
+                valorB = self._as_float('valorB', valorB, -1e9, 1e9)
         else:
             if valorB is not None:
                 raise ValueError(f"valorB deve ser None para a palavra-chave {palavra_norm}")
 
         mes = values['mes']
         ano = values['ano']
-        if palavra_norm in self._PALAVRAS_LISTA3 or palavra_norm in self._PALAVRAS_LISTA4:
+        if (palavra_norm in self._PALAVRAS_LISTA3 or palavra_norm in self._PALAVRAS_LISTA4 or
+                palavra_norm in self._PALAVRAS_LISTA5):
             mes = self._as_int('mes', mes, 1, 12)
-            ano = self._as_int('ano', ano, 0, 9999)
+            if palavra_norm == 'VAZMINT' and isinstance(ano, str) and ano.strip().upper() in ('PRE', 'POS'):
+                ano = ano.strip().upper()
+            else:
+                ano = self._as_int('ano', ano, 0, 9999)
         else:
             mes = self._as_int('mes', mes, 0, 0)
             ano = self._as_int('ano', ano, 0, 0)
@@ -195,6 +211,11 @@ class Modif(ModifTemplate):
                    'cfuga', 'vazmint', 'cmont')
 
         lista4 = ( 'VMINP', 'VMINT', 'VMAXT', 'vminp', 'vmint', 'vmaxt')
+
+        lista5 = ( 'TURBMAXT', 'TURBMINT', 'VAZMAXT',
+                   'turbmaxt', 'turbmint', 'vazmaxt')
+
+        lista6 = ('CDESVIO', 'cdesvio')
 
         try:
 
@@ -258,7 +279,10 @@ class Modif(ModifTemplate):
                             mes = int(mes)
                             self.usina['mes'].append(mes)
                             ano = linha[9:].strip().split()[1]
-                            ano = int(ano)
+                            if pal_chave.upper() == 'VAZMINT' and ano.upper() in ('PRE', 'POS'):
+                                ano = ano.upper()
+                            else:
+                                ano = int(ano)
                             self.usina['ano'].append(ano)
                         elif pal_chave in lista4:
                             pal_chave.split()[0]
@@ -273,6 +297,24 @@ class Modif(ModifTemplate):
                             ano = linha[9:].strip().split()[1]
                             ano = int(ano)
                             self.usina['ano'].append(ano)
+                        elif pal_chave in lista5:
+                            campos = linha[9:].strip().split()
+                            self.usina['codigo'].append(codigo)
+                            self.usina['comentario'].append(comentario.strip())
+                            self.usina['palavra_chave'].append(pal_chave)
+                            self.usina['valorA'].append([float(valor) for valor in campos[2:]])
+                            self.usina['valorB'].append(None)
+                            self.usina['mes'].append(int(campos[0]))
+                            self.usina['ano'].append(int(campos[1]))
+                        elif pal_chave in lista6:
+                            campos = linha[9:].strip().split()
+                            self.usina['codigo'].append(codigo)
+                            self.usina['comentario'].append(comentario.strip())
+                            self.usina['palavra_chave'].append(pal_chave)
+                            self.usina['valorA'].append(int(campos[0]))
+                            self.usina['valorB'].append(float(campos[1]) if len(campos) > 1 else None)
+                            self.usina['mes'].append(0)
+                            self.usina['ano'].append(0)
                         self.next_line(f)
                         linha = self.linha
                         pal_chave = linha[1:9]
@@ -290,6 +332,8 @@ class Modif(ModifTemplate):
                 # impediria put() de gravar uma lista de coeficientes na celula.
                 self.bloco_usina['df']['valorA'] = self.bloco_usina['df']['valorA'].astype(object)
                 self.bloco_usina['df']['valorB'] = self.bloco_usina['df']['valorB'].astype(object)
+                # VAZMINT admite tanto anos inteiros quanto os marcadores PRE/POS, inclusive via put().
+                self.bloco_usina['df']['ano'] = self.bloco_usina['df']['ano'].astype(object)
 
                 print('OK! Leitura do', self.nome_arquivo ,'realizada com sucesso. (', self.numero_modifs,
                       'Usinas Hidraulicas Modificadas )')
@@ -312,6 +356,11 @@ class Modif(ModifTemplate):
                    'cfuga', 'vazmint', 'cmont')
 
         lista4 = ( 'VMINP', 'VMINT', 'VMAXT', 'vminp', 'vmint', 'vmaxt')
+
+        lista5 = ( 'TURBMAXT', 'TURBMINT', 'VAZMAXT',
+                   'turbmaxt', 'turbmint', 'vazmaxt')
+
+        lista6 = ('CDESVIO', 'cdesvio')
 
         df = self.bloco_usina['df']
 
@@ -423,6 +472,23 @@ class Modif(ModifTemplate):
                                         valorb=registro[6]
                                       )
                             f.write(formato.format(**row))
+                        if registro[4] in lista5:
+                            valores = ' '.join(repr(float(valor)) for valor in registro[5])
+                            formato = " {key: <8} {mes:>2} {ano:>4} {valores}\n"
+                            row = dict(
+                                        key=registro[4],
+                                        ano=registro[0],
+                                        mes=registro[3],
+                                        valores=valores
+                                      )
+                            f.write(formato.format(**row))
+                        if registro[4] in lista6:
+                            formato = " {key: <8} {codigo: >6d}"
+                            row = dict(key=registro[4], codigo=int(registro[5]))
+                            f.write(formato.format(**row))
+                            if registro[6] is not None:
+                                f.write(" " + repr(float(registro[6])))
+                            f.write("\n")
                         reg += 1
                     #
                     # Pula para próxima usina
