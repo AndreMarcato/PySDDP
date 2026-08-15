@@ -360,7 +360,10 @@ class Sistema(SistemaTemplate):
 
                     registro = df.iloc[linha].values
 
-                    if registro[3] > 0:
+                    # O formato NEWAVE define os campos de deficit para
+                    # submercados nao ficticios; para ficticios eles sao
+                    # ignorados. A presenca do registro nao depende de cdef_1.
+                    if registro[2] == 0:
                         row = dict( codigo = registro[0],
                                     nome = registro[1],
                                     tipo = registro[2],
@@ -466,7 +469,7 @@ class Sistema(SistemaTemplate):
                     if (dger.anos_pre['valor'] > 0):
                         f.write(f"PRE   ")
                         for imes in range(12):
-                            if pre[0][imes] > 0:
+                            if pre[0][imes] >= 0:
                                 f.write(f" {pre[0][imes]:6.0f}.")
                             else:
                                 f.write("        ")
@@ -475,7 +478,7 @@ class Sistema(SistemaTemplate):
                     for iano in range(dger.num_anos['valor']):
                         f.write(f"{dger.ano_ini['valor']+iano}  ")
                         for imes in range(12):
-                            if estudo[iano][imes] > 0:
+                            if estudo[iano][imes] >= 0:
                                 f.write(f" {estudo[iano][imes]:6.0f}.")
                             else:
                                 f.write("        ")
@@ -484,7 +487,7 @@ class Sistema(SistemaTemplate):
                     if (dger.anos_pos['valor'] > 0):
                         f.write(f"POS   ")
                         for imes in range(12):
-                            if pos[0][imes] > 0:
+                            if pos[0][imes] >= 0:
                                 f.write(f" {pos[0][imes]:6.0f}.")
                             else:
                                 f.write("        ")
@@ -632,34 +635,31 @@ class Sistema(SistemaTemplate):
         #
 
 
-        self.bloco_sistema['df'][self.bloco_sistema['df']['codigo'] == sist['codigo']] = [ sist['codigo'],
-                                                                                           sist['nome'].ljust(10),
-                                                                                           sist['tipo'],
-                                                                                           sist['cdef'][0],
-                                                                                           sist['cdef'][1],
-                                                                                           sist['cdef'][2],
-                                                                                           sist['cdef'][3],
-                                                                                           sist['prof'][0],
-                                                                                           sist['prof'][1],
-                                                                                           sist['prof'][2],
-                                                                                           sist['prof'][3] ]
+        filtro_sistema = self.bloco_sistema['df']['codigo'] == sist['codigo']
+        colunas_sistema = [
+            'codigo', 'nome', 'tipo',
+            'cdef_1', 'cdef_2', 'cdef_3', 'cdef_4',
+            'prof_1', 'prof_2', 'prof_3', 'prof_4'
+        ]
+        valores_sistema = [
+            sist['codigo'], sist['nome'].ljust(10), sist['tipo'],
+            sist['cdef'][0], sist['cdef'][1], sist['cdef'][2], sist['cdef'][3],
+            sist['prof'][0], sist['prof'][1], sist['prof'][2], sist['prof'][3]
+        ]
+        for indice in self.bloco_sistema['df'].index[filtro_sistema]:
+            for coluna, valor in zip(colunas_sistema, valores_sistema):
+                self.bloco_sistema['df'].at[indice, coluna] = valor
 
         #
         # Carrega Dados do Mercado (pré, estudo e pós estudo)
         #
 
-        serie_pre = self.bloco_mercado['df'][self.bloco_mercado['df']['codigo'] == sist['codigo']]['pre'].values
-        serie_est = self.bloco_mercado['df'][self.bloco_mercado['df']['codigo'] == sist['codigo']]['estudo'].values
-        serie_pos = self.bloco_mercado['df'][self.bloco_mercado['df']['codigo'] == sist['codigo']]['pos'].values
-
-        serie_pre[0] = sist['mercado_pre']
-        serie_est[0] = sist['mercado_estudo']
-        serie_pos[0] = sist['mercado_pos']
-
-        self.bloco_mercado['df'][self.bloco_mercado['df']['codigo'] == sist['codigo']] = [ sist['codigo'],
-                                                                                           serie_pre,
-                                                                                           serie_est,
-                                                                                           serie_pos ]
+        filtro_mercado = self.bloco_mercado['df']['codigo'] == sist['codigo']
+        for indice in self.bloco_mercado['df'].index[filtro_mercado]:
+            self.bloco_mercado['df'].at[indice, 'codigo'] = sist['codigo']
+            self.bloco_mercado['df'].at[indice, 'pre'] = sist['mercado_pre']
+            self.bloco_mercado['df'].at[indice, 'estudo'] = sist['mercado_estudo']
+            self.bloco_mercado['df'].at[indice, 'pos'] = sist['mercado_pos']
 
         #
         # Carrega os Dados de Usinas Não Simuladas
@@ -667,19 +667,16 @@ class Sistema(SistemaTemplate):
 
         for nao_sim in sist['nao_simuladas']:
 
-            serie = self.bloco_nao_simuladas['df'][(self.bloco_nao_simuladas['df']['codigo'] == sist['codigo']) &
-                                           (self.bloco_nao_simuladas['df']['nume_bloco'] == nao_sim['nume_bloco'])]['geracao'].values
-
-            serie[0] = nao_sim['geracao']
-
-            self.bloco_nao_simuladas['df'][(self.bloco_nao_simuladas['df']['codigo'] == sist['codigo']) &
-                                           (self.bloco_nao_simuladas['df']['nume_bloco'] == nao_sim['nume_bloco'])] = \
-                                                        [ sist['codigo'],
-                                                          nao_sim['nume_bloco'],
-                                                          nao_sim['desc_bloco'],
-                                                          nao_sim['nume_tecno'],
-                                                          serie
-                                                        ]
+            filtro_nao_sim = (
+                (self.bloco_nao_simuladas['df']['codigo'] == sist['codigo']) &
+                (self.bloco_nao_simuladas['df']['nume_bloco'] == nao_sim['nume_bloco'])
+            )
+            for indice in self.bloco_nao_simuladas['df'].index[filtro_nao_sim]:
+                self.bloco_nao_simuladas['df'].at[indice, 'codigo'] = sist['codigo']
+                self.bloco_nao_simuladas['df'].at[indice, 'nume_bloco'] = nao_sim['nume_bloco']
+                self.bloco_nao_simuladas['df'].at[indice, 'desc_bloco'] = nao_sim['desc_bloco']
+                self.bloco_nao_simuladas['df'].at[indice, 'nume_tecno'] = nao_sim['nume_tecno']
+                self.bloco_nao_simuladas['df'].at[indice, 'geracao'] = nao_sim['geracao']
 
         return
 
@@ -738,17 +735,17 @@ class Sistema(SistemaTemplate):
         if tamanho == 0:
             return None
 
-        serie = self.bloco_intercambio['df'][(self.bloco_intercambio['df']['de'] == interc['de']) &
-                                             (self.bloco_intercambio['df']['para'] == interc['para'])]['intercambio'].values
-
-        serie[0] =  interc['valor']
-
-        self.bloco_intercambio['df'][(self.bloco_intercambio['df']['de'] == interc['de']) &
-                                     (self.bloco_intercambio['df']['para'] == interc['para'])] = [ interc['de'],
-                                                                                                   interc['para'],
-                                                                                                   interc['flag_tipo_interc'],
-                                                                                                   interc['flag_penal_interc'],
-                                                                                                   serie ]
+        filtro = (
+            (self.bloco_intercambio['df']['de'] == interc['de']) &
+            (self.bloco_intercambio['df']['para'] == interc['para'])
+        )
+        for indice in self.bloco_intercambio['df'].index[filtro]:
+            self.bloco_intercambio['df'].at[indice, 'de'] = interc['de']
+            self.bloco_intercambio['df'].at[indice, 'para'] = interc['para']
+            self.bloco_intercambio['df'].at[indice, 'flag_tipo_interc'] = interc['flag_tipo_interc']
+            # Mantem o nome historico (com typo) usado na construcao do DataFrame.
+            self.bloco_intercambio['df'].at[indice, 'flat_penal_interc'] = interc['flag_penal_interc']
+            self.bloco_intercambio['df'].at[indice, 'intercambio'] = interc['valor']
         return
 
     def plota_mercado(self,sistema):
