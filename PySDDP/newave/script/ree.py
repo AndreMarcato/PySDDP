@@ -5,6 +5,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from PySDDP.newave.script.templates.ree import ReeTemplate
+from PySDDP.newave.energia_armazenada import FATOR_NEWAVE_MWMES
 
 
 class Ree(ReeTemplate):
@@ -270,14 +271,18 @@ class Ree(ReeTemplate):
 
     def _calc_earm_max(self, confhd, codigo_ree):
         nanos = len(confhd._status_vol_morto['valor'][0])
-        earmax = np.zeros((nanos, 12), 'f')
+        earmax = np.zeros((nanos, 12), dtype=np.float64)
         for iusi in confhd.lista_uhes():
             uhe = confhd._get(iusi, copy_values=False)
             if uhe['vol_util'] > 0 and uhe['ree'] == codigo_ree:
                 for iano in range(nanos):
                     for imes in range(12):
                         if uhe['status_vol_morto'][iano][imes] == 2:
-                            earmax[iano][imes] +=  uhe['ro_acum'][iano][imes] * uhe['vol_util'] / 2.63
+                            earmax[iano][imes] += (
+                                uhe['ro_acum'][iano][imes]
+                                * uhe['vol_util']
+                                / FATOR_NEWAVE_MWMES
+                            )
         return earmax
 
     def _calc_ena(self, confhd, codigo_ree):

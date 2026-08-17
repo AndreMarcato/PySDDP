@@ -14,6 +14,9 @@ from PySDDP.newave.script.term import Term
 from PySDDP.newave.script.sistema import Sistema
 from PySDDP.newave.script.manutt import Manutt
 from PySDDP.newave.script.expt import Expt
+from PySDDP.newave.energia_armazenada import (
+    calcular_energia_armazenada_inicial as _calcular_energia_armazenada_inicial,
+)
 
 
 class Newave(object):
@@ -73,6 +76,17 @@ class Newave(object):
         # Realiza a Leitura do SISTEMA.DAT
         self.sistema = Sistema()
         self.sistema.ler(os.path.join(self.path_, self.arquivos.sistema), self.dger)
+
+    def calcular_energia_armazenada_inicial(self):
+        """Retorna EARMX e EAR inicial por REE e submercado.
+
+        As fontes CONFHD e DGER sao calculadas em paralelo. ``flag_earm_inic``
+        e apenas informativa nesta API.
+        """
+        return _calcular_energia_armazenada_inicial(
+            self.dger, self.confhd, self.ree, self.sistema
+        )
+
     def escrever(self, caminho):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
         self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))

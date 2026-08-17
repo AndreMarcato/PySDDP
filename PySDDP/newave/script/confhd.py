@@ -908,10 +908,10 @@ class Confhd(ConfhdTemplate):
                                 FioRee = False
                             if FioRee:
                                 if uhe['status_motoriz'][iano][imes] == 2:
-                                    self._ro_acum_b_ree['valor'][reg][iano][imes] += produtib
+                                    self._ro_acum_c_ree['valor'][reg][iano][imes] += produtib
                             else:
                                 if uhe['status_motoriz'][iano][imes] == 2:
-                                    self._ro_acum_c_ree['valor'][reg][iano][imes] += produtib
+                                    self._ro_acum_b_ree['valor'][reg][iano][imes] += produtib
 
                         if trocouSist == 0:
                             if uhe['status_motoriz'][iano][imes] == 2:
@@ -921,10 +921,10 @@ class Confhd(ConfhdTemplate):
                                 FioSist = False
                             if FioSist:
                                 if uhe['status_motoriz'][iano][imes] == 2:
-                                    self._ro_acum_b_sist['valor'][reg][iano][imes] += produtib
+                                    self._ro_acum_c_sist['valor'][reg][iano][imes] += produtib
                             else:
                                 if uhe['status_motoriz'][iano][imes] == 2:
-                                    self._ro_acum_c_sist['valor'][reg][iano][imes] += produtib
+                                    self._ro_acum_b_sist['valor'][reg][iano][imes] += produtib
 
     def _prod_acum_entre_res_ree(self, uhe, iano, imes):
 

@@ -320,11 +320,11 @@ class ConfhdTemplate(ArquivoEntrada):
                         'valor': list(),
                         }
         self._ro_acum_b_ree = {
-                        'descricao': 'Parcela B da Prod. Acumulada - Intercambio Hidraulico entre REE',
+                        'descricao': 'Parcela B Controlavel da Prod. Acumulada - Intercambio Hidraulico entre REE',
                         'valor': list(),
                         }
         self._ro_acum_c_ree = {
-                        'descricao': 'Parcela C da Prod. Acumulada - Intercambio Hidraulico entre REE',
+                        'descricao': "Parcela C Fio d'Agua da Prod. Acumulada - Intercambio Hidraulico entre REE",
                         'valor': list(),
                         }
         self._ro_acum_a_sist = {
@@ -332,11 +332,11 @@ class ConfhdTemplate(ArquivoEntrada):
                         'valor': list(),
                         }
         self._ro_acum_b_sist = {
-                        'descricao': 'Parcela B da Prod. Acumulada - Intercambio Hidraulico entre Submercados',
+                        'descricao': 'Parcela B Controlavel da Prod. Acumulada - Intercambio Hidraulico entre Submercados',
                         'valor': list(),
                         }
         self._ro_acum_c_sist = {
-                        'descricao': 'Parcela C da Prod. Acumulada - Intercambio Hidraulico entre Submercados',
+                        'descricao': "Parcela C Fio d'Agua da Prod. Acumulada - Intercambio Hidraulico entre Submercados",
                         'valor': list(),
                         }
         self._ro_acum_entre_res_ree = {
