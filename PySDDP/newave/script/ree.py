@@ -291,9 +291,9 @@ class Ree(ReeTemplate):
 
         nanos_hist = len(confhd._vazoes['valor'][0])
 
-        ec = np.zeros((nanos, 12, nanos_hist), 'f')
-        #efio = np.zeros((nanos, 12, nanos_hist), 'f')
-        ena = np.zeros((nanos, 12, nanos_hist), 'f')
+        shape = (nanos, 12, nanos_hist)
+        ec = np.zeros(shape, dtype=np.float64)
+        efio = np.zeros(shape, dtype=np.float64)
 
         for iusi, ree in enumerate(confhd._ree['valor']):
             if ree == codigo_ree:
@@ -301,13 +301,24 @@ class Ree(ReeTemplate):
                 for iano in range(nanos):
                     for imes in range(12):
                         if confhd._status_vol_morto['valor'][iusi][iano][imes] == 2:
+                            vazao_incremental = confhd.vaz_inc_entre_res(
+                                codigo, iano, imes
+                            )
                             if confhd._vol_util['valor'][iusi] > 0:
-                                ec[iano][imes] += confhd._ro_acum_med['valor'][iusi][iano][imes] * confhd.vaz_inc_entre_res(codigo, iano, imes)
-                            #else:
-                            #    efio[iano][imes] += confhd._ro_65['valor'][iusi][iano][imes] * confhd.vaz_inc_entre_res(codigo, iano, imes)
-                            for ianoh in range(nanos_hist):
-                                ena[iano][imes][ianoh] += confhd._ro_65['valor'][iusi][iano][imes] * confhd._vazoes['valor'][iusi][ianoh][imes]
-        efio = ena - ec
+                                ec[iano, imes] += (
+                                    confhd._ro_acum_med['valor'][iusi][iano][imes]
+                                    * vazao_incremental
+                                )
+                            elif (
+                                confhd._status_motoriz['valor'][iusi][iano][imes]
+                                == 2
+                            ):
+                                efio[iano, imes] += (
+                                    confhd._ro_equiv['valor'][iusi][iano][imes]
+                                    * vazao_incremental
+                                )
+
+        ena = ec + efio
         return [ena, ec, efio]
 
 
