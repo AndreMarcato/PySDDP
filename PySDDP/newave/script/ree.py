@@ -30,6 +30,8 @@ class Ree(ReeTemplate):
         self.dir_base = os.path.split(file_name)[0]
         self.nome_arquivo = os.path.split(file_name)[1]
         self.numero_rees = 0
+        self.flag_ficticias['valor'] = 0
+        terminador_encontrado = False
 
         # listas referentes ao dicionário REE
         self.ree['codigo'] = list()
@@ -96,24 +98,31 @@ class Ree(ReeTemplate):
                     self.next_line(f)
                     linha = self.linha
 
+                terminador_encontrado = True
+
                 #
                 #  Lê bloco 2
                 #
-
-                self.bloco_ficticias['flag'] = 0
 
                 self.next_line(f)
                 linha = self.linha
 
                 if len(linha) >= 25:
                     if linha[21:25] != '    ':
-                        self.bloco_ficticias['flag'] = int(linha[21:25])
+                        flag = int(linha[21:25])
+                        if flag not in (0, 1):
+                            raise ValueError("flag_ficticias deve ser 0 ou 1")
+                        self.flag_ficticias['valor'] = flag
 
                 self.next_line(f)
                 linha = self.linha
 
         except Exception as err:
             if isinstance(err, StopIteration):
+                if not terminador_encontrado:
+                    raise ValueError(
+                        "Fim inesperado do REE.DAT antes do terminador 999"
+                    ) from err
                 self.bloco_ree['df'] = pd.DataFrame(self.ree, columns = [ 'codigo',
                                                                           'nome',
                                                                           'submercado',
@@ -153,33 +162,26 @@ class Ree(ReeTemplate):
 
                     registro = df.iloc[linha].values
 
-                    if registro[3] > 0:
-                        row = dict(
-                                    codigo = registro[0],
-                                    nome = registro[1],
-                                    submercado = registro[2],
-                                    mes = registro[3],
-                                    ano = registro[4]
-                                  )
-                        formato = self.bloco_ree['formatoA']
-                    else:
-                        row = dict(
-                                    codigo = registro[0],
-                                    nome = registro[1],
-                                    submercado = registro[2]
-                                  )
-                        formato = self.bloco_ree['formatoB']
+                    row = dict(
+                                codigo = int(registro[0]),
+                                nome = str(registro[1]).rstrip(),
+                                submercado = int(registro[2]),
+                                mes = int(registro[3]),
+                                ano = int(registro[4])
+                              )
 
                     conta_ree += 1
 
-                    f.write(formato.format(**row))
+                    f.write(self.bloco_ree['formato'].format(**row))
 
                     linha += 1
 
                 f.write(' 999\n')
 
-                if self.bloco_ficticias['flag'] == 1:
-                    f.write('                         1')
+                flag = int(self.flag_ficticias['valor'])
+                if flag not in (0, 1):
+                    raise ValueError("flag_ficticias deve ser 0 ou 1")
+                f.write(self.flag_ficticias['formato'].format(valor=flag))
 
             print('OK! Escrita do', self.nome_arquivo ,'realizada com sucesso. (', conta_ree,
                   'Reservatórios de Equivalentes de Energia  )')

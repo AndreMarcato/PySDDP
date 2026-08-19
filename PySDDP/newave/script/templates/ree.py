@@ -1,6 +1,4 @@
 from abc import abstractmethod
-from typing import Optional
-
 from PySDDP.newave.script.templates.arquivo_entrada import ArquivoEntrada
 
 
@@ -21,13 +19,23 @@ class ReeTemplate(ArquivoEntrada):
 
         self.bloco_ree = {
             'df': None,
-            'formatoA': " {codigo:>3} {nome:<10}   {submercado:>3}  {mes:>2} {ano:>4}\n",
-            'formatoB': " {codigo:>3} {nome:<10}   {submercado:>3}\n"
+            'descricao': (
+                'Bloco dos REEs: codigo, nome, submercado, mes e ano de '
+                'inicio da agregacao'
+            ),
+            'formato': (
+                " {codigo:>3} {nome:<10}   {submercado:>3}  "
+                "{mes:>2} {ano:>4}\n"
+            )
         }
 
-        self.bloco_ficticias = {
-            'flag': None,
-            'formato': "{flag:>25}"
+        self.flag_ficticias = {
+            'descricao': (
+                'Tratamento das usinas ficticias nos periodos '
+                'individualizados: 0 = remove; 1 = mantem'
+            ),
+            'valor': None,
+            'formato': "{valor:>25}\n"
         }
 
         @abstractmethod
