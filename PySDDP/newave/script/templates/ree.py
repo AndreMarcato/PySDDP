@@ -17,6 +17,12 @@ class ReeTemplate(ArquivoEntrada):
         self.nome_arquivo = None
         self.numero_rees = None
 
+        self._cabecalho = [
+            " REES X SUBMERCADOS",
+            " NUM|NOME REES.| SUBM",
+            " XXX|XXXXXXXXXX|  XXX",
+        ]
+
         self.bloco_ree = {
             'df': None,
             'descricao': (

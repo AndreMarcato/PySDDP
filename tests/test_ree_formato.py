@@ -83,6 +83,28 @@ class TestFormatoRee(unittest.TestCase):
             )
             self.assertEqual(relido.flag_ficticias["valor"], 0)
 
+    def test_round_trip_preserva_cabecalho_original(self):
+        cabecalho = (
+            " REES X SUBMERCADOS\n"
+            " NUM|NOME REES.| SUBM|MES| ANO\n"
+            " XXX|XXXXXXXXXX|  XXX| XX|XXXX\n"
+        )
+        conteudo = cabecalho + "   1 SUDESTE        1   4 2027\n" + " 999\n"
+
+        with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as diretorio:
+            origem = Path(diretorio) / "REE.DAT"
+            destino = Path(diretorio) / "REE_OUT.DAT"
+            origem.write_text(conteudo, encoding="latin-1")
+
+            ree = self.ler(origem)
+            with redirect_stdout(io.StringIO()):
+                ree.escrever(str(destino))
+
+            self.assertEqual(
+                destino.read_text(encoding="latin-1")[: len(cabecalho)],
+                cabecalho,
+            )
+
     def test_deck_antigo_sem_segundo_bloco_assume_zero(self):
         conteudo = self.CABECALHO + "   1 SUDESTE        1\n" + " 999\n"
 

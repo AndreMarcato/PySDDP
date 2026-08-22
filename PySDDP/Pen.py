@@ -14,6 +14,8 @@ from PySDDP.newave.script.term import Term
 from PySDDP.newave.script.sistema import Sistema
 from PySDDP.newave.script.manutt import Manutt
 from PySDDP.newave.script.expt import Expt
+from PySDDP.newave.script.patamar import Patamar
+from PySDDP.newave.script.agrint import Agrint
 from PySDDP.newave.energia_armazenada import (
     calcular_energia_armazenada_inicial as _calcular_energia_armazenada_inicial,
 )
@@ -38,6 +40,22 @@ class Newave(object):
         # Realiza a Leitura do DGER.DAT
         self.dger = Dger()
         self.dger.ler(os.path.join(self.path_, self.arquivos.dger))
+        # Realiza a Leitura do arquivo de patamares indicado em ARQUIVOS.DAT
+        self.patamar = Patamar()
+        nome_patamar = self.patamar.verificar_caixa_nome_arquivo(
+            self.path_, self.arquivos.patamar
+        )
+        self.patamar.ler(os.path.join(self.path_, nome_patamar), self.dger)
+        # Realiza a Leitura do arquivo de agrupamentos indicado em ARQUIVOS.DAT
+        self.agrint = Agrint()
+        if self.arquivos.agrint and self.arquivos.agrint.strip():
+            nome_agrint = self.agrint.verificar_caixa_nome_arquivo(
+                self.path_, self.arquivos.agrint
+            )
+            self.agrint.ler(
+                os.path.join(self.path_, nome_agrint),
+                self.patamar.numero_patamares,
+            )
         # Realiza a Leitura do HIDR.DAT
         self.hidr = Hidr()
         self.hidr.ler(os.path.join(self.path_, 'HIDR.DAT'))
@@ -91,6 +109,9 @@ class Newave(object):
         self.caso.escrever(os.path.join(caminho, 'CASO.DAT'))
         self.arquivos.escrever(os.path.join(caminho, self.caso.nome_arquivos))
         self.dger.escrever(os.path.join(caminho, self.arquivos.dger))
+        self.patamar.escrever(os.path.join(caminho, self.arquivos.patamar))
+        if self.arquivos.agrint and self.arquivos.agrint.strip():
+            self.agrint.escrever(os.path.join(caminho, self.arquivos.agrint))
         self.hidr.escrever(os.path.join(caminho, 'HIDR.DAT'))
         self.vazoes.escrever(os.path.join(caminho, 'VAZOES.DAT'))
         self.modif.escrever(os.path.join(caminho, self.arquivos.modif))

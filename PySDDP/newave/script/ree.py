@@ -32,6 +32,7 @@ class Ree(ReeTemplate):
         self.numero_rees = 0
         self.flag_ficticias['valor'] = 0
         terminador_encontrado = False
+        self._cabecalho = list()
 
         # listas referentes ao dicionário REE
         self.ree['codigo'] = list()
@@ -48,9 +49,10 @@ class Ree(ReeTemplate):
 
             with open(file_name, 'r', encoding='latin-1') as f:  # type: IO[str]
 
-                self.next_line(f)   # Linha de cabeçalho
-                self.next_line(f)   # Linha de cabeçalho
-                self.next_line(f)   # Linha de cabeçalho
+                for _ in range(3):
+                    self._cabecalho.append(
+                        self.next_line(f).rstrip('\r\n')
+                    )
 
                 self.next_line(f)
 
@@ -147,9 +149,8 @@ class Ree(ReeTemplate):
         try:
             with open(file_out, 'w', encoding='latin-1') as f:  # type: IO[str]
 
-                f.write(" REES X SUBMERCADOS\n" )
-                f.write(" NUM|NOME REES.| SUBM\n" )
-                f.write(" XXX|XXXXXXXXXX|  XXX\n")
+                for linha_cabecalho in self._cabecalho:
+                    f.write(linha_cabecalho + "\n")
 
                 tamanho = df.shape
                 tamanho = tamanho[0]
