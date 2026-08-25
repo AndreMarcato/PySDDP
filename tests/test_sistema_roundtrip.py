@@ -50,6 +50,51 @@ def registro_copiado(sistema, codigo):
     return registro
 
 
+def criar_sistema_com_fontes(pasta, dger, fontes):
+    linhas = (PMO / "SISTEMA.DAT").read_text(encoding="latin-1").splitlines()
+    inicio = linhas.index(" GERACAO DE USINAS NAO SIMULADAS")
+    linhas = linhas[:inicio + 3]
+
+    for fonte in fontes:
+        linhas.append(
+            f" {fonte['codigo']:3d}  {fonte['bloco']:3d}  "
+            f"{fonte['descricao']:20s}  {fonte['tecnologia']:3d}"
+        )
+        for iano, valores in enumerate(fonte["geracao"]):
+            if fonte["precisao"] == 2:
+                campos = "".join(f" {valor:7.2f}" for valor in valores)
+            else:
+                campos = "".join(f" {valor:7.0f}" for valor in valores)
+            linhas.append(f"{dger.ano_ini['valor'] + iano}  {campos}")
+
+    linhas.append(" 999")
+    entrada = pasta / "SISTEMA_ENTRADA.DAT"
+    entrada.write_text("\n".join(linhas) + "\n", encoding="latin-1")
+    sistema = Sistema()
+    with redirect_stdout(io.StringIO()):
+        sistema.ler(str(entrada), dger)
+    return sistema
+
+
+def fonte(codigo, bloco, precisao, primeiros):
+    geracao = np.full((5, 12), 90.0)
+    geracao[0, :len(primeiros)] = primeiros
+    return {
+        "codigo": codigo,
+        "bloco": bloco,
+        "descricao": f"FONTE {bloco}",
+        "tecnologia": bloco,
+        "precisao": precisao,
+        "geracao": geracao,
+    }
+
+
+def primeira_linha_ano(saida, descricao):
+    linhas = saida.read_text(encoding="latin-1").splitlines()
+    indice = next(i for i, linha in enumerate(linhas) if descricao in linha)
+    return linhas[indice + 1]
+
+
 class TestSistemaPutRoundTrip(unittest.TestCase):
     def setUp(self):
         self.temp = TemporaryDirectory(dir=ROOT / "tests")
@@ -154,6 +199,99 @@ class TestSistemaPutRoundTrip(unittest.TestCase):
 
         relido, _ = reler(self.sistema, self.dger, self.pasta)
         self.assertEqual(relido.get_interc(1, 2)["valor"][0, 0], 8123.0)
+
+
+class TestSistemaNaoSimuladasPrecisao(unittest.TestCase):
+    def setUp(self):
+        self.temp = TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.pasta = Path(self.temp.name)
+        _, self.dger = carregar_sistema()
+
+    def test_leitura_e_escrita_f7_0(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 0, [2744, 90])]
+        )
+        geracao = sistema.get(1)["nao_simuladas"][0]["geracao"]
+        self.assertEqual(geracao[0, 0], 2744.0)
+        self.assertEqual(geracao[0, 1], 90.0)
+
+        _, saida = reler(sistema, self.dger, self.pasta)
+        linha = primeira_linha_ano(saida, "FONTE 1")
+        self.assertEqual(linha[7:14], "  2744.")
+        self.assertEqual(linha[15:22], "    90.")
+
+    def test_leitura_f7_2(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 2, [0.00, 3.41, 0.02, 565.64])]
+        )
+        geracao = sistema.get(1)["nao_simuladas"][0]["geracao"]
+        np.testing.assert_array_equal(geracao[0, :4], [0.00, 3.41, 0.02, 565.64])
+
+    def test_round_trip_f7_2_preserva_valores_e_formato(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 2, [3.41, 0.02, 565.64])]
+        )
+        relido, saida = reler(sistema, self.dger, self.pasta)
+        geracao = relido.get(1)["nao_simuladas"][0]["geracao"]
+        np.testing.assert_array_equal(geracao[0, :3], [3.41, 0.02, 565.64])
+        linha = primeira_linha_ano(saida, "FONTE 1")
+        self.assertEqual(linha[7:14], "   3.41")
+        self.assertEqual(linha[15:22], "   0.02")
+        self.assertEqual(linha[23:30], " 565.64")
+
+    def test_zero_decimal_permanece_explicito(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 2, [0.00])]
+        )
+        _, saida = reler(sistema, self.dger, self.pasta)
+        self.assertEqual(primeira_linha_ano(saida, "FONTE 1")[7:14], "   0.00")
+
+    def test_inteiro_em_conjunto_decimal_mantem_duas_casas(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 2, [3.41, 4.00, 5.25])]
+        )
+        _, saida = reler(sistema, self.dger, self.pasta)
+        linha = primeira_linha_ano(saida, "FONTE 1")
+        self.assertEqual(linha[15:22], "   4.00")
+
+    def test_f7_0_editado_com_fracao_e_promovido_para_f7_2(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 0, [90])]
+        )
+        registro = registro_copiado(sistema, 1)
+        registro["nao_simuladas"][0]["geracao"][0, 0] = 90.25
+        sistema.put(registro)
+
+        relido, saida = reler(sistema, self.dger, self.pasta)
+        self.assertEqual(
+            relido.get(1)["nao_simuladas"][0]["geracao"][0, 0], 90.25
+        )
+        self.assertEqual(primeira_linha_ano(saida, "FONTE 1")[7:14], "  90.25")
+
+    def test_fontes_com_precisoes_diferentes(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta,
+            self.dger,
+            [fonte(1, 1, 0, [90]), fonte(1, 2, 2, [3.41])],
+        )
+        _, saida = reler(sistema, self.dger, self.pasta)
+        self.assertEqual(primeira_linha_ano(saida, "FONTE 1")[7:14], "    90.")
+        self.assertEqual(primeira_linha_ano(saida, "FONTE 2")[7:14], "   3.41")
+
+    def test_campos_f7_2_permanecem_nas_posicoes_fixas(self):
+        sistema = criar_sistema_com_fontes(
+            self.pasta, self.dger, [fonte(1, 1, 2, [0.00, 3.41, 565.64])]
+        )
+        _, saida = reler(sistema, self.dger, self.pasta)
+        linha = primeira_linha_ano(saida, "FONTE 1")
+        self.assertEqual(linha[:4], str(self.dger.ano_ini["valor"]))
+        self.assertEqual(len(linha), 102)
+        self.assertTrue(all(linha[6 + 8 * imes] == " " for imes in range(12)))
+        self.assertEqual(
+            [linha[7 + 8 * imes:14 + 8 * imes] for imes in range(3)],
+            ["   0.00", "   3.41", " 565.64"],
+        )
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 import os
+import re
 from typing import IO
 import pandas as pd
 import numpy as np
@@ -20,6 +21,7 @@ class Sistema(SistemaTemplate):
         self.usinsim = dict()
         self.mercado = dict()
         self.num_anos = None
+        self._usinsim_precisao = dict()
 
     def ler(self, file_name: str, dger) -> None:
         """
@@ -35,6 +37,7 @@ class Sistema(SistemaTemplate):
         self.numero_sistemas = 0
         self.numero_intercambios = 0
         self.num_anos = dger.num_anos['valor']
+        self._usinsim_precisao = dict()
 
         # Listas referente ao dicionário bloco_sistema['df']
         self.sistema['codigo'] = list()
@@ -258,18 +261,23 @@ class Sistema(SistemaTemplate):
                         nume_tecno = 0
 
                     geracao = np.zeros((dger.num_anos['valor'],12))
+                    precisao = 0
                     for iano in range(dger.num_anos['valor']):
                         self.next_line(f)
                         linha = self.linha
                         for imes in range(12):
-                            if len(linha[7+imes*8:14+imes*8].strip()) > 0:
-                                geracao[iano][imes] = float(linha[7+imes*8:14+imes*8])
+                            campo = linha[7+imes*8:14+imes*8]
+                            if len(campo.strip()) > 0:
+                                geracao[iano][imes] = float(campo)
+                                if re.fullmatch(r"\s*[+-]?\d+\.\d{2}\s*", campo):
+                                    precisao = 2
 
                     self.usinsim['codigo'].append(codigo)
                     self.usinsim['nume_bloco'].append(nume_bloco)
                     self.usinsim['desc_bloco'].append(desc_bloco)
                     self.usinsim['nume_tecno'].append(nume_tecno)
                     self.usinsim['geracao'].append(geracao)
+                    self._usinsim_precisao[(codigo, nume_bloco)] = precisao
 
                     self.next_line(f)
                     linha = self.linha
@@ -518,6 +526,15 @@ class Sistema(SistemaTemplate):
                     desc_bloco = registro[2]
                     nume_tecno = registro[3]
                     geracao = registro[4]
+                    chave = (codigo, nume_bloco)
+                    precisao = self._usinsim_precisao.get(chave, 0)
+                    if precisao == 0 and any(
+                        not float(valor).is_integer()
+                        for valor in np.asarray(geracao).flat
+                        if np.isfinite(valor)
+                    ):
+                        precisao = 2
+                        self._usinsim_precisao[chave] = precisao
 
                     if nume_tecno == 0:
                         f.write(f" {codigo:3d}  {nume_bloco:3d}  {desc_bloco:20s}\n")
@@ -527,7 +544,15 @@ class Sistema(SistemaTemplate):
                     for iano in range(dger.num_anos['valor']):
                         f.write(f"{dger.ano_ini['valor']+iano}  ")
                         for imes in range(12):
-                            if geracao[iano][imes] > 0:
+                            if precisao == 2 and geracao[iano][imes] >= 0:
+                                campo = f"{geracao[iano][imes]:7.2f}"
+                                if len(campo) != 7:
+                                    raise ValueError(
+                                        "Valor de geracao nao simulada nao cabe "
+                                        "no formato F7.2: " + campo
+                                    )
+                                f.write(" " + campo)
+                            elif geracao[iano][imes] > 0:
                                 f.write(f" {geracao[iano][imes]:6.0f}.")
                             else:
                                 f.write("        ")
