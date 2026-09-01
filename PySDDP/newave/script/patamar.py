@@ -1,7 +1,7 @@
 import os
 import math
 from numbers import Integral, Real
-from typing import IO, List
+from typing import IO, List, Optional
 
 import pandas as pd
 
@@ -112,15 +112,23 @@ class Patamar(PatamarTemplate):
             raise ValueError(f"Decimal invalido em {contexto}: {campo!r}") from err
 
     def _valores_mensais(
-        self, linha: str, inicio: int, passo: int, contexto: str
-    ) -> List[float]:
-        return [
-            self._float(
-                linha[inicio + mes * passo:inicio + mes * passo + 6],
-                f"{contexto}, mes {mes + 1}",
-            )
-            for mes in range(12)
-        ]
+        self,
+        linha: str,
+        inicio: int,
+        passo: int,
+        contexto: str,
+        permitir_vazio: bool = False,
+    ) -> List[Optional[float]]:
+        valores = []
+        for mes in range(12):
+            campo = linha[inicio + mes * passo:inicio + mes * passo + 6]
+            if permitir_vazio and not campo.strip():
+                valores.append(None)
+            else:
+                valores.append(
+                    self._float(campo, f"{contexto}, mes {mes + 1}")
+                )
+        return valores
 
     @staticmethod
     def _novo_df(linhas, colunas):
@@ -267,6 +275,7 @@ class Patamar(PatamarTemplate):
                             8,
                             7,
                             f"bloco {bloco}, ano {ano}, patamar {patamar}",
+                            permitir_vazio=True,
                         )
                         for mes, valor in zip(self._MESES, valores):
                             linhas.append(
@@ -438,16 +447,22 @@ class Patamar(PatamarTemplate):
             inicio, passo = 1, 7
         for _, dado in linhas.iterrows():
             mes = int(dado["mes"])
+            valor = dado["fator"]
+            campo = (
+                " " * 6
+                if pd.isna(valor)
+                else self._decimal_saida(
+                    valor,
+                    6,
+                    4,
+                    f"fator do bloco {bloco}, mes {mes}",
+                )
+            )
             linha = self._substituir(
                 linha,
                 inicio + (mes - 1) * passo,
                 6,
-                self._decimal_saida(
-                    dado["fator"],
-                    6,
-                    4,
-                    f"fator do bloco {bloco}, mes {mes}",
-                ),
+                campo,
             )
         return linha
 

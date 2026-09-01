@@ -171,7 +171,14 @@ class Dger(DgerTemplate):
                 for i in range(len(self.linha[19:])//7):
                     ini = 19+(i*7)
                     fim = ini+7
-                    self.vol_earm_inic['valor'].append(float(self.linha[ini:fim]))
+                    campo = self.linha[ini:fim]
+                    # Alguns geradores preenchem todo o registro fisico com
+                    # espacos (por exemplo, ate a coluna 500). Esses espacos
+                    # nao representam novos REEs/submercados.
+                    if not campo.strip():
+                        fim = ini
+                        break
+                    self.vol_earm_inic['valor'].append(float(campo))
                 self.vol_earm_inic['comentarios'] = self.linha[fim:]
                 self.vol_earm_inic['ordem'] = contador
                 contador += 1
@@ -215,7 +222,7 @@ class Dger(DgerTemplate):
                 self.num_min_iter['resumo'] = self.linha[00:21]
                 self.num_min_iter['valor'] = int(self.linha[21:25])
                 self.iter_inic_zinf['resumo'] = self.linha[00:21]
-                if len(self.linha) >= 29:
+                if self.linha[28:29].strip().isdigit():
                     self.iter_inic_zinf['valor'] = int(self.linha[28:29])
                     self.num_min_iter['comentarios'] = self.linha[29:]
                     self.iter_inic_zinf['comentarios'] = self.linha[29:]
@@ -394,7 +401,8 @@ class Dger(DgerTemplate):
                 self.mini_sim_fin['valor'] = int(self.linha[23:25])
                 fim = 25
                 self.aini_sim_fin['resumo'] = self.linha[00:21]
-                if len(self.linha) >= 30:
+                campo_ano = self.linha[26:30].strip()
+                if campo_ano.isdigit():
                     self.aini_sim_fin['valor'] = int(self.linha[26:30])
                     fim = 30
                 self.vini_ree_sim_fin['resumo'] = self.linha[00:21]
@@ -402,7 +410,11 @@ class Dger(DgerTemplate):
                 for i in range(len(self.linha[30:])//7):
                     ini = 30+(i*7)
                     fim = ini+7
-                    self.vini_ree_sim_fin['valor'].append(float(self.linha[ini:fim]))
+                    campo = self.linha[ini:fim]
+                    if not campo.strip():
+                        fim = ini
+                        break
+                    self.vini_ree_sim_fin['valor'].append(float(campo))
                 self.mini_sim_fin['comentarios'] = self.linha[fim:]
                 self.aini_sim_fin['comentariso'] = self.linha[fim:]
                 self.vini_ree_sim_fin['comentarios'] = self.linha[fim:]
